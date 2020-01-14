@@ -1,17 +1,10 @@
 package frc.controller.controlSchemes;
 
 import frc.controller.*;
-import frc.robot.Claw;
 import frc.robot.DrivePneumatics;
-import frc.robot.Elevator;
-import frc.robot.Intake;
 import frc.robot.Vision;
-import frc.robot.Wrist;
-import frc.robot.Elevator.ElevatorPosition;
-import frc.robot.Wrist.WristPosition;
 import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SingDrive.SpeedMode;
-import edu.wpi.first.wpilibj.Controller;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import com.kauailabs.navx.frc.AHRS;
@@ -37,10 +30,6 @@ public class ArcadeDrive extends ControlScheme {
     //final int releaseClawAngle = 60;
     final double clawSpeed = 0.5;
     
-    WristPosition wristPosition;
-
-    ElevatorPosition elevatorPosition;
-
     double tx, tv;
     double ultraIn;
 
@@ -64,8 +53,6 @@ public class ArcadeDrive extends ControlScheme {
         speedMode = SpeedMode.SLOW;
 
         usingVision = false;
-
-        wristPosition = WristPosition.START;
 
         driveMulti = false;
         bButtonNow = false;
@@ -141,128 +128,6 @@ public class ArcadeDrive extends ControlScheme {
         }
         else {
             pneumatics.setHigh();
-        }
-    }
-
-    
-    public void wrist(Wrist wrist) {
-
-        if(armController.getAButton()){
-            wristPosition = WristPosition.START;
-        }
-        else if (armController.getBButton()){
-            wristPosition = WristPosition.CARGO;
-        }
-        else if (armController.getYButton()){
-            wristPosition = WristPosition.HATCH;
-        }
-        else if (armController.getXButton()){
-            wristPosition = WristPosition.INTAKE;
-        }
-        SmartDashboard.putString("Wrist Intended Position", "" + wristPosition);
-        //wrist.setPositionWithEnum(wristPosition, armController.getRS_Y());
-
-        wrist.driveWithFF(0.5 * (-1 * armController.getRS_Y()));
-
-    }
-
-
-
-    public void elevator(Elevator elevator) {
-
-        if(wristPosition == WristPosition.HATCH){
-            if (armController.getPOVDown()){
-                elevatorPosition = ElevatorPosition.HATCH1;
-            }
-            else if(armController.getPOVLeft()){
-                elevatorPosition = ElevatorPosition.HATCH2;
-            }
-            else if(armController.getPOVUp()){
-                elevatorPosition = ElevatorPosition.HATCH3;
-            }
-        }
-
-        else if(wristPosition == WristPosition.CARGO){
-            if (armController.getPOVDown()){
-                elevatorPosition = ElevatorPosition.CARGO1;
-            }
-            else if(armController.getPOVLeft()){
-                elevatorPosition = ElevatorPosition.CARGO2;
-            }
-            else if(armController.getPOVUp()){
-                elevatorPosition = ElevatorPosition.CARGO3;
-            }
-            else if(armController.getPOVRight()){
-                elevatorPosition = ElevatorPosition.CARGOSHIP;
-            }
-
-        }
-
-        else if(wristPosition == WristPosition.INTAKE){
-            elevatorPosition = ElevatorPosition.BOTTOM;
-        }
-
-        //WristPosition must be set to Start
-        else {
-            elevatorPosition = ElevatorPosition.BOTTOM; 
-        }
-
-        SmartDashboard.putString("elevator intended position", "" + elevatorPosition);
-
-        double input = armController.getLS_Y();
-
-        double multiplier = 0.4;
-        if (input > -0.06 && input < 0.06) {
-            input = 0;
-        }
-
-        ///elevator.setPositionWithEnum(elevatorPosition, 0.7 * armController.getLS_Y());\
-        //elevator.setSpeed(multiplier * armController.getLS_Y() - 0.025);
-        //elevator.setSpeedWithTwoMotorsLowPower(multiplier * armController.getLS_Y());
-        elevator.setSpeedWithTwoMotorsPercent(input);
-    }
-    
-
-    public void controlClaw(Claw claw) {
-        
-        
-        if(armController.getRB()){
-
-            claw.rightControlClawMotor(clawSpeed);
-        }
-        else if(armController.getLB()){
-            
-            claw.leftControlClawMotor(-clawSpeed);
-        }
-        else if(armController.getTriggerRight() > .5){
-            claw.rightControlClawMotor(-clawSpeed);
-
-        }
-        else if(armController.getTriggerLeft() > .5){
-            claw.leftControlClawMotor(clawSpeed);
-        }
-
-        else {
-            claw.leftControlClawMotor(0.0);
-            claw.rightControlClawMotor(0.0);
-        }
-
-        //claw.controlClawMotor(armController.getTriggerRight() - armController.getTriggerLeft());
-        
-        
-    }
-
-    public void intake(Intake intake) {
-
-        if(driveController.getTriggerRight() >= .4) {
-            intake.intakeOn();
-        }
-
-        else if((driveController.getTriggerLeft() >= .4)) {
-            intake.intakeReverse();
-        }
-        else {
-            intake.intakeConstantSpeed();
         }
     }
 

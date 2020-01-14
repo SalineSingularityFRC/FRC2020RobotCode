@@ -1,7 +1,5 @@
 package frc.singularityDrive;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 /**
  * The simplest subclass of SingDrive, meant to represent a drivetrain with two sets of in-line
  * wheels and motors (for examples, 3 motors on the left and 3 on the right).

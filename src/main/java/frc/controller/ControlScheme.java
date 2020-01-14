@@ -4,13 +4,9 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Ultrasonic;
 import frc.robot.DrivePneumatics;
-import frc.robot.Elevator;
-import frc.robot.Claw;
-import frc.robot.Intake;
-import frc.robot.PneumaticEjector;
 import frc.singularityDrive.SingDrive;
 import frc.robot.Vision;
-import frc.robot.Wrist;
+
 
 /**
  * This interface forces it's subclasses to have all the
@@ -21,11 +17,7 @@ import frc.robot.Wrist;
 public abstract class ControlScheme {
 	
 	public abstract void drive(SingDrive drive, DrivePneumatics pneumatics);
-	public abstract void controlClaw(Claw claw);
-	public abstract void intake(Intake intake);
 	public abstract void visionDrive(Vision vision, SingDrive drive, DrivePneumatics dPneumatics, AHRS gyro, Ultrasonic ultra);
-	public abstract void elevator(Elevator elevator);
-	public abstract void wrist(Wrist wrist);
 	public abstract void ledMode(Vision vision);
 	
 	/**

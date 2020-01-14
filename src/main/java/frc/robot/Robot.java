@@ -12,7 +12,7 @@ import frc.controller.*;
 import frc.singularityDrive.*;
 import frc.singularityDrive.SingDrive;
 import frc.controller.controlSchemes.ArcadeDrive;
-import frc.controller.controlSchemes.Test;
+//import frc.controller.controlSchemes.Test;
 
 import com.kauailabs.navx.frc.*;
 
@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Ultrasonic;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -52,12 +52,6 @@ public class Robot extends TimedRobot {
   //Declaration of mechanisms
   SingDrive drive;
   DrivePneumatics drivePneumatics;
-
-  Intake intake;
-  //PneumaticEjector ejectorPneu;
-  Elevator elevator;
-  Wrist wrist;
-  Claw claw;
 
   Vision vision;
 
@@ -94,12 +88,6 @@ public class Robot extends TimedRobot {
     //initialize mechanisms
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
     drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
-
-    intake = new Intake(intakeMotor);
-    claw = new Claw(clawLeftMotor, clawRightMotor);
-
-    elevator = new Elevator(elevatorMotor, true, elevatorMotor2, true);
-    wrist = new Wrist(wristMotor, true, claw);
     
     //ejectorPneu = new PneumaticEjector(ejectorPneuPush, ejectorPneuHold);
     
@@ -163,10 +151,7 @@ public class Robot extends TimedRobot {
     currentScheme.drive(drive, drivePneumatics);
     // partial autonomy via vision
     currentScheme.visionDrive(vision, drive, drivePneumatics, gyro, ultra);
-    currentScheme.elevator(elevator);
-    currentScheme.wrist(wrist);
     //currentScheme.controlClaw(claw);
-    currentScheme.intake(intake);
     currentScheme.ledMode(vision);
   }
 
@@ -188,11 +173,6 @@ public class Robot extends TimedRobot {
     // (we shouldn't need to change this too often- other than commenting)
     currentScheme.drive(drive, drivePneumatics);
     // partial autonomy via vision
-    currentScheme.visionDrive(vision, drive, drivePneumatics, gyro, ultra);
-    currentScheme.elevator(elevator);
-    currentScheme.wrist(wrist);
-    //currentScheme.controlClaw(claw);
-    currentScheme.intake(intake);
     currentScheme.ledMode(vision);
     
   }
