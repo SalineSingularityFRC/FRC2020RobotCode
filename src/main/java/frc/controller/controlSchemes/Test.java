@@ -29,7 +29,7 @@ public class Test extends ControlScheme{
 
     }
 
-    public void ledMode(Vision vision){
+    public void ledMode(LimeLight limeLight){
         
     }
 }

@@ -7,10 +7,10 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class LimeLight{
 
     public NetworkTable table;
-    public NetworkTableEntry tx, ty, ta, tv, ts, tl, tshort, tlong, thor, tvert, getpipe, camtran, ledMode;
+    public NetworkTableEntry tx, ty, ta, tv, ts, tl, pipeLine, tshort, tlong, thor, tvert, getpipe, camtran, ledMode;
 
     //constructor to create the limelight and its values
-    //////Branden Amstutz
+    //class by: Branden Amstutz
     public LimeLight() {
 
         table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -40,15 +40,25 @@ public class LimeLight{
         camtran = table.getEntry("camtran");
         //state of LEDs: 1.0 - on, 2.0 - blink, 3.0 - off
         ledMode = table.getEntry("ledMode");
+        //set pipeLine
+        pipeLine = table.getEntry("pipeLine");
         
     }
 
+    // turn on the LEDs, takes a liemlight object
     public void ledOn( LimeLight limeLight ){
         
         limeLight.ledMode.setDouble(1.0);
 
     }
-    public void LEDOff(LimeLight limeLight){
+
+    // turn off the LEDs, takes a LimeLight object
+    public void ledOff(LimeLight limeLight){
         limeLight.ledMode.setDouble(3.0);
+    }
+
+    // method to change between pipeLines, takes an int and a LimeLight object
+    public void setpipeline(LimeLight limeLight, double pipe){
+        limeLight.pipeLine.setDouble( pipe);
     }
 }

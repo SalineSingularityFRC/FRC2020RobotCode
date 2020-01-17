@@ -5,7 +5,7 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import frc.robot.DrivePneumatics;
 import frc.singularityDrive.SingDrive;
-import frc.robot.Vision;
+import frc.robot.LimeLight;;
 
 
 /**
@@ -17,8 +17,7 @@ import frc.robot.Vision;
 public abstract class ControlScheme {
 	
 	public abstract void drive(SingDrive drive, DrivePneumatics pneumatics);
-	public abstract void visionDrive(Vision vision, SingDrive drive, DrivePneumatics dPneumatics, AHRS gyro, Ultrasonic ultra);
-	public abstract void ledMode(Vision vision);
+	public abstract void ledMode(LimeLight limeLight);
 	
 	/**
 	 * 

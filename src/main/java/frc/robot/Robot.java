@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
   SingDrive drive;
   DrivePneumatics drivePneumatics;
 
-  Vision vision;
+  LimeLight limeLight;
 
   //Create a gyro
   AHRS gyro;
@@ -91,7 +91,7 @@ public class Robot extends TimedRobot {
     
     //ejectorPneu = new PneumaticEjector(ejectorPneuPush, ejectorPneuHold);
     
-    vision = new Vision();
+    limeLight = new LimeLight();
     //DO NOT REMOVE PLZ
     CameraServer.getInstance().startAutomaticCapture();
     //CameraServer.getInstance().startAutomaticCapture();
@@ -150,9 +150,8 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     currentScheme.drive(drive, drivePneumatics);
     // partial autonomy via vision
-    currentScheme.visionDrive(vision, drive, drivePneumatics, gyro, ultra);
     //currentScheme.controlClaw(claw);
-    currentScheme.ledMode(vision);
+    currentScheme.ledMode(limeLight);
   }
 
   @Override
@@ -173,7 +172,7 @@ public class Robot extends TimedRobot {
     // (we shouldn't need to change this too often- other than commenting)
     currentScheme.drive(drive, drivePneumatics);
     // partial autonomy via vision
-    currentScheme.ledMode(vision);
+    currentScheme.ledMode(limeLight);
     
   }
 
