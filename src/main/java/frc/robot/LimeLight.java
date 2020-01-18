@@ -7,7 +7,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 public class LimeLight{
 
     public NetworkTable table;
-    public NetworkTableEntry tx, ty, ta, tv, ts, tl, pipeLine, tshort, tlong, thor, tvert, getpipe, camtran, ledMode;
+    public NetworkTableEntry tx, ty, ta, tv, ts, tl, pipeLine, tshort, tlong, thor, tvert, getpipe, camtran, ledMode, camMode;
 
     //constructor to create the limelight and its values
     //class by: Branden Amstutz
@@ -42,6 +42,8 @@ public class LimeLight{
         ledMode = table.getEntry("ledMode");
         //set pipeLine
         pipeLine = table.getEntry("pipeLine");
+        // swap the limelight between vision processing and drive camera
+        camMode = table.getEntry("camMode");
         
     }
 
@@ -59,6 +61,11 @@ public class LimeLight{
 
     // method to change between pipeLines, takes an int and a LimeLight object
     public void setpipeline(LimeLight limeLight, double pipe){
-        limeLight.pipeLine.setDouble( pipe);
+        limeLight.pipeLine.setDouble(pipe);
+    }
+    
+    //method to toggle camera between drive mode and vision mode
+    public void setCamMode( LimeLight limeLight, double mode){
+        limeLight.camMode.setDouble(mode);
     }
 }

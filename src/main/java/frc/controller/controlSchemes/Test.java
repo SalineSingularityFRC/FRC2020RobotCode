@@ -4,10 +4,10 @@ import frc.controller.*;
 import frc.robot.*;
 import frc.singularityDrive.*;
 
-import edu.wpi.first.wpilibj.Ultrasonic;
+//import edu.wpi.first.wpilibj.Ultrasonic;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import com.kauailabs.navx.frc.AHRS;
+//import com.kauailabs.navx.frc.AHRS;
 
 public class Test extends ControlScheme{
     XboxController driveController;
