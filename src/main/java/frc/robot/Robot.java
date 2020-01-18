@@ -20,7 +20,6 @@ import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.Ultrasonic;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -34,16 +33,7 @@ public class Robot extends TimedRobot {
 
   //stores the motor controller IDs
   int driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3;
-  int drivePneu1, drivePneu2;
-
-  //int ejectorPneuPush, ejectorPneuHold;
-  //int hatchMechDown, hatchMechUp;
-
-  int intakeMotor;
-  int elevatorMotor, elevatorMotor2;
-  int wristMotor;
-  int clawLeftMotor, clawRightMotor;
-  
+  int drivePneu1, drivePneu2;  
 
   //Declaration of our driving scheme, which can be initialized to
   //any ControlScheme in robotInit()
@@ -58,11 +48,6 @@ public class Robot extends TimedRobot {
   //Create a gyro
   AHRS gyro;
   boolean gyroResetAtTeleop;
-
-  //create ultrasonics
-  Ultrasonic ultra;
-  final int ultraInput = 1;
-  final int ultraOutput = 2;
 
   Compressor compressor;
 
@@ -85,23 +70,16 @@ public class Robot extends TimedRobot {
     //initialize our driving scheme to a basic arcade drive
     currentScheme = new ArcadeDrive(XBOX_PORT, XBOX_PORT +1);
     
-    //initialize mechanisms
+    //initialize all mechanisms on the robot
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
     drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
     
-    //ejectorPneu = new PneumaticEjector(ejectorPneuPush, ejectorPneuHold);
-    
     limeLight = new LimeLight();
-    //DO NOT REMOVE PLZ
+    //DO NOT REMOVE PLZ - starts collecting data from drive cameras
     CameraServer.getInstance().startAutomaticCapture();
-    //CameraServer.getInstance().startAutomaticCapture();
 
     gyro = new AHRS(SPI.Port.kMXP);
     gyroResetAtTeleop = true;
-    
-    
-    //ultra = new Ultrasonic(ultraInput, ultraOutput);
-    //ultra.setAutomaticMode(true);
     
     
     compressor = new Compressor();
@@ -137,9 +115,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-
-    gyro.setAngleAdjustment(-gyro.getAngle());
-    gyroResetAtTeleop = false;
     
   }
 
@@ -149,21 +124,16 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     currentScheme.drive(drive, drivePneumatics);
-    // partial autonomy via vision
-    //currentScheme.controlClaw(claw);
     currentScheme.ledMode(limeLight);
   }
 
+  //Stuff to run when teleop is selected
   @Override
   public void teleopInit() {
-    
-    if (gyroResetAtTeleop) {
-      gyro.setAngleAdjustment(-gyro.getAngle());
-    }
   }
 
   /**
-   * This function is called periodically during operator control.
+   * Function that contains everything that will run in the teleop perio/option in DS
    */
   @Override
   public void teleopPeriodic() {
@@ -177,7 +147,7 @@ public class Robot extends TimedRobot {
   }
 
   /**
-   * This function is called periodically during test mode.
+   * Use test mode in drivers station to charge compressor.
    */
   @Override
   public void testPeriodic() {
@@ -187,11 +157,7 @@ public class Robot extends TimedRobot {
 
   
   /**
-   * Assigning port numbers to components
-   * 
-   * To be run at beginning of robotInit 
-   * 
-   * @author Max P.
+   * Assigning port numbers to motors, solenoids, etc.
    */
   private void setDefaultProperties() {
     
@@ -202,19 +168,11 @@ public class Robot extends TimedRobot {
     driveRight1 = 4;
     driveRight2 = 5;
     driveRight3 = 6;
-    elevatorMotor = 11; //up motor
-    elevatorMotor2 = 10; //down motor
-    wristMotor = 8;
-    intakeMotor = 9;
 
     //Pneumatics
     
     drivePneu1 = 0;
     drivePneu2 = 1;
-    //ejectorPneuPush = 3;
-    //ejectorPneuHold = 4;
-    //hatchMechDown = 5;
-    //hatchMechUp = 6;*/
 
     
 

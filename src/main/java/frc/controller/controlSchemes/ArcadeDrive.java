@@ -5,9 +5,10 @@ import frc.robot.DrivePneumatics;
 import frc.robot.LimeLight;
 import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SingDrive.SpeedMode;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.smartdashboard.*;
-import com.kauailabs.navx.frc.AHRS;
+
+//Uncomment to enable gyro stuff
+//import com.kauailabs.navx.frc.AHRS;
 
 /**
  * 
@@ -25,21 +26,6 @@ public class ArcadeDrive extends ControlScheme {
 
     boolean usingVision;
 
-    //Hatch Variables
-    //final int grabClawAngle = 120;
-    //final int releaseClawAngle = 60;
-    final double clawSpeed = 0.5;
-    
-    double tx, tv;
-    double ultraIn;
-
-
-    //Need to be adjusted for our robot
-    final double driveSpeedConstant = 0.3;
-    final double txkP = 0.022;
-    final double angleDifferencekP = 0.011;
-    final double endDistance = 2.0;
-
     boolean bButtonNow, bButtonPrev, driveMulti;
 
     // Constructor for the ArcadeDrive class
@@ -51,8 +37,6 @@ public class ArcadeDrive extends ControlScheme {
 
         lowGear = true;
         speedMode = SpeedMode.SLOW;
-
-        usingVision = false;
 
         driveMulti = false;
         bButtonNow = false;
@@ -131,7 +115,7 @@ public class ArcadeDrive extends ControlScheme {
         }
     }
     
-    public void ledMode( LimeLight limeLight ){
+    public void ledMode(LimeLight limeLight ){
         if(driveController.getXButton() || driveController.getYButton()){
             limeLight.ledOff(limeLight);
         }

@@ -2,7 +2,6 @@ package frc.controller;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import edu.wpi.first.wpilibj.Ultrasonic;
 import frc.robot.DrivePneumatics;
 import frc.singularityDrive.SingDrive;
 import frc.robot.LimeLight;;
@@ -18,6 +17,11 @@ public abstract class ControlScheme {
 	
 	public abstract void drive(SingDrive drive, DrivePneumatics pneumatics);
 	public abstract void ledMode(LimeLight limeLight);
+
+
+	// In addation to defining our various different mechanisms to be expanded upon in subclasses (other controlSchemes, i.e. ArcadeDrive),
+	// various different methods to interact with the gyro are also included in here. Why? I don't know, but they can be accessed anywhere from
+	// here so I don't want to move them.
 	
 	/**
 	 * 
