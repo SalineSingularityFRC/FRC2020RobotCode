@@ -4,7 +4,6 @@ import frc.controller.*;
 import frc.robot.*;
 import frc.singularityDrive.*;
 
-
 // Alternative ControlScheme to ArcadeDrive.java (control scheme) to test different mechaninsms without breaking everything
 // ControlSchemes can be changed in Robot.java
 
