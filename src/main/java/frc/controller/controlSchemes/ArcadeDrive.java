@@ -3,7 +3,6 @@ package frc.controller.controlSchemes;
 import frc.controller.*;
 import frc.robot.DrivePneumatics;
 import frc.robot.LimeLight;
-import frc.robot.Vision;
 import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SingDrive.SpeedMode;
 import edu.wpi.first.wpilibj.Ultrasonic;
