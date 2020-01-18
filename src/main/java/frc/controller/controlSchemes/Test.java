@@ -25,11 +25,7 @@ public class Test extends ControlScheme{
         
     }
 
-	public void visionDrive(Vision vision, SingDrive drive, DrivePneumatics dPneumatics, AHRS gyro, Ultrasonic ultra){
-
-    }
-
-    public void ledMode(Vision vision){
+    public void ledMode(LimeLight limeLight){
         
     }
 }
