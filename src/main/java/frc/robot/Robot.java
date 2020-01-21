@@ -9,9 +9,11 @@ package frc.robot;
 
 
 import frc.controller.*;
+import frc.controller.autonomous.AutonTest;
 import frc.singularityDrive.*;
 import frc.singularityDrive.SingDrive;
 import frc.controller.controlSchemes.ArcadeDrive;
+import frc.controller.autonomous.*;
 //import frc.controller.controlSchemes.Test;
 
 import com.kauailabs.navx.frc.*;
@@ -115,7 +117,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    
+    AutonTest.moveAuton();
   }
 
   /**
@@ -162,9 +164,9 @@ public class Robot extends TimedRobot {
   private void setDefaultProperties() {
     
     //Motors
-    driveLeft1 = 1;
-    driveLeft2 = 2;
-    driveLeft3 = 3;
+    driveLeft1 = 11;
+    driveLeft2 = 12;
+    driveLeft3 = 13;
     driveRight1 = 4;
     driveRight2 = 5;
     driveRight3 = 6;
@@ -181,8 +183,3 @@ public class Robot extends TimedRobot {
 
 
 }
-
-
-
-
-
