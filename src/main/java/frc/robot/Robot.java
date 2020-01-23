@@ -13,6 +13,7 @@ import frc.singularityDrive.*;
 import frc.singularityDrive.SingDrive;
 import frc.controller.controlSchemes.ArcadeDrive;
 //import frc.controller.controlSchemes.Test;
+import frc.robot.Canifier;
 
 import com.kauailabs.navx.frc.*;
 
@@ -22,6 +23,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Ultrasonic;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -54,6 +56,9 @@ public class Robot extends TimedRobot {
   DrivePneumatics drivePneumatics;
 
   LimeLight limeLight;
+
+  //Create a CANifier
+  Canifier canifier;
 
   //Create a gyro
   AHRS gyro;
@@ -99,6 +104,7 @@ public class Robot extends TimedRobot {
     gyro = new AHRS(SPI.Port.kMXP);
     gyroResetAtTeleop = true;
     
+    canifier = new Canifier();
     
     //ultra = new Ultrasonic(ultraInput, ultraOutput);
     //ultra.setAutomaticMode(true);
@@ -173,6 +179,13 @@ public class Robot extends TimedRobot {
     currentScheme.drive(drive, drivePneumatics);
     // partial autonomy via vision
     currentScheme.ledMode(limeLight);
+
+    boolean colorData[] = canifier.getPinData();
+    int color = canifier.binToDecColor(colorData);
+    int count = canifier.binToDecCount(colorData);
+
+    SmartDashboard.putNumber("Current Color: ", color);
+    SmartDashboard.putNumber("Current Count: ", count);
     
   }
 
