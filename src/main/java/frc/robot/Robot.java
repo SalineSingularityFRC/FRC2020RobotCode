@@ -44,7 +44,6 @@ public class Robot extends TimedRobot {
   //Declaration of mechanisms
   SingDrive drive;
   DrivePneumatics drivePneumatics;
-
   LimeLight limeLight;
 
   //Create a gyro

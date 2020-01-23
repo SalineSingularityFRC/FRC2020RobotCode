@@ -28,11 +28,11 @@ public abstract class AutonControlScheme {
     //private static double getAverage() { return (drive.getLeftPosition() + drive.getRightPosition()) / 2; }
     public void vertical(double distance, double verticalSpeed){
 
-        /*while (getAverage() > -distance*encoderTicks / DistancePerRevolution
-				&& getAverage() < distance*encoderTicks / DistancePerRevolution) {
+        while (drive.getCurrentPosition() > -distance*encoderTicks / DistancePerRevolution
+				&& drive.getCurrentPosition() < distance*encoderTicks / DistancePerRevolution) {
 	
 			drive.arcadeDrive(verticalSpeed, verticalSpeed, 0.0, false, SpeedMode.NORMAL);
-		}*/
+		}
     }
 
     public void rotate(double rotationSpeed, double angle, boolean counterClockwise){
