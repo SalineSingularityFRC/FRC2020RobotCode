@@ -9,7 +9,9 @@ package frc.robot;
 
 
 import frc.controller.*;
+import frc.controller.autonomous.AutonControlScheme;
 import frc.singularityDrive.*;
+import frc.controller.autonomous.TestAuton;
 import frc.singularityDrive.SingDrive;
 import frc.controller.controlSchemes.ArcadeDrive;
 //import frc.controller.controlSchemes.Test;
@@ -115,7 +117,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    
+    AutonControlScheme hodl = new TestAuton(drive);
+    hodl.moveAuton();
   }
 
   /**
