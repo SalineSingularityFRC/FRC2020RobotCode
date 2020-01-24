@@ -85,14 +85,15 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     
     //initialize motor controller ports IDs
-    setDefaultProperties();
+    //Uncomment to initialize motor controllers aswell - commented for texting purposes
+    //setDefaultProperties();
 
     //initialize our driving scheme to a basic arcade drive
-    currentScheme = new ArcadeDrive(XBOX_PORT, XBOX_PORT +1);
+    //currentScheme = new ArcadeDrive(XBOX_PORT, XBOX_PORT +1);
     
     //initialize mechanisms
-    drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
-    drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
+    //drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
+    //drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
     
     //ejectorPneu = new PneumaticEjector(ejectorPneuPush, ejectorPneuHold);
     
@@ -110,7 +111,7 @@ public class Robot extends TimedRobot {
     //ultra.setAutomaticMode(true);
     
     
-    compressor = new Compressor();
+    //compressor = new Compressor();
     
 
   }
@@ -176,9 +177,9 @@ public class Robot extends TimedRobot {
 
     // Allow driver control based on current scheme
     // (we shouldn't need to change this too often- other than commenting)
-    currentScheme.drive(drive, drivePneumatics);
+    //currentScheme.drive(drive, drivePneumatics);
     // partial autonomy via vision
-    currentScheme.ledMode(limeLight);
+    //currentScheme.ledMode(limeLight);
 
     boolean colorData[] = canifier.getPinData();
     int color = canifier.binToDecColor(colorData);

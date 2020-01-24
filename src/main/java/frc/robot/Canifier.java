@@ -6,16 +6,21 @@ import com.ctre.phoenix.CANifier.*;
 
 
 public class Canifier{
-    CANifier canifier = new CANifier(0);
-    int pin1 = 8;
-    int pin2 = 7;
-    int pin3 = 6;
-    int pin4 = 5;
-    int pin5 = 4;
-    int pin6 = 3;
+    CANifier canifier;
 
-    int pin7 = 2;
-    int pin8 = 1;
+    public Canifier(){
+        canifier = new CANifier(0);
+    }
+
+    int pin1 = 14;
+    int pin2 = 13;
+    int pin3 = 12;
+    int pin4 = 10;
+    int pin5 = 8;
+    int pin6 = 7;
+
+    int pin7 = 6;
+    int pin8 = 4;
 
     int pinArray[] = {pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8};
 
