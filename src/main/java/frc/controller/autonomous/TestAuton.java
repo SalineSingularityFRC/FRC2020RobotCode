@@ -12,7 +12,7 @@ public class TestAuton extends AutonControlScheme{
 
     @Override
     public void moveAuton() {
-        super.rotate(0.2, 90, false);
+        super.vertical(10, 0.1);
     }
 
 }

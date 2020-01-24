@@ -24,7 +24,9 @@ public abstract class AutonControlScheme {
     //the main method of each auton programs
     public abstract void moveAuton();
 
-    //TODO Reference the encoders to make the vertical unctrion
+    //TODO Reference the encoders to make the
+    
+
     //private static double getAverage() { return (drive.getLeftPosition() + drive.getRightPosition()) / 2; }
     public void vertical(double distance, double verticalSpeed){
 
