@@ -1,30 +1,35 @@
 package frc.robot;
-
+//Imports package for Double Solenoid
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-
-// Class for the drive pneumatics for pneumatic two-speed shifting gearboxes to drive the robot.
-
-public class DrivePneumatics{
-
-    DoubleSolenoid doubleSolenoid;
-
-	// Defines the solenoids, takes a channel for moving the solenoid in and one for out
-    public DrivePneumatics(int forwardChannel, int reverseChannel){
-        doubleSolenoid = new DoubleSolenoid(forwardChannel, reverseChannel);
-    }
+//creates public class for Drive Pneumatics
+public class DrivePneumatics {
 	
-	// Set high gear for the gearbox
-	public void setHigh() {
+	//Declares doubleSolenoid
+	DoubleSolenoid doubleSolenoid;
+
+	/**
+	 * 
+	 * @param forwardChannel the channel that the forward solenoid is connected to on the PCM
+	 * @param reverseChannel the channel that the reverse solenoid is connected to on the PCM
+	 */
+	
+	
+	//creates constructor for doubleSolenoid
+
+	public DrivePneumatics(int forwardChannel, int reverseChannel){
+		doubleSolenoid = new DoubleSolenoid(forwardChannel, reverseChannel);
+	}
+
+	//method to set Double Solenoid Value high
+	public void setHigh(){
 		doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
-	
-	// Set low gear for the gearbox
-	public void setLow() {
+	//method to set Double Solenoid Value low
+	public void setLow(){
 		doubleSolenoid.set(DoubleSolenoid.Value.kForward);
 	}
-	
-	// Set solenoid to off so the solenoid can move realativly freely
-	public void setOff() {
+	//method to set Double Solenoid Value off
+	public void setOff(){		
 		doubleSolenoid.set(DoubleSolenoid.Value.kOff);
 	}
 
