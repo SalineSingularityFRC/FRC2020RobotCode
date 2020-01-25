@@ -64,7 +64,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    
+    //TODO un-comment methods
     //initialize motor controller ports IDs
     setDefaultProperties();
 
@@ -73,17 +73,17 @@ public class Robot extends TimedRobot {
     
     //initialize all mechanisms on the robot
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
-    drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
+    //drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
     
-    limeLight = new LimeLight();
+    //limeLight = new LimeLight();
     //DO NOT REMOVE PLZ - starts collecting data from drive cameras
     CameraServer.getInstance().startAutomaticCapture();
 
-    gyro = new AHRS(SPI.Port.kMXP);
-    gyroResetAtTeleop = true;
+    //gyro = new AHRS(SPI.Port.kMXP);
+    //gyroResetAtTeleop = true;
     
     
-    compressor = new Compressor();
+    //compressor = new Compressor();
     
 
   }
@@ -126,7 +126,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     currentScheme.drive(drive, drivePneumatics);
-    currentScheme.ledMode(limeLight);
+    
+    //TODO un-comment
+    //currentScheme.ledMode(limeLight);
   }
 
   //Stuff to run when teleop is selected
@@ -144,7 +146,7 @@ public class Robot extends TimedRobot {
     // (we shouldn't need to change this too often- other than commenting)
     currentScheme.drive(drive, drivePneumatics);
     // partial autonomy via vision
-    currentScheme.ledMode(limeLight);
+    //currentScheme.ledMode(limeLight);
     
   }
 
@@ -164,12 +166,12 @@ public class Robot extends TimedRobot {
   private void setDefaultProperties() {
     
     //Motors
-    driveLeft1 = 1;
-    driveLeft2 = 2;
-    driveLeft3 = 3;
+    driveLeft1 = 11;
+    driveLeft2 = 11;
+    driveLeft3 = 11;
     driveRight1 = 4;
-    driveRight2 = 5;
-    driveRight3 = 6;
+    driveRight2 = 4;
+    driveRight3 = 4;
 
     //Pneumatics
     

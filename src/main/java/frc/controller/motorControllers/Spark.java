@@ -257,10 +257,18 @@ public class Spark implements MotorController {
         this.initialPosition = this.m_encoder.getPosition();
     }
 
+    /**
+     * gets the valueas from the encoders
+     * @return Encoder Position in inches
+     */
     public double getCurrentPosition() {
+        SmartDashboard.putNumber("Placibo", 6);
+        SmartDashboard.putNumber("doofus", this.m_encoder.getPosition());
+        
         if(initialPosition != -100) {
             return this.m_encoder.getPosition() - this.initialPosition;
         }
+
         return m_encoder.getPosition();
         
     }
