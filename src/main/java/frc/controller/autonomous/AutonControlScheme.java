@@ -1,6 +1,8 @@
 package frc.controller.autonomous;
 
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import com.kauailabs.navx.frc.AHRS;
 import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SingDrive.*;
@@ -31,7 +33,7 @@ public abstract class AutonControlScheme {
     public void vertical(double distance, double verticalSpeed){
 
         /*while (drive.getCurrentPosition() > -distance*encoderTicks / DistancePerRevolution
-				&& drive.getCurrentPosition() < distance*encoderTicks / DistancePerRevolution) {*/
+                && drive.getCurrentPosition() < distance*encoderTicks / DistancePerRevolution) {*/
 	    while(true){
             drive.arcadeDrive(verticalSpeed, verticalSpeed, 0.0, false, SpeedMode.NORMAL);
         }

@@ -105,7 +105,7 @@ public class Spark implements MotorController {
     }
 
     public void setSpeed(double percentOutput) {
-        
+        SmartDashboard.putNumber( "wow", 12);
         this.m_motor.set(percentOutput);
     }
 

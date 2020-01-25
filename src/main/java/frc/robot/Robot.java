@@ -77,7 +77,7 @@ public class Robot extends TimedRobot {
     
     //limeLight = new LimeLight();
     //DO NOT REMOVE PLZ - starts collecting data from drive cameras
-    CameraServer.getInstance().startAutomaticCapture();
+    //CameraServer.getInstance().startAutomaticCapture();
 
     //gyro = new AHRS(SPI.Port.kMXP);
     //gyroResetAtTeleop = true;
@@ -167,11 +167,11 @@ public class Robot extends TimedRobot {
     
     //Motors
     driveLeft1 = 11;
-    driveLeft2 = 11;
-    driveLeft3 = 11;
+    driveLeft2 = 12;
+    driveLeft3 = 13;
     driveRight1 = 4;
-    driveRight2 = 4;
-    driveRight3 = 4;
+    driveRight2 = 5;
+    driveRight3 = 6;
 
     //Pneumatics
     
