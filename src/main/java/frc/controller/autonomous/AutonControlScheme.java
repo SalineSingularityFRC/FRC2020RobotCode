@@ -2,6 +2,7 @@ package frc.controller.autonomous;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import java.lang.Math;
 
 import com.kauailabs.navx.frc.AHRS;
 import frc.singularityDrive.SingDrive;
@@ -32,19 +33,22 @@ public abstract class AutonControlScheme {
     //private static double getAverage() { return (drive.getLeftPosition() + drive.getRightPosition()) / 2; }
     public void vertical(double distance, double verticalSpeed){
 
-        /*while (drive.getCurrentPosition() > -distance*encoderTicks / DistancePerRevolution
-                && drive.getCurrentPosition() < distance*encoderTicks / DistancePerRevolution) {*/
-	    while(true){
-            drive.arcadeDrive(verticalSpeed, verticalSpeed, 0.0, false, SpeedMode.NORMAL);
-        }
-		//}
+        while (drive.getCurrentPosition() > -distance*encoderTicks / DistancePerRevolution
+                && drive.getCurrentPosition() < distance*encoderTicks / DistancePerRevolution) {
+        
+            SmartDashboard.putNumber("encoderPosition", drive.getCurrentPosition());
+            drive.arcadeDrive(verticalSpeed, 0, 0.0, false, SpeedMode.NORMAL);
+        
+		}
     }
 
     public void rotate(double rotationSpeed, double angle, boolean counterClockwise){
         gyro.reset();
         if(counterClockwise) rotationSpeed*= -1;
-		while(gyro.getAngle() < angle) {
-			
+		while(Math.abs(gyro.getAngle()) < angle) {
+            
+            SmartDashboard.putNumber("gyro Value", Math.abs(gyro.getAngle()));
+
 			//TODO accelerate motors slowly
 			//drive.rampVoltage();
 			

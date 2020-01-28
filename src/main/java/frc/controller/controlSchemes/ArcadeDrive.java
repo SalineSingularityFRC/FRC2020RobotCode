@@ -52,8 +52,6 @@ public class ArcadeDrive extends ControlScheme {
      */
     public void drive(SingDrive drive, DrivePneumatics pneumatics) {
 
-        SmartDashboard.putNumber("Doofus", 69.420);
-
         //Set speed mode based on the dpad on the driveController
         if(driveController.getLB()){
             speedMode = SpeedMode.SLOW;
