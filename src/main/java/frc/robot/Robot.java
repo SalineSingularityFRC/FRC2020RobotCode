@@ -9,11 +9,11 @@ package frc.robot;
 
 
 import frc.controller.*;
-import frc.controller.autonomous.AutonControlScheme;
+import frc.controller.autonomous.AutonTest;
 import frc.singularityDrive.*;
-import frc.controller.autonomous.TestAuton;
 import frc.singularityDrive.SingDrive;
 import frc.controller.controlSchemes.ArcadeDrive;
+import frc.controller.autonomous.*;
 //import frc.controller.controlSchemes.Test;
 
 import com.kauailabs.navx.frc.*;
@@ -186,8 +186,3 @@ public class Robot extends TimedRobot {
 
 
 }
-
-
-
-
-

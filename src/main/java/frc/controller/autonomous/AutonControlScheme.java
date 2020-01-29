@@ -42,13 +42,15 @@ public abstract class AutonControlScheme {
 		}
     }
 
-    public void rotate(double rotationSpeed, double angle, boolean counterClockwise){
-        gyro.reset();
-        if(counterClockwise) rotationSpeed*= -1;
-		while(Math.abs(gyro.getAngle()) < angle) {
-            
-            SmartDashboard.putNumber("gyro Value", Math.abs(gyro.getAngle()));
+    public void rotate(double angle, boolean isCounterClockwise){
+        rotate(0.1, angle, isCounterClockwise);
+    }
 
+    public void rotate(double rotationSpeed, double angle, boolean isCounterClockwise){
+        gyro.reset();
+        if(isCounterClockwise) rotationSpeed*= -1;
+		while(gyro.getAngle() < angle) {
+			
 			//TODO accelerate motors slowly
 			//drive.rampVoltage();
 			
