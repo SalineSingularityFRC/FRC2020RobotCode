@@ -1,6 +1,9 @@
 package frc.controller.autonomous;
 
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import java.lang.Math;
+
 import com.kauailabs.navx.frc.AHRS;
 import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SingDrive.*;
@@ -24,15 +27,19 @@ public abstract class AutonControlScheme {
     //the main method of each auton programs
     public abstract void moveAuton();
 
-    //TODO Reference the encoders to make the vertical unctrion
+    //TODO Reference the encoders to make the
+    
+
     //private static double getAverage() { return (drive.getLeftPosition() + drive.getRightPosition()) / 2; }
     public void vertical(double distance, double verticalSpeed){
 
-        /*while (getAverage() > -distance*encoderTicks / DistancePerRevolution
-				&& getAverage() < distance*encoderTicks / DistancePerRevolution) {
-	
-			drive.arcadeDrive(verticalSpeed, verticalSpeed, 0.0, false, SpeedMode.NORMAL);
-		}*/
+        while (drive.getCurrentPosition() > -distance*encoderTicks / DistancePerRevolution
+                && drive.getCurrentPosition() < distance*encoderTicks / DistancePerRevolution) {
+        
+            SmartDashboard.putNumber("encoderPosition", drive.getCurrentPosition());
+            drive.arcadeDrive(verticalSpeed, 0, 0.0, false, SpeedMode.NORMAL);
+        
+		}
     }
 
     public void rotate(double angle, boolean isCounterClockwise){

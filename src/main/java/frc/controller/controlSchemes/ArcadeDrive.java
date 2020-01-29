@@ -99,7 +99,6 @@ public class ArcadeDrive extends ControlScheme {
             
         }
 
-
         if(driveController.getBackButton()) {
            lowGear = true;
         }
@@ -107,12 +106,13 @@ public class ArcadeDrive extends ControlScheme {
             lowGear = false;
         }
 
-        if(lowGear) {
+        //TODO uncomment this pneumatics
+        /*if(lowGear) {
             pneumatics.setLow();
         }
         else {
             pneumatics.setHigh();
-        }
+        }*/
     }
     
     public void ledMode(LimeLight limeLight ){

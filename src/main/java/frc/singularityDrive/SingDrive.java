@@ -244,6 +244,10 @@ public abstract class SingDrive {
 		this.m_rightMotor3.setRampRate(DEFAULT_RAMP_RATE);
 	}
 
+	public double getCurrentPosition(){
+		return ((Spark) this.m_leftMotor1).getCurrentPosition() / 2.0 + ((Spark) this.m_rightMotor1).getCurrentPosition() / 2.0;
+	}
+
 	/**
 	 * Setting motors to brake mode runs power to the motors to decellerate, but wears on the motors.
 	 * 

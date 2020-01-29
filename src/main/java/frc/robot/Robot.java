@@ -44,7 +44,6 @@ public class Robot extends TimedRobot {
   //Declaration of mechanisms
   SingDrive drive;
   DrivePneumatics drivePneumatics;
-
   LimeLight limeLight;
 
   //Create a gyro
@@ -65,7 +64,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    
+    //TODO un-comment methods
     //initialize motor controller ports IDs
     setDefaultProperties();
 
@@ -74,17 +73,17 @@ public class Robot extends TimedRobot {
     
     //initialize all mechanisms on the robot
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
-    drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
+    //drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
     
-    limeLight = new LimeLight();
+    //limeLight = new LimeLight();
     //DO NOT REMOVE PLZ - starts collecting data from drive cameras
-    CameraServer.getInstance().startAutomaticCapture();
+    //CameraServer.getInstance().startAutomaticCapture();
 
-    gyro = new AHRS(SPI.Port.kMXP);
-    gyroResetAtTeleop = true;
+    //gyro = new AHRS(SPI.Port.kMXP);
+    //gyroResetAtTeleop = true;
     
     
-    compressor = new Compressor();
+    //compressor = new Compressor();
     
 
   }
@@ -117,7 +116,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    AutonTest.moveAuton();
+    AutonControlScheme hodl = new TestAuton(drive);
+    hodl.moveAuton();
   }
 
   /**
@@ -126,7 +126,9 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     currentScheme.drive(drive, drivePneumatics);
-    currentScheme.ledMode(limeLight);
+    
+    //TODO un-comment
+    //currentScheme.ledMode(limeLight);
   }
 
   //Stuff to run when teleop is selected
@@ -144,7 +146,7 @@ public class Robot extends TimedRobot {
     // (we shouldn't need to change this too often- other than commenting)
     currentScheme.drive(drive, drivePneumatics);
     // partial autonomy via vision
-    currentScheme.ledMode(limeLight);
+    //currentScheme.ledMode(limeLight);
     
   }
 
@@ -164,12 +166,12 @@ public class Robot extends TimedRobot {
   private void setDefaultProperties() {
     
     //Motors
-    driveLeft1 = 11;
-    driveLeft2 = 12;
+    driveLeft1 = 13;
+    driveLeft2 = 13;
     driveLeft3 = 13;
-    driveRight1 = 4;
-    driveRight2 = 5;
-    driveRight3 = 6;
+    driveRight1 = 14;
+    driveRight2 = 14;
+    driveRight3 = 14;
 
     //Pneumatics
     

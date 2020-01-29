@@ -1,5 +1,7 @@
 package frc.singularityDrive;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * The simplest subclass of SingDrive, meant to represent a drivetrain with two sets of in-line
  * wheels and motors (for examples, 3 motors on the left and 3 on the right).
@@ -59,7 +61,7 @@ public class BasicDrive extends SingDrive {
 	public void arcadeDrive(double vertical, double rotation, double horizontal, boolean poweredInputs, SpeedMode speedMode) {
 
 		double forwardVelocity = vertical, rotationVelocity = -rotation;
-		
+
 		// Account for joystick drift.
 		forwardVelocity = super.threshold(forwardVelocity);
 		if (forwardVelocity != vertical) {
@@ -78,10 +80,12 @@ public class BasicDrive extends SingDrive {
 		// If translation + rotation > 1, we will divide by this value, maximum, in order to only set motors to power -1 to 1.
 		double maximum = Math.max(1, Math.abs(forwardVelocity) + Math.abs(rotationVelocity));
 
+		//SmartDashboard.putNumber("Rush", super.velocityMultiplier * (-forwardVelocity + rotationVelocity) / maximum);
+
+		
 		// Drive the motors, and all subsequent motors through following.
 		super.m_leftMotor1.setSpeed(super.velocityMultiplier * (-forwardVelocity + rotationVelocity) / maximum);
 		super.m_rightMotor1.setSpeed(super.velocityMultiplier * (forwardVelocity + rotationVelocity) / maximum);
-		
 	}
 
 	

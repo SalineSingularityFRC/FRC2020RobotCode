@@ -105,7 +105,6 @@ public class Spark implements MotorController {
     }
 
     public void setSpeed(double percentOutput) {
-        
         this.m_motor.set(percentOutput);
     }
 
@@ -257,10 +256,18 @@ public class Spark implements MotorController {
         this.initialPosition = this.m_encoder.getPosition();
     }
 
+    /**
+     * gets the valueas from the encoders
+     * @return Encoder Position in inches
+     */
     public double getCurrentPosition() {
+        
         if(initialPosition != -100) {
-            return this.m_encoder.getPosition() - this.initialPosition;
+            return this.m_encoder.
+            getPosition()
+            - this.initialPosition;
         }
+
         return m_encoder.getPosition();
         
     }
