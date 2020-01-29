@@ -146,7 +146,8 @@ public class Robot extends TimedRobot {
     // (we shouldn't need to change this too often- other than commenting)
     currentScheme.drive(drive, drivePneumatics);
     // partial autonomy via vision
-    //currentScheme.ledMode(limeLight);
+    currentScheme.ledMode(limeLight);
+    currentScheme.limeLightDrive(limeLight, drive, gyro);
     
   }
 
