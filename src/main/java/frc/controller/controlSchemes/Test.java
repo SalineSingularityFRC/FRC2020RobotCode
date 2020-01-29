@@ -21,8 +21,12 @@ public class Test extends ControlScheme{
         armController = new XboxController(armControllerPort);
     }
 
-    public void drive(SingDrive drive, DrivePneumatics pneumatics) {
+    public void drive(SingDrive drive) {
         
+    }
+
+    public void limeLightDrive(LimeLight limeLight, SingDrive drive, AHRS gyro){
+
     }
 
     public void ledMode(LimeLight limeLight){

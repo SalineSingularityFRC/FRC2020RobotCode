@@ -16,8 +16,11 @@ import frc.robot.LimeLight;;
 
 public abstract class ControlScheme {
 	
-	public abstract void drive(SingDrive drive, DrivePneumatics pneumatics);
+	//TODO: Uncomment below to enable drive pneumatics
+	//public abstract void drive(SingDrive drive, DrivePneumatics pneumatics);
+	public abstract void drive(SingDrive drive);
 	public abstract void ledMode(LimeLight limeLight);
+	public abstract void limeLightDrive(LimeLight limeLight, SingDrive drive, AHRS gyro);
 	
 	/**
 	 * 

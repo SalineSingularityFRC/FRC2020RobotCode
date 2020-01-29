@@ -60,11 +60,11 @@ public class Robot extends TimedRobot {
   boolean gyroResetAtTeleop;
 
   //create ultrasonics
-  Ultrasonic ultra;
-  final int ultraInput = 1;
-  final int ultraOutput = 2;
+  //Ultrasonic ultra;
+  //final int ultraInput = 1;
+  //final int ultraOutput = 2;
 
-  Compressor compressor;
+  //Compressor compressor;
 
   //default ports of certain joysticks in DriverStation
   final int XBOX_PORT = 0;
@@ -87,7 +87,7 @@ public class Robot extends TimedRobot {
     
     //initialize mechanisms
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
-    drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
+    //drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
     
     //ejectorPneu = new PneumaticEjector(ejectorPneuPush, ejectorPneuHold);
     
@@ -104,7 +104,7 @@ public class Robot extends TimedRobot {
     //ultra.setAutomaticMode(true);
     
     
-    compressor = new Compressor();
+    //compressorcompressor = new Compressor();
     
 
   }
@@ -148,7 +148,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    currentScheme.drive(drive, drivePneumatics);
+    currentScheme.drive(drive);
     // partial autonomy via vision
     //currentScheme.controlClaw(claw);
     currentScheme.ledMode(limeLight);
@@ -170,9 +170,11 @@ public class Robot extends TimedRobot {
 
     // Allow driver control based on current scheme
     // (we shouldn't need to change this too often- other than commenting)
-    currentScheme.drive(drive, drivePneumatics);
+    currentScheme.drive(drive);
     // partial autonomy via vision
     currentScheme.ledMode(limeLight);
+
+    currentScheme.limeLightDrive(limeLight, drive, gyro);
     
   }
 
@@ -182,7 +184,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
 
-    compressor.start();
+    //compressor.start();
   }
 
   
@@ -196,26 +198,18 @@ public class Robot extends TimedRobot {
   private void setDefaultProperties() {
     
     //Motors
-    driveLeft1 = 1;
-    driveLeft2 = 2;
-    driveLeft3 = 3;
-    driveRight1 = 4;
-    driveRight2 = 5;
-    driveRight3 = 6;
-    elevatorMotor = 11; //up motor
-    elevatorMotor2 = 10; //down motor
-    wristMotor = 8;
-    intakeMotor = 9;
+    driveLeft1 = 14;
+    driveLeft2 = 14;
+    driveLeft3 = 14;
+    driveRight1 = 13;
+    driveRight2 = 13;
+    driveRight3 = 13;
+
 
     //Pneumatics
     
-    drivePneu1 = 0;
-    drivePneu2 = 1;
-    //ejectorPneuPush = 3;
-    //ejectorPneuHold = 4;
-    //hatchMechDown = 5;
-    //hatchMechUp = 6;*/
-
+    //drivePneu1 = 0;
+    //drivePneu2 = 1;
     
 
   }
