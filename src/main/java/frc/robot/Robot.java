@@ -9,7 +9,6 @@ package frc.robot;
 
 
 import frc.controller.*;
-import frc.controller.autonomous.AutonTest;
 import frc.singularityDrive.*;
 import frc.singularityDrive.SingDrive;
 import frc.controller.controlSchemes.ArcadeDrive;

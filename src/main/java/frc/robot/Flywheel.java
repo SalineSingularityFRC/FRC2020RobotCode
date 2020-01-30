@@ -11,15 +11,14 @@ public class Flywheel {
     final private double reverseSpeed = -0.25;
 
     //Constructer
-    public FlyWheel(int flywheel1Port, int flywheel2Port){
+    public Flywheel(int flywheel1Port, int flywheel2Port){
         flywheel1 = new Spark(flywheel1Port, true, 0);
         flywheel2 = new Spark(flywheel2Port, true, 0);
         flywheel2.follow(flywheel1, true);
     }
     //sets flywheels to spin forward
     public void flywheelForward() {
-        flyw
-        heel1.setSpeed(forwardSpeed);
+        flywheel1.setSpeed(forwardSpeed);
     }
     //sets flywheels to spin backward
     public void flywheelReverse() {
