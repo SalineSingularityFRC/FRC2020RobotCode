@@ -26,6 +26,14 @@ public class Test extends ControlScheme{
         
     }
 
+    public void flywheel(Flywheel flywheel) {
+
+    }
+
+    public void conveyor(Conveyor conveyor) {
+        
+    }
+
     public void ledMode(LimeLight limeLight){
         
     }

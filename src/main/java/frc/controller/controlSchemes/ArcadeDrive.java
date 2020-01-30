@@ -1,6 +1,7 @@
 package frc.controller.controlSchemes;
 
 import frc.controller.*;
+import frc.robot.Conveyor;
 import frc.robot.DrivePneumatics;
 import frc.robot.Flywheel;
 import frc.robot.LimeLight;
@@ -101,14 +102,35 @@ public class ArcadeDrive extends ControlScheme {
      * Controls flywheel - turns only on (forward) and off
      * @param flywheel Takes in flywheel object to control.
      */
-    public void Flywheel(Flywheel flywheel) {
+    public void flywheel(Flywheel flywheel) {
         // When A is pressed and held, turn on the flywheel to the constant speed defined in the class.
-        if(armController.getAButton()) {
+        if(armController.getRB()) {
             flywheel.flywheelForward();
         }
 
         else {
             flywheel.flywheelOff();
+        }
+    }
+
+    /**
+     * Controls the conveyor on the bot using two buttons to move it
+     * forward or backward
+     * 
+     * @param converyor Takes in a conveyor object to control
+     */
+    public void conveyor(Conveyor conveyor){
+        //Conveyor will be moved forward with the B button
+        if(armController.getBButton()) {
+            conveyor.conveyorForward();
+        }
+        //And reversed with the x button - opposite each other on gamepad
+        else if(armController.getXButton()) {
+            conveyor.conveyorReverse();
+        }
+        //turns conveyor off if nothing is happening
+        else {
+            conveyor.converyorOff();
         }
     }
 
