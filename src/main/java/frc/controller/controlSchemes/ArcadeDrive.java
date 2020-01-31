@@ -1,6 +1,7 @@
 package frc.controller.controlSchemes;
 
 import frc.controller.*;
+import frc.robot.CellCollector;
 import frc.robot.Conveyor;
 import frc.robot.DrivePneumatics;
 import frc.robot.Flywheel;
@@ -131,6 +132,16 @@ public class ArcadeDrive extends ControlScheme {
         //turns conveyor off if nothing is happening
         else {
             conveyor.converyorOff();
+        }
+    }
+
+    public void collector(CellCollector collector) {
+        if(armController.getLB()) {
+            collector.collectorForward();
+        }
+
+        else {
+            collector.collectorOff();
         }
     }
 

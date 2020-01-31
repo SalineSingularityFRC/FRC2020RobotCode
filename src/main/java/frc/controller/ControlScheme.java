@@ -5,6 +5,7 @@ package frc.controller;
 //import edu.wpi.first.wpilibj.Ultrasonic;
 import frc.robot.DrivePneumatics;
 import frc.robot.Flywheel;
+import frc.robot.CellCollector;
 import frc.robot.Conveyor;
 import frc.singularityDrive.SingDrive;
 import frc.robot.LimeLight;;
@@ -22,6 +23,7 @@ public abstract class ControlScheme {
 	public abstract void ledMode(LimeLight limeLight);
 	public abstract void flywheel(Flywheel flywheel);
 	public abstract void conveyor(Conveyor conveyor);
+	public abstract void collector(CellCollector collector);
 
 
 	// In addation to defining our various different mechanisms to be expanded upon in subclasses (other controlSchemes, i.e. ArcadeDrive),

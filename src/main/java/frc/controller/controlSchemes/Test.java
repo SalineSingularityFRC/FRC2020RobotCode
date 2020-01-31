@@ -34,6 +34,10 @@ public class Test extends ControlScheme{
         
     }
 
+    public void collector(CellCollector collector) {
+        
+    }
+
     public void ledMode(LimeLight limeLight){
         
     }
