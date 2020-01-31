@@ -36,6 +36,7 @@ public class Robot extends TimedRobot {
   int drivePneu1, drivePneu2;
   int flywheelMotor1, flywheelMotor2;
   int conveyorMotor1, conveyorMotor2;
+  int collectorMotor1;
 
   //Declaration of our driving scheme, which can be initialized to
   //any ControlScheme in robotInit()
@@ -46,6 +47,7 @@ public class Robot extends TimedRobot {
   DrivePneumatics drivePneumatics;
   Flywheel flywheel;
   Conveyor conveyor;
+  CellCollector collector;
 
   //Creates an all-knowing limelight
   LimeLight limeLight;  // or CitrusSight?
@@ -80,6 +82,7 @@ public class Robot extends TimedRobot {
     drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
     flywheel = new Flywheel(flywheelMotor1, flywheelMotor2);
     conveyor = new Conveyor(conveyorMotor1, conveyorMotor2);
+    collector = new CellCollector(collectorMotor1);
     
     limeLight = new LimeLight();
     //DO NOT REMOVE PLZ - starts collecting data from drive cameras
@@ -153,6 +156,7 @@ public class Robot extends TimedRobot {
     //control other various mechanisms
     currentScheme.flywheel(flywheel);
     currentScheme.conveyor(conveyor);
+    currentScheme.collector(collector);
     
   }
 
@@ -186,6 +190,9 @@ public class Robot extends TimedRobot {
     // Conveyor motors
     conveyorMotor1 = 9;
     conveyorMotor2 = 10;
+
+    // Cell Collector Motor
+    collectorMotor1 = 11;
 
     //Pneumatics
     
