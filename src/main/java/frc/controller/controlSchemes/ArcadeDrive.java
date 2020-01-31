@@ -1,7 +1,10 @@
 package frc.controller.controlSchemes;
 
 import frc.controller.*;
+import frc.robot.Collector;
+import frc.robot.ConveyorBelt;
 import frc.robot.DrivePneumatics;
+import frc.robot.Flywheel;
 import frc.robot.LimeLight;
 import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SingDrive.SpeedMode;
@@ -17,30 +20,20 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
  */
 public class ArcadeDrive extends ControlScheme {
 
-    // make new XBox driveController objects
-    XboxController driveController;
-    XboxController armController;
+    XboxController driveController, armController;
+
+    SpeedMode speedMode;//this comes from control scheme
 
     boolean lowGear;
-    SpeedMode speedMode;
-
-    boolean usingVision;
-
-    boolean bButtonNow, bButtonPrev, driveMulti;
-
-    // Constructor for the ArcadeDrive class
 
     public ArcadeDrive(int driveControllerPort, int armControllerPort) {
-        //Initiates a new Xbox driveController
         driveController = new XboxController(driveControllerPort);
-        armController = new XboxController(armControllerPort);
+        armController = new XboxController (armControllerPort);
 
         lowGear = true;
         speedMode = SpeedMode.SLOW;
 
-        driveMulti = false;
-        bButtonNow = false;
-        bButtonPrev = false;
+
 
 
         
@@ -51,78 +44,78 @@ public class ArcadeDrive extends ControlScheme {
      * 
      */
     public void drive(SingDrive drive, DrivePneumatics pneumatics) {
+        if(driveController.getLB()) {
+            speedMode = SpeedMode.SLOW; 
 
-        //Set speed mode based on the dpad on the driveController
-        if(driveController.getLB()){
-            speedMode = SpeedMode.SLOW;
-
-        }
-        else if(driveController.getRB()){
+            }
+        else if(driveController.getRB()) {
             speedMode = SpeedMode.FAST;
         }
-        SmartDashboard.putString("Speed Mode", ""+ speedMode);
 
-        
-        bButtonNow = driveController.getBButton();
-        if(bButtonNow && !bButtonPrev) {
-            driveMulti = !driveMulti;
-        }
-        bButtonPrev = bButtonNow;
+        SmartDashboard.putString("Speed Mode", "" + speedMode);
 
+    if(driveController.getStartButton()) {
+        lowGear = false;
+    }
+    else if(driveController.getBackButton()) {
+        lowGear = true;
+    }
 
-        //driving arcade drive based on right joystick on driveController
-        //changed boolean poweredInputs from false to true, change back if robot encounters issues
-        //ADDED USINGVISION, SO IF THINGS ARE ACTING WEIRD COME BACK TO THIS
-        if(driveController.getPOVLeft()) {
-            drive.arcadeDrive(0, -0.1, 0.0, false, SpeedMode.FAST);
-        }
+    if(lowGear) {
+        pneumatics.setLow();
+    }
+    else{
+        pneumatics.setHigh();
+    }
 
-        else if (driveController.getPOVUp()) {
-            drive.arcadeDrive(0.1, 0, 0.0, false, SpeedMode.FAST);
-        }
+    drive.arcadeDrive(driveController.getLS_Y(), driveController.getRS_X(), 0.0, true, speedMode);
 
-        else if (driveController.getPOVRight()) {
-            drive.arcadeDrive(0.0, 0.1, 0.0, false, SpeedMode.FAST);
-        }
-        
-        else if (driveController.getPOVDown()) {
-            drive.arcadeDrive(-0.1, 0.0, 0.0, false, SpeedMode.FAST);
-        }
-
-        else if (!usingVision) {
-            if (driveMulti) {
-                drive.arcadeDrive((-1 * driveController.getLS_Y()), driveController.getRS_X(), 0.0, true, speedMode);
-            }
-            else {
-                drive.arcadeDrive(driveController.getLS_Y(), driveController.getRS_X(), 0.0, true, speedMode);
-            }
-            
-        }
-
-
-        if(driveController.getBackButton()) {
-           lowGear = true;
-        }
-        else if(driveController.getStartButton()) {
-            lowGear = false;
-        }
-
-        if(lowGear) {
-            pneumatics.setLow();
+}
+   
+    public void Flywheel(Flywheel flywheel) {
+        if(armController.getAButton()) {//armController because this is anything but driving 
+            flywheel.flywheelForward();
+            //the dot helps you access things 
         }
         else {
-            pneumatics.setHigh();
+            flywheel.flyWheelOff();
         }
     }
     
+    public void Conveyor(ConveyorBelt conveyor){
+        if(armController.getBButton()){
+            conveyor.conveyorBeltForward();
+        }
+        else if(armController.getXButton()){
+            conveyor.conveyorBeltReverse();
+        }
+        
+        else{
+            conveyor.conveyorBeltOff();
+        }
+    }
     public void ledMode(LimeLight limeLight ){
+        /*
         if(driveController.getXButton() || driveController.getYButton()){
             limeLight.ledOff(limeLight);
         }
         else{
             limeLight.ledOn(limeLight);;
         }
+        */
     }
+    public void Collector(Collector collector){
+        if(armController.getBButton()){
+            collector.collectorForward();
+        }
+         else if(armController.getXButton()){
+                collector.collectorReverse();
+            }
+        }
 
-}
+    
+    }
+    
+
+
     

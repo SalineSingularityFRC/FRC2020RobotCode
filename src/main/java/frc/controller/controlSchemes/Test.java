@@ -17,16 +17,47 @@ public class Test extends ControlScheme{
     XboxController driveController;
     XboxController armController;
 
-    public Test(int driveControllerPort, int armControllerPort){
+    public Test(final int driveControllerPort, final int armControllerPort){
         driveController = new XboxController(driveControllerPort);
         armController = new XboxController(armControllerPort);
     }
 
-    public void drive(SingDrive drive, DrivePneumatics pneumatics) {
+    public void drive(final SingDrive drive, final DrivePneumatics pneumatics) {
         
     }
 
-    public void ledMode(LimeLight limeLight){
-        
+    public void Conveyor(final ConveyorBelt conveyor){
+        if(armController.getBButton()){
+        conveyor.conveyorBeltForward();
+        }
+        else if(armController.getXButton()){
+        conveyor.conveyorBeltReverse();
+        }
+    } 
+ 
+    public void ledMode(final LimeLight limeLight){
     }
+
+    public void Flywheel(final Flywheel flywheel){
+        if(armController.getBButton()){
+            flywheel.flywheelForward();
+
+        }
+        else if(armController.getXButton()){
+            flywheel.flywheelReverse();
+        }
+    }
+
+    public void Collector(final Collector collector){
+        if(armController.getBButton()){
+            collector.collectorForward();
+        }
+        else if(armController.getXButton()){
+            collector.collectorReverse();
+        }
+    }
+
+   
+
+   
 }
