@@ -1,5 +1,7 @@
 package frc.controller.controlSchemes;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import frc.controller.*;
 import frc.robot.*;
 import frc.singularityDrive.*;
@@ -39,6 +41,10 @@ public class Test extends ControlScheme{
     }
 
     public void ledMode(LimeLight limeLight){
+        
+    }
+    
+    public void limeLightDrive( LimeLight limeLight, SingDrive drive, AHRS gyro){
         
     }
 }

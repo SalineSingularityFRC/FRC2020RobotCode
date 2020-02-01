@@ -8,6 +8,9 @@ import frc.robot.Flywheel;
 import frc.robot.LimeLight;
 import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SingDrive.SpeedMode;
+
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
 //Uncomment to enable gyro stuff
@@ -26,6 +29,13 @@ public class ArcadeDrive extends ControlScheme {
     SpeedMode speedMode;
 
     boolean lowGear;
+
+    //vision variables
+    double ty, tx, tv;
+    final double driveSpeedConstant = 0.3;
+    final double txkP = 0.022;
+    final double angleDifferencekP = 0.011;
+    final double endDistance = 2.0;
 
     /**
      * 
@@ -151,15 +161,82 @@ public class ArcadeDrive extends ControlScheme {
      */
     public void ledMode(LimeLight limeLight ){
 
-        /*
         if(driveController.getXButton() || driveController.getYButton()){
             limeLight.ledOff(limeLight);
         }
         else{
             limeLight.ledOn(limeLight);;
         }
-        */
     }
+
+    public void limeLightDrive(LimeLight limeLight, SingDrive drive, AHRS gyro) {
+        // Defining tx and tv
+        // tx = X coordinate between -27 and 27
+        // tv = 0 if no target found, 1 is target found
+
+        tx = limeLight.tx.getDouble(0.0);
+        tv = limeLight.tv.getDouble(0.0);
+
+        SmartDashboard.putNumber("tx", tx);
+        SmartDashboard.putNumber("tv", ty);
+
+        //SmartDashboard.putNumber("Inches", ultraIn);
+
+        // Declaring and instantiating buttons used for enabling vision drive
+        boolean squareButton = driveController.getXButton();
+        boolean offSetButton = driveController.getYButton();
+    
+        
+        // Defining and Declaring currentAngle as angle from gyro, between 0 and 360 degrees
+        double currentAngle = super.smooshGyroAngle(gyro.getAngle());
+        SmartDashboard.putNumber("current angle:", currentAngle);
+
+        // Resets gyro value to 0
+        if (driveController.getAButton()) {
+            gyro.setAngleAdjustment(0);
+            gyro.setAngleAdjustment(-super.smooshGyroAngle(gyro.getAngle()));
+            
+        }
+
+        
+        //Starts driving based on vision if the button is pushed and we have a target
+        if ((squareButton == true || offSetButton == true) && tv == 1.0) {
+            
+            //Declaring the left and right command speeds and setting it equal to the driveSpeedConstant
+            double left_command = driveSpeedConstant;
+            double right_command = driveSpeedConstant;
+
+            //Declares and instaniates steering_adjust, and sets it to txkP * tx
+            double steering_adjust = 0.0;
+            steering_adjust += txkP * tx;
+
+            // Declare and adjust targetAngle based on currentAngle
+            double targetAngle;
+            if(squareButton) {
+                targetAngle = super.getSquareAngleForPort(currentAngle);
+            }
+            else {
+                targetAngle = super.getOffsetHatchAngle(currentAngle);
+            }
+
+            //Declaring the offset angle for turning
+            double angleDifference = currentAngle - targetAngle;
+            //This is an alternative angleDifference
+            double secondAngleDifference = targetAngle - 360 + currentAngle; 
+            //This is where we define which one we want to use. 
+            //Takes which ever one is closer to 0
+            if (Math.abs(secondAngleDifference) < Math.abs(angleDifference)) {
+                angleDifference = secondAngleDifference;
+            }
+            //To remove gyro control, comment out this line:
+            steering_adjust += angleDifferencekP * angleDifference;
+            
+            // Setting vision drive for tank drive
+            left_command += steering_adjust;
+            right_command -= steering_adjust;
+            drive.tankDrive(left_command, right_command, 0.0, false, SpeedMode.FAST);
+        }
+    }//end of limeLightDrive
 
 }
     

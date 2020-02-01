@@ -50,7 +50,7 @@ public class Robot extends TimedRobot {
   //CellCollector collector;
 
   //Creates an all-knowing limelight
-  //LimeLight limeLight;  // or CitrusSight?
+  LimeLight limeLight;  // or CitrusSight?
 
   //Create a gyro
   AHRS gyro;
@@ -84,7 +84,7 @@ public class Robot extends TimedRobot {
     //conveyor = new Conveyor(conveyorMotor1, conveyorMotor2);
     //collector = new CellCollector(collectorMotor1);
     
-    //limeLight = new LimeLight();
+    limeLight = new LimeLight();
     //DO NOT REMOVE PLZ - starts collecting data from drive cameras
     //CameraServer.getInstance().startAutomaticCapture();
 
@@ -153,6 +153,7 @@ public class Robot extends TimedRobot {
     currentScheme.drive(drive/*, drivePneumatics*/);
     // partial autonomy via vision
     //currentScheme.ledMode(limeLight);
+    currentScheme.limeLightDrive(limeLight, drive, gyro);
     //control other various mechanisms
     //currentScheme.flywheel(flywheel);
     //currentScheme.conveyor(conveyor);
