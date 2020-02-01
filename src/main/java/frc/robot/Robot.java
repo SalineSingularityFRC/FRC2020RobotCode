@@ -184,9 +184,11 @@ public class Robot extends TimedRobot {
     boolean colorData[] = canifier.getPinData();
     int color = canifier.binToDecColor(colorData);
     int count = canifier.binToDecCount(colorData);
+    String byteString = canifier.byteArrayToString(colorData);
 
     SmartDashboard.putNumber("Current Color: ", color);
     SmartDashboard.putNumber("Current Count: ", count);
+    SmartDashboard.putString("Byte Transfered: ", byteString);
     
   }
 

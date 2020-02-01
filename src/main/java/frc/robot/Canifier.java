@@ -9,49 +9,58 @@ public class Canifier{
     CANifier canifier;
 
     public Canifier(){
-        canifier = new CANifier(0);
+        canifier = new CANifier(1);
     }
 
-    int pin1 = 14;
-    int pin2 = 13;
-    int pin3 = 12;
-    int pin4 = 10;
-    int pin5 = 8;
-    int pin6 = 7;
+    //GeneralPin pinArray[] = {GeneralPin.QUAD_A, GeneralPin.QUAD_B, GeneralPin.QUAD_IDX, GeneralPin.LIMF, GeneralPin.LIMR, GeneralPin.SPI_CS, GeneralPin.SPI_CLK_PWM0P, GeneralPin.SPI_MOSI_PWM1P};
 
-    int pin7 = 6;
-    int pin8 = 4;
+    GeneralPin pinArray[] = {GeneralPin.SPI_MOSI_PWM1P, GeneralPin.SPI_CLK_PWM0P, GeneralPin.SPI_CS, GeneralPin.LIMR, GeneralPin.LIMF, GeneralPin.QUAD_IDX, GeneralPin.QUAD_B, GeneralPin.QUAD_A};
 
-    int pinArray[] = {pin1, pin2, pin3, pin4, pin5, pin6, pin7, pin8};
 
-    boolean dataBuf[] = {};
+
+
+    boolean dataBuf[] = new boolean[8];
 
     public boolean getPinData()[]{
         for(int i = 0; i < 8; i++){
-            dataBuf[i] = canifier.getGeneralInput(GeneralPin.valueOf(pinArray[i]));	
+            dataBuf[i] = canifier.getGeneralInput(pinArray[i]);	
         }
         return dataBuf;
     }
 
-    public int binToDecColor(boolean arr[]){
+    public String byteArrayToString(boolean array[]){
+        String string = "";
+        for(int i = 0; i < 8; i++){
+            if(array[i]){
+                string += "1";
+            }
+            else{
+                string += "0";
+            }
+        }
+        return string;
+
+    }
+
+    public int binToDecCount(boolean arr[]){
         int intBuf = 0;
 
         for(int ii = 0; ii < 6; ii++){
             if(arr[ii]){
-                intBuf += 2^ii;
+                intBuf += Math.pow(2, ii);
             }
         }
         return intBuf;
 
     }
-    public int binToDecCount(boolean arr[]){
-        int countBuf = 0;
+    public int binToDecColor(boolean arr[]){
+        int colorBuf = 0;
         for(int ii = 6; ii < 8; ii++){
             if(arr[ii]){
-                countBuf += 2^ii;
+                colorBuf += Math.pow(2, (ii-6));
             }
         }
-        return countBuf;
+        return colorBuf;
     }
 
 }
