@@ -20,6 +20,6 @@ public class Climber{
     }
 
     public void climberToPosition() {
-        //upMotor.
+        //upMotor.setToPosition(joystickControl, position, feedForward);
     }
 }
