@@ -9,7 +9,7 @@ import frc.controller.motorControllers.Spark;
 public class Flywheel {
 
     // Creates two generic motor controller objects to control the two motors (normal NEOs) on the flywheel
-    MotorController flywheel1, flywheel2;
+   Spark flywheel1, flywheel2;
 
     // Create two constant speed variables that run the motors forwards and backwars
     // Make these both final, so they can't be changed later, and private, so they're not influenced other places in the code

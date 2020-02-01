@@ -6,7 +6,7 @@ import frc.controller.motorControllers.Spark;
 // Same as pretty much every other mechanism class written, see comments there
 public class CellCollector {
 
-    MotorController collectorMotor;
+    Spark collectorMotor;
 
     private final double forwardSpeed = 0.25;
     private final double reverseSpeed = 0.25;

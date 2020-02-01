@@ -5,7 +5,7 @@ import frc.controller.motorControllers.Spark;
 
 public class Conveyor {
 
-    MotorController motor1, motor2;
+    Spark motor1, motor2;
 
     private final double forwardSpeed = 0.25;
     private final double reverseSpeed = -0.25;
