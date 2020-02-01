@@ -1,5 +1,7 @@
 package frc.singularityDrive;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /**
  * The simplest subclass of SingDrive, meant to represent a drivetrain with two sets of in-line
  * wheels and motors (for examples, 3 motors on the left and 3 on the right).
@@ -78,6 +80,12 @@ public class BasicDrive extends SingDrive {
 		// If translation + rotation > 1, we will divide by this value, maximum, in order to only set motors to power -1 to 1.
 		double maximum = Math.max(1, Math.abs(forwardVelocity) + Math.abs(rotationVelocity));
 
+		double leftOutput = super.velocityMultiplier * (-forwardVelocity + rotationVelocity) / maximum;
+		double rightOutput = super.velocityMultiplier * (forwardVelocity + rotationVelocity) / maximum;
+
+		SmartDashboard.putNumber("Output Left", leftOutput);
+		SmartDashboard.putNumber("Output Right", rightOutput);
+
 		// Drive the motors, and all subsequent motors through following.
 		super.m_leftMotor1.setSpeed(super.velocityMultiplier * (-forwardVelocity + rotationVelocity) / maximum);
 		super.m_rightMotor1.setSpeed(super.velocityMultiplier * (forwardVelocity + rotationVelocity) / maximum);
@@ -115,6 +123,7 @@ public class BasicDrive extends SingDrive {
 		// If a velocity > 1, we will divide by this value, maximum, in order to only set motors to power -1 to 1.
 		double leftMaximum = Math.max(1, Math.abs(leftVelocity));
 		double rightMaximum = Math.max(1, Math.abs(rightVelocity));
+
 
 		// Drive the motors, and all subsequent motors through following.
 		super.m_leftMotor1.setSpeed(super.velocityMultiplier * leftVelocity / leftMaximum);

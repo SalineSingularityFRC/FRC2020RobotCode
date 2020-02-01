@@ -44,19 +44,19 @@ public class Robot extends TimedRobot {
 
   //Declaration of mechanisms
   SingDrive drive;
-  DrivePneumatics drivePneumatics;
-  Flywheel flywheel;
-  Conveyor conveyor;
-  CellCollector collector;
+  //DrivePneumatics drivePneumatics;
+  //Flywheel flywheel;
+  //Conveyor conveyor;
+  //CellCollector collector;
 
   //Creates an all-knowing limelight
-  LimeLight limeLight;  // or CitrusSight?
+  //LimeLight limeLight;  // or CitrusSight?
 
   //Create a gyro
   AHRS gyro;
   boolean gyroResetAtTeleop;
 
-  Compressor compressor;
+  //Compressor compressor;
 
   //default ports of certain joysticks in DriverStation
   final int XBOX_PORT = 0;
@@ -79,20 +79,20 @@ public class Robot extends TimedRobot {
     
     //initialize all mechanisms on the robot
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
-    drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
-    flywheel = new Flywheel(flywheelMotor1, flywheelMotor2);
-    conveyor = new Conveyor(conveyorMotor1, conveyorMotor2);
-    collector = new CellCollector(collectorMotor1);
+    //drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
+    //flywheel = new Flywheel(flywheelMotor1, flywheelMotor2);
+    //conveyor = new Conveyor(conveyorMotor1, conveyorMotor2);
+    //collector = new CellCollector(collectorMotor1);
     
-    limeLight = new LimeLight();
+    //limeLight = new LimeLight();
     //DO NOT REMOVE PLZ - starts collecting data from drive cameras
-    CameraServer.getInstance().startAutomaticCapture();
+    //CameraServer.getInstance().startAutomaticCapture();
 
     gyro = new AHRS(SPI.Port.kMXP);
     gyroResetAtTeleop = true;
     
     
-    compressor = new Compressor();
+    //compressor = new Compressor();
     
 
   }
@@ -133,8 +133,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    currentScheme.drive(drive, drivePneumatics);
-    currentScheme.ledMode(limeLight);
+    currentScheme.drive(drive/*, drivePneumatics*/);
+    //currentScheme.ledMode(limeLight);
   }
 
   //Stuff to run when teleop is selected
@@ -150,13 +150,13 @@ public class Robot extends TimedRobot {
 
     // Allow driver control based on current scheme
     // (we shouldn't need to change this too often- other than commenting)
-    currentScheme.drive(drive, drivePneumatics);
+    currentScheme.drive(drive/*, drivePneumatics*/);
     // partial autonomy via vision
-    currentScheme.ledMode(limeLight);
+    //currentScheme.ledMode(limeLight);
     //control other various mechanisms
-    currentScheme.flywheel(flywheel);
-    currentScheme.conveyor(conveyor);
-    currentScheme.collector(collector);
+    //currentScheme.flywheel(flywheel);
+    //currentScheme.conveyor(conveyor);
+    //currentScheme.collector(collector);
     
   }
 
@@ -166,7 +166,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
 
-    compressor.start();
+    //compressor.start();
   }
 
   
@@ -176,12 +176,12 @@ public class Robot extends TimedRobot {
   private void setDefaultProperties() {
     
     // Drive Motors
-    driveLeft1 = 1;
-    driveLeft2 = 2;
-    driveLeft3 = 3;
-    driveRight1 = 4;
-    driveRight2 = 5;
-    driveRight3 = 6;
+    driveLeft1 = 4;
+    driveLeft2 = 4;
+    driveLeft3 = 4;
+    driveRight1 = 11;
+    driveRight2 = 11;
+    driveRight3 = 11;
 
     // Flywheel motors
     flywheelMotor1 = 7;

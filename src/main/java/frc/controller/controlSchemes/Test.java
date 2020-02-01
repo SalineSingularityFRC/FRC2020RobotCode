@@ -22,7 +22,7 @@ public class Test extends ControlScheme{
         armController = new XboxController(armControllerPort);
     }
 
-    public void drive(SingDrive drive, DrivePneumatics pneumatics) {
+    public void drive(SingDrive drive/*, DrivePneumatics pneumatics*/) {
         
     }
 
