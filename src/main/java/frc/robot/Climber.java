@@ -1,12 +1,12 @@
 package frc.robot;
 
-import frc.controller.MotorController;
 import frc.controller.motorControllers.Spark;
 
 public class Climber{
 
     Spark upMotor, downMotor;
 
+    private final double upVoltage = 11.5;
     private final double upSpeed = 0.25;
     private final double downSpeed = 0.25;
     private final double constantSpeed = 0.1;
@@ -19,7 +19,32 @@ public class Climber{
         downMotor.setCoastMode(false);
     }
 
-    public void climberToPosition() {
-        //upMotor.setToPosition(joystickControl, position, feedForward);
+    public void climberToPosition(double joystickControl) {
+        //11.5 volts, probably need to change that
+        upMotor.setToPosition(joystickControl, upPosition, upVoltage);
+    }
+
+    public void climberUp() {
+        upMotor.setSpeed(upSpeed);
+    }
+
+    public void climberHoldPosition() {
+        upMotor.setSpeed(constantSpeed);
+    }
+
+    public void climberDown() {
+        upMotor.setSpeed(0);
+        upMotor.setCoastMode(true);
+        downMotor.setSpeed(downSpeed);
+    }
+
+    public void downStop() {
+        if(downMotor.isLowerLimitPressed(true)) {
+            downMotor.setSpeed(0);
+        }
+
+        else {
+            downMotor.setSpeed(downSpeed);
+        }
     }
 }

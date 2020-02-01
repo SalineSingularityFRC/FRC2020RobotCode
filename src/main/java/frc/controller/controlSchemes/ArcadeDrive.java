@@ -2,6 +2,7 @@ package frc.controller.controlSchemes;
 
 import frc.controller.*;
 import frc.robot.CellCollector;
+import frc.robot.Climber;
 import frc.robot.Conveyor;
 import frc.robot.DrivePneumatics;
 import frc.robot.Flywheel;
@@ -26,6 +27,8 @@ public class ArcadeDrive extends ControlScheme {
     SpeedMode speedMode;
 
     boolean lowGear;
+    boolean climberExtended;
+    boolean climberDown;
 
     /**
      * 
@@ -37,6 +40,7 @@ public class ArcadeDrive extends ControlScheme {
         armController = new XboxController(armControllerPort);
 
         lowGear = true;
+        climberExtended = false;
         speedMode = SpeedMode.SLOW;
 
     }
@@ -143,6 +147,33 @@ public class ArcadeDrive extends ControlScheme {
         else {
             collector.collectorOff();
         }
+    }
+
+    public void climber(Climber climber) {
+        if(driveController.getBButton()) {
+            //check this idk joystick
+            climber.climberToPosition(armController.getRS_X());
+            climberExtended = true;
+        }
+
+        if(!driveController.getBButton() && !driveController.getYButton() && climberExtended) {
+            climber.climberHoldPosition();
+        }
+
+        else if(!driveController.getBButton() && driveController.getYButton() && climberExtended){
+            climber.climberUp();
+        }
+
+        else if(driveController.getAButton() && climberExtended) {
+            climber.climberDown();
+            climberDown = true;
+        }
+
+        if(!driveController.getAButton() && climberDown) {
+            climber.downStop();
+        }
+
+        
     }
 
     /**

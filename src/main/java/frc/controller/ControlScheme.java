@@ -6,6 +6,7 @@ package frc.controller;
 import frc.robot.DrivePneumatics;
 import frc.robot.Flywheel;
 import frc.robot.CellCollector;
+import frc.robot.Climber;
 import frc.robot.Conveyor;
 import frc.singularityDrive.SingDrive;
 import frc.robot.LimeLight;;
@@ -24,6 +25,7 @@ public abstract class ControlScheme {
 	public abstract void flywheel(Flywheel flywheel);
 	public abstract void conveyor(Conveyor conveyor);
 	public abstract void collector(CellCollector collector);
+	public abstract void climber(Climber climber);
 
 
 	// In addation to defining our various different mechanisms to be expanded upon in subclasses (other controlSchemes, i.e. ArcadeDrive),
