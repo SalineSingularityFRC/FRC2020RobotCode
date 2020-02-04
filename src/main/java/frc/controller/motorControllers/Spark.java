@@ -112,7 +112,7 @@ public class Spark implements MotorController {
     public void setRampRate(double rampRate) {
 
         if (!this.m_motor.isFollower()) {
-            this.m_motor.setClosedLoopRampRate(rampRate);
+            this.m_motor.setOpenLoopRampRate(rampRate);
         }
     }
 

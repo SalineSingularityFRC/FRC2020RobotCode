@@ -59,7 +59,7 @@ public class ArcadeDrive extends ControlScheme {
      * Drives arcade drive
      * 
      */
-    public void drive(SingDrive drive, DrivePneumatics pneumatics) {
+    public void drive(SingDrive drive/*, DrivePneumatics pneumatics*/) {
 
         //Set speed mode based on the dpad on the driveController
         if(driveController.getLB()){

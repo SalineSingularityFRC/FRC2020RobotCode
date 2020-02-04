@@ -17,7 +17,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 public abstract class ControlScheme {
 	
-	public abstract void drive(SingDrive drive, DrivePneumatics pneumatics);
+	public abstract void drive(SingDrive drive/*, DrivePneumatics pneumatics*/);
 	public abstract void ledMode(LimeLight limeLight);
 	public abstract void limeLightDrive( LimeLight limeLight, SingDrive drive, AHRS gyro);
 

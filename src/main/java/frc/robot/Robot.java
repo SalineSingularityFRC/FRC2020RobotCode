@@ -42,14 +42,14 @@ public class Robot extends TimedRobot {
 
   //Declaration of mechanisms
   SingDrive drive;
-  DrivePneumatics drivePneumatics;
-  LimeLight limeLight;
+  // DrivePneumatics drivePneumatics;
+  // LimeLight limeLight;
 
   //Create a gyro
   AHRS gyro;
   boolean gyroResetAtTeleop;
 
-  Compressor compressor;
+  // Compressor compressor;
 
   //default ports of certain joysticks in DriverStation
   final int XBOX_PORT = 0;
@@ -124,7 +124,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    currentScheme.drive(drive, drivePneumatics);
+    currentScheme.drive(drive/*, drivePneumatics*/);
     
     //TODO un-comment
     //currentScheme.ledMode(limeLight);
@@ -143,10 +143,10 @@ public class Robot extends TimedRobot {
 
     // Allow driver control based on current scheme
     // (we shouldn't need to change this too often- other than commenting)
-    currentScheme.drive(drive, drivePneumatics);
+    currentScheme.drive(drive/*, drivePneumatics*/);
     // partial autonomy via vision
-    currentScheme.ledMode(limeLight);
-    currentScheme.limeLightDrive(limeLight, drive, gyro);
+    //currentScheme.ledMode(limeLight);
+    //currentScheme.limeLightDrive(limeLight, drive, gyro);
     
   }
 
@@ -156,7 +156,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
 
-    compressor.start();
+   // compressor.start();
   }
 
   
