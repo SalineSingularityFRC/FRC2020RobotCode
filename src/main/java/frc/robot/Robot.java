@@ -166,12 +166,12 @@ public class Robot extends TimedRobot {
   private void setDefaultProperties() {
     
     //Motors
-    driveLeft1 = 13;
-    driveLeft2 = 13;
-    driveLeft3 = 13;
-    driveRight1 = 14;
-    driveRight2 = 14;
-    driveRight3 = 14;
+    driveLeft1 = 1;
+    driveLeft2 = 1;
+    driveLeft3 = 1;
+    driveRight1 = 4;
+    driveRight2 = 4;
+    driveRight3 = 4;
 
     //Pneumatics
     
