@@ -1,6 +1,7 @@
 package frc.controller.controlSchemes;
 
 import frc.controller.*;
+import frc.robot.ColorSensor;
 import frc.robot.DrivePneumatics;
 import frc.robot.LimeLight;
 import frc.singularityDrive.SingDrive;
@@ -60,6 +61,12 @@ public class ArcadeDrive extends ControlScheme {
 
 
         
+    }
+
+    public void colorSensor(ColorSensor colorSensor){
+        if(armController.getPOVUp()) {
+            colorSensor.spinColorWheelRotations(3);
+        }
     }
 
     /**

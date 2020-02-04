@@ -45,6 +45,7 @@ public class Robot extends TimedRobot {
   int elevatorMotor, elevatorMotor2;
   int wristMotor;
   int clawLeftMotor, clawRightMotor;
+  int colorSpinner;
   
 
   //Declaration of our driving scheme, which can be initialized to
@@ -59,6 +60,9 @@ public class Robot extends TimedRobot {
 
   //Create a CANifier
   Canifier canifier;
+
+  //Create a ColorSensor
+  ColorSensor colorSensor;
 
   //Create a gyro
   AHRS gyro;
@@ -97,15 +101,16 @@ public class Robot extends TimedRobot {
     
     //ejectorPneu = new PneumaticEjector(ejectorPneuPush, ejectorPneuHold);
     
-    limeLight = new LimeLight();
+    //limeLight = new LimeLight();
     //DO NOT REMOVE PLZ
-    CameraServer.getInstance().startAutomaticCapture();
+    //CameraServer.getInstance().startAutomaticCapture();
     //CameraServer.getInstance().startAutomaticCapture();
 
     gyro = new AHRS(SPI.Port.kMXP);
     gyroResetAtTeleop = true;
-    
-    canifier = new Canifier();
+
+    //
+    colorSensor = new ColorSensor(14);
     
     //ultra = new Ultrasonic(ultraInput, ultraOutput);
     //ultra.setAutomaticMode(true);
@@ -155,10 +160,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    currentScheme.drive(drive, drivePneumatics);
+    //currentScheme.drive(drive, drivePneumatics);
     // partial autonomy via vision
     //currentScheme.controlClaw(claw);
-    currentScheme.ledMode(limeLight);
+    //currentScheme.ledMode(limeLight);
   }
 
   @Override
@@ -180,7 +185,7 @@ public class Robot extends TimedRobot {
     //currentScheme.drive(drive, drivePneumatics);
     // partial autonomy via vision
     //currentScheme.ledMode(limeLight);
-
+/*
     boolean colorData[] = canifier.getPinData();
     int color = canifier.binToDecColor(colorData);
     int count = canifier.binToDecCount(colorData);
@@ -189,6 +194,10 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Current Color: ", color);
     SmartDashboard.putNumber("Current Count: ", count);
     SmartDashboard.putString("Byte Transfered: ", byteString);
+*/  
+    colorSensor.spinColorWheelRotations(24);
+    
+    
     
   }
 
@@ -198,7 +207,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
 
-    compressor.start();
+    //compressor.start();
   }
 
   
@@ -223,6 +232,8 @@ public class Robot extends TimedRobot {
     wristMotor = 8;
     intakeMotor = 9;
 
+    colorSpinner = 14;
+
     //Pneumatics
     
     drivePneu1 = 0;
@@ -239,8 +250,3 @@ public class Robot extends TimedRobot {
 
 
 }
-
-
-
-
-

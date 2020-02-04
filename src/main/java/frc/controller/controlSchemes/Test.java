@@ -13,6 +13,10 @@ public class Test extends ControlScheme{
     XboxController driveController;
     XboxController armController;
 
+    public void colorSensor(ColorSensor colorSensor) {
+        
+    }
+
     int grabClawAngle = 160;
     final int releaseClawAngle = 90;
 

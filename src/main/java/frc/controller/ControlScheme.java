@@ -1,5 +1,7 @@
 package frc.controller;
 
+import frc.robot.ColorSensor;
+
 //import com.kauailabs.navx.frc.AHRS;
 
 //import edu.wpi.first.wpilibj.Ultrasonic;
@@ -18,6 +20,7 @@ public abstract class ControlScheme {
 	
 	public abstract void drive(SingDrive drive, DrivePneumatics pneumatics);
 	public abstract void ledMode(LimeLight limeLight);
+	public abstract void colorSensor(ColorSensor colorSensor);
 	
 	/**
 	 * 
