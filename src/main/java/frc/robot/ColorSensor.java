@@ -24,11 +24,12 @@ public class ColorSensor{
         
         SmartDashboard.putNumber("Current Color: ", color);
         SmartDashboard.putNumber("Current Count: ", count);
+        SmartDashboard.putString("Byte Tranfered: ", byteString);
 
         if(count <= numRotations) {
             colorSpinner.setSpeed(this.speed);
         }
-        else{
+        else {
             colorSpinner.setSpeed(0.0);
         }
     }
@@ -40,7 +41,7 @@ public class ColorSensor{
         
         SmartDashboard.putNumber("Current Color: ", color);
         SmartDashboard.putNumber("Current Count: ", count);
-
+        SmartDashboard.putString("Byte Tranfered: ", byteString);
 
         if(color != targetColor) {
             colorSpinner.setSpeed(this.speed/2);

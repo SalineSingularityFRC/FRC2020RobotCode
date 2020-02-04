@@ -195,7 +195,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Current Count: ", count);
     SmartDashboard.putString("Byte Transfered: ", byteString);
 */  
-    colorSensor.spinColorWheelRotations(24);
+    colorSensor.spinColorWheelColor(2);
     
     
     
