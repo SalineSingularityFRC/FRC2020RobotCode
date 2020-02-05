@@ -263,9 +263,7 @@ public class Spark implements MotorController {
     public double getCurrentPosition() {
         
         if(initialPosition != -100) {
-            return this.m_encoder.
-            getPosition()
-            - this.initialPosition;
+            return this.m_encoder.getPosition() - this.initialPosition;
         }
 
         return m_encoder.getPosition();

@@ -22,6 +22,7 @@ public abstract class AutonControlScheme {
         //define Limelight and all the sensors
         this.drive = drive;
         this.gyro = new AHRS(SPI.Port.kMXP);
+        
     }
 
     //the main method of each auton programs

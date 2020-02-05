@@ -4,7 +4,8 @@ package frc.singularityDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.controller.MotorController;
-import frc.controller.motorControllers.*;
+import frc.controller.motorControllers.Spark;
+import frc.controller.controlSchemes.*;
 
 /**
  * SingDrive (short for Singularity Drive) is the base class for all drive trains for 5066. It is
@@ -29,7 +30,7 @@ public abstract class SingDrive {
 	 * 
 	 * WARNING: These objects will need to be changed if the number, type, or orientation of motor controllers changes!
 	 */
-	protected MotorController m_leftMotor1, m_leftMotor2, m_leftMotor3, m_rightMotor1, m_rightMotor2, m_rightMotor3;
+	protected Spark m_leftMotor1, m_leftMotor2, m_leftMotor3, m_rightMotor1, m_rightMotor2, m_rightMotor3;
 
 	/**
 	 * When using CANSparkMax motor controllers, change DEFAULT_TO_BRUSHLESS based on the drivetrain
@@ -132,6 +133,7 @@ public abstract class SingDrive {
 	double slowSpeedConstant, double normalSpeedConstant, double fastSpeedConstant) {
 
 		this.m_leftMotor1 = new Spark(leftMotor1, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+		//m_leftMotor1.setInitialPosition();
 		//this.m_leftMotor2 = new Spark(leftMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
 		//this.m_leftMotor3 = new Spark(leftMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
 		// Setting one motor controller to follow another means that it will automatically set output voltage of the follower
@@ -141,17 +143,11 @@ public abstract class SingDrive {
 		//this.m_leftMotor3.follow(this.m_leftMotor1, false);
 
 		this.m_rightMotor1 = new Spark(rightMotor1, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-<<<<<<< HEAD
-		// this.m_rightMotor2 = new Spark(rightMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		// this.m_rightMotor3 = new Spark(rightMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		// this.m_rightMotor2.follow(this.m_rightMotor1, false);
-		// this.m_rightMotor3.follow(this.m_rightMotor1, false);
-=======
+		//m_rightMotor1.setInitialPosition();
 		//this.m_rightMotor2 = new Spark(rightMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
 		//this.m_rightMotor3 = new Spark(rightMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
 		///this.m_rightMotor2.follow(this.m_rightMotor1, false);
 		//this.m_rightMotor3.follow(this.m_rightMotor1, false);
->>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
 
 
 		// Set speed constants.
@@ -175,6 +171,13 @@ public abstract class SingDrive {
 	 */
 	public double getVelocityMultiplier() {
 		return this.velocityMultiplier;
+	}
+
+	/**
+	 * @return the velocityMultiplier, used to scale motor speed
+	 */
+	public double getCurrentPosition() {
+		return ((Spark) this.m_leftMotor1).getCurrentPosition()/2.0 + ((Spark) this.m_rightMotor1).getCurrentPosition()/2.0;
 	}
 
 	/**
@@ -229,21 +232,12 @@ public abstract class SingDrive {
 	 */
 	public void rampVoltage(double rampRate) {
 		this.m_leftMotor1.setRampRate(rampRate);
-<<<<<<< HEAD
-		// this.m_leftMotor2.setRampRate(rampRate);
-		// this.m_leftMotor3.setRampRate(rampRate);
-
-		this.m_rightMotor1.setRampRate(rampRate);
-		// this.m_rightMotor2.setRampRate(rampRate);
-		// this.m_rightMotor3.setRampRate(rampRate);
-=======
 		//this.m_leftMotor2.setRampRate(rampRate);
 		//this.m_leftMotor3.setRampRate(rampRate);
 
 		this.m_rightMotor1.setRampRate(rampRate);
 		//this.m_rightMotor2.setRampRate(rampRate);
 		//this.m_rightMotor3.setRampRate(rampRate);
->>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
 	}
 	/**
 	 * Used to return rampRate of motors to the default to avoid wear on motors (recommended for any normal driving).
@@ -252,25 +246,12 @@ public abstract class SingDrive {
 	 */
 	public void rampDefaultVoltage() {
 		this.m_leftMotor1.setRampRate(DEFAULT_RAMP_RATE);
-<<<<<<< HEAD
-		// this.m_leftMotor2.setRampRate(DEFAULT_RAMP_RATE);
-		// this.m_leftMotor3.setRampRate(DEFAULT_RAMP_RATE);
-
-		this.m_rightMotor1.setRampRate(DEFAULT_RAMP_RATE);
-		// this.m_rightMotor2.setRampRate(DEFAULT_RAMP_RATE);
-		// this.m_rightMotor3.setRampRate(DEFAULT_RAMP_RATE);
-	}
-
-	public double getCurrentPosition(){
-		return ((Spark) this.m_leftMotor1).getCurrentPosition() / 2.0 + ((Spark) this.m_rightMotor1).getCurrentPosition() / 2.0;
-=======
 		//this.m_leftMotor2.setRampRate(DEFAULT_RAMP_RATE);
 		//this.m_leftMotor3.setRampRate(DEFAULT_RAMP_RATE);
 
 		this.m_rightMotor1.setRampRate(DEFAULT_RAMP_RATE);
 		//this.m_rightMotor2.setRampRate(DEFAULT_RAMP_RATE);
 		//this.m_rightMotor3.setRampRate(DEFAULT_RAMP_RATE);
->>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
 	}
 
 	/**
@@ -282,21 +263,12 @@ public abstract class SingDrive {
 	 */
 	public void setDriveToCoast(boolean coast) {
 		this.m_leftMotor1.setCoastMode(coast);
-<<<<<<< HEAD
-		// this.m_leftMotor2.setCoastMode(coast);
-		// this.m_leftMotor3.setCoastMode(coast);
-
-		this.m_rightMotor1.setCoastMode(coast);
-		// this.m_rightMotor2.setCoastMode(coast);
-		// this.m_rightMotor3.setCoastMode(coast);
-=======
 		//this.m_leftMotor2.setCoastMode(coast);
 		//this.m_leftMotor3.setCoastMode(coast);
 
 		this.m_rightMotor1.setCoastMode(coast);
 		//this.m_rightMotor2.setCoastMode(coast);
 		//this.m_rightMotor3.setCoastMode(coast);
->>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
 	}
 	
 	

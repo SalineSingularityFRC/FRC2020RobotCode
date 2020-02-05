@@ -24,8 +24,6 @@ public class Test extends ControlScheme{
     }
 
     public void drive(SingDrive drive/*, DrivePneumatics pneumatics*/) {
-<<<<<<< HEAD
-=======
         
     }
 
@@ -42,7 +40,6 @@ public class Test extends ControlScheme{
     }
 
     public void climber(Climber climber) {
->>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
         
     }
 

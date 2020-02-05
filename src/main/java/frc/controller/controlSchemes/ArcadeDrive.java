@@ -27,25 +27,16 @@ public class ArcadeDrive extends ControlScheme {
 
     SpeedMode speedMode;
 
-<<<<<<< HEAD
-    boolean usingLimeLight;
-    
-
-    double tx, ty, tv;
-
-    final double txkP = 0.022;
-    final double driveSpeedConstant = 0.3;
-    final double angleDifferencekP = 0.011;
-    final double endDistance = 2.0;
-
-    boolean bButtonNow, bButtonPrev, driveMulti;
-
-    // Constructor for the ArcadeDrive class
-=======
     boolean lowGear;
     boolean climberExtended;
     boolean climberDown;
->>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
+
+    double tx, tv;
+    
+    final double driveSpeedConstant = 0.3;
+    final double txkP = 0.022;
+    final double angleDifferencekP = 0.011;
+    final double endDistance = 2.0;
 
     /**
      * 
@@ -67,14 +58,8 @@ public class ArcadeDrive extends ControlScheme {
      * 
      */
     public void drive(SingDrive drive/*, DrivePneumatics pneumatics*/) {
-<<<<<<< HEAD
-
-        //Set speed mode based on the dpad on the driveController
-        if(driveController.getLB()){
-=======
         //Switch speed mode object, set to low with left bumber and high with right bumper
         if(driveController.getLB()) {
->>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
             speedMode = SpeedMode.SLOW;
         }
 
@@ -124,20 +109,6 @@ public class ArcadeDrive extends ControlScheme {
             drive.arcadeDrive(0.1, 0, 0.0, false, SpeedMode.FAST);
         }
 
-<<<<<<< HEAD
-        else if (!usingLimeLight) {
-            if (driveMulti) {
-                drive.arcadeDrive((-1 * driveController.getLS_Y()), driveController.getRS_X(), 0.0, true, speedMode);
-            }
-            else {
-                drive.arcadeDrive(driveController.getLS_Y(), driveController.getRS_X(), 0.0, true, speedMode);
-            }
-            
-        }
-
-        if(driveController.getBackButton()) {
-           lowGear = true;
-=======
     }
     
     /**
@@ -165,7 +136,6 @@ public class ArcadeDrive extends ControlScheme {
         //Conveyor will be moved forward with the B button
         if(armController.getBButton()) {
             conveyor.conveyorForward();
->>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
         }
         //And reversed with the x button - opposite each other on gamepad
         else if(armController.getXButton()) {
@@ -177,25 +147,14 @@ public class ArcadeDrive extends ControlScheme {
         }
     }
 
-<<<<<<< HEAD
         //TODO uncomment this pneumatics
         /*if(lowGear) {
             pneumatics.setLow();
-=======
-    public void collector(CellCollector collector) {
-        if(armController.getLB()) {
-            collector.collectorForward();
->>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
         }
 
         else {
-<<<<<<< HEAD
-            pneumatics.setHigh();
-        }*/
-=======
             collector.collectorOff();
         }
->>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
     }
 
     public void climber(Climber climber) {
@@ -303,15 +262,7 @@ public class ArcadeDrive extends ControlScheme {
             left_command += steering_adjust;
             right_command -= steering_adjust;
             drive.tankDrive(left_command, right_command, 0.0, false, SpeedMode.FAST);
-            
-
-            usingLimeLight = true;
-        } // end of if statement
-
-        else {
-            usingLimeLight = false;
         }
     }
-
 }
     

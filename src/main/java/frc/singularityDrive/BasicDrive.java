@@ -80,22 +80,12 @@ public class BasicDrive extends SingDrive {
 		// If translation + rotation > 1, we will divide by this value, maximum, in order to only set motors to power -1 to 1.
 		double maximum = Math.max(1, Math.abs(forwardVelocity) + Math.abs(rotationVelocity));
 
-<<<<<<< HEAD
-		//SmartDashboard.putNumber("Rush", super.velocityMultiplier * (-forwardVelocity + rotationVelocity) / maximum);
-
-		double leftOutput = super.velocityMultiplier * (-forwardVelocity + rotationVelocity) / maximum;
-		double rightOutput = super.velocityMultiplier * (forwardVelocity + rotationVelocity) / maximum;
-		SmartDashboard.putNumber("Output Left", leftOutput);
-		SmartDashboard.putNumber("Output Right", rightOutput);
-		
-=======
 		double leftOutput = super.velocityMultiplier * (-forwardVelocity + rotationVelocity) / maximum;
 		double rightOutput = super.velocityMultiplier * (forwardVelocity + rotationVelocity) / maximum;
 
 		SmartDashboard.putNumber("Output Left", leftOutput);
 		SmartDashboard.putNumber("Output Right", rightOutput);
 
->>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
 		// Drive the motors, and all subsequent motors through following.
 		super.m_leftMotor1.setSpeed(super.velocityMultiplier * (-forwardVelocity + rotationVelocity) / maximum);
 		super.m_rightMotor1.setSpeed(super.velocityMultiplier * (forwardVelocity + rotationVelocity) / maximum);
@@ -133,7 +123,8 @@ public class BasicDrive extends SingDrive {
 		double leftMaximum = Math.max(1, Math.abs(leftVelocity));
 		double rightMaximum = Math.max(1, Math.abs(rightVelocity));
 
-
+		SmartDashboard.putNumber("Left Output", super.velocityMultiplier * leftVelocity / leftMaximum);
+		SmartDashboard.putNumber("Right Output", -super.velocityMultiplier * rightVelocity / rightMaximum);
 		// Drive the motors, and all subsequent motors through following.
 		super.m_leftMotor1.setSpeed(super.velocityMultiplier * leftVelocity / leftMaximum);
 		super.m_rightMotor1.setSpeed(-super.velocityMultiplier * rightVelocity / rightMaximum);

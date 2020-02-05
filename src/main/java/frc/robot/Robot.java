@@ -45,10 +45,6 @@ public class Robot extends TimedRobot {
 
   //Declaration of mechanisms
   SingDrive drive;
-<<<<<<< HEAD
-  // DrivePneumatics drivePneumatics;
-  // LimeLight limeLight;
-=======
   //DrivePneumatics drivePneumatics;
   //Flywheel flywheel;
   //Conveyor conveyor;
@@ -56,17 +52,12 @@ public class Robot extends TimedRobot {
 
   //Creates an all-knowing limelight
   //LimeLight limeLight;  // or CitrusSight?
->>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
 
   //Create a gyro
   AHRS gyro;
   boolean gyroResetAtTeleop;
 
-<<<<<<< HEAD
-  // Compressor compressor;
-=======
   //Compressor compressor;
->>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
 
   //default ports of certain joysticks in DriverStation
   final int XBOX_PORT = 0;
@@ -90,12 +81,9 @@ public class Robot extends TimedRobot {
     //initialize all mechanisms on the robot
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
     //drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
-<<<<<<< HEAD
-=======
     //flywheel = new Flywheel(flywheelMotor1, flywheelMotor2);
     //conveyor = new Conveyor(conveyorMotor1, conveyorMotor2);
     //collector = new CellCollector(collectorMotor1);
->>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
     
     //limeLight = new LimeLight();
     //DO NOT REMOVE PLZ - starts collecting data from drive cameras
@@ -148,11 +136,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     currentScheme.drive(drive/*, drivePneumatics*/);
-<<<<<<< HEAD
     
     //TODO un-comment
-=======
->>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
     //currentScheme.ledMode(limeLight);
   }
 
