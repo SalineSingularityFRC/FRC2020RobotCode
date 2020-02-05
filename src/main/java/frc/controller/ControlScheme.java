@@ -4,6 +4,10 @@ package frc.controller;
 
 //import edu.wpi.first.wpilibj.Ultrasonic;
 import frc.robot.DrivePneumatics;
+import frc.robot.Flywheel;
+import frc.robot.CellCollector;
+import frc.robot.Climber;
+import frc.robot.Conveyor;
 import frc.singularityDrive.SingDrive;
 import frc.robot.LimeLight;
 import com.kauailabs.navx.frc.AHRS;
@@ -19,7 +23,15 @@ public abstract class ControlScheme {
 	
 	public abstract void drive(SingDrive drive/*, DrivePneumatics pneumatics*/);
 	public abstract void ledMode(LimeLight limeLight);
+<<<<<<< HEAD
 	public abstract void limeLightDrive( LimeLight limeLight, SingDrive drive, AHRS gyro);
+=======
+	public abstract void flywheel(Flywheel flywheel);
+	public abstract void conveyor(Conveyor conveyor);
+	public abstract void collector(CellCollector collector);
+	public abstract void climber(Climber climber);
+
+>>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
 
 	// In addation to defining our various different mechanisms to be expanded upon in subclasses (other controlSchemes, i.e. ArcadeDrive),
 	// various different methods to interact with the gyro are also included in here. Why? I don't know, but they can be accessed anywhere from

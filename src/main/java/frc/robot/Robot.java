@@ -34,7 +34,10 @@ public class Robot extends TimedRobot {
 
   //stores the motor controller IDs
   int driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3;
-  int drivePneu1, drivePneu2;  
+  int drivePneu1, drivePneu2;
+  int flywheelMotor1, flywheelMotor2;
+  int conveyorMotor1, conveyorMotor2;
+  int collectorMotor1;
 
   //Declaration of our driving scheme, which can be initialized to
   //any ControlScheme in robotInit()
@@ -42,14 +45,28 @@ public class Robot extends TimedRobot {
 
   //Declaration of mechanisms
   SingDrive drive;
+<<<<<<< HEAD
   // DrivePneumatics drivePneumatics;
   // LimeLight limeLight;
+=======
+  //DrivePneumatics drivePneumatics;
+  //Flywheel flywheel;
+  //Conveyor conveyor;
+  //CellCollector collector;
+
+  //Creates an all-knowing limelight
+  //LimeLight limeLight;  // or CitrusSight?
+>>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
 
   //Create a gyro
   AHRS gyro;
   boolean gyroResetAtTeleop;
 
+<<<<<<< HEAD
   // Compressor compressor;
+=======
+  //Compressor compressor;
+>>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
 
   //default ports of certain joysticks in DriverStation
   final int XBOX_PORT = 0;
@@ -73,6 +90,12 @@ public class Robot extends TimedRobot {
     //initialize all mechanisms on the robot
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
     //drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
+<<<<<<< HEAD
+=======
+    //flywheel = new Flywheel(flywheelMotor1, flywheelMotor2);
+    //conveyor = new Conveyor(conveyorMotor1, conveyorMotor2);
+    //collector = new CellCollector(collectorMotor1);
+>>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
     
     //limeLight = new LimeLight();
     //DO NOT REMOVE PLZ - starts collecting data from drive cameras
@@ -125,8 +148,11 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     currentScheme.drive(drive/*, drivePneumatics*/);
+<<<<<<< HEAD
     
     //TODO un-comment
+=======
+>>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
     //currentScheme.ledMode(limeLight);
   }
 
@@ -146,7 +172,10 @@ public class Robot extends TimedRobot {
     currentScheme.drive(drive/*, drivePneumatics*/);
     // partial autonomy via vision
     //currentScheme.ledMode(limeLight);
-    //currentScheme.limeLightDrive(limeLight, drive, gyro);
+    //control other various mechanisms
+    //currentScheme.flywheel(flywheel);
+    //currentScheme.conveyor(conveyor);
+    //currentScheme.collector(collector);
     
   }
 
@@ -156,7 +185,7 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
 
-   // compressor.start();
+    //compressor.start();
   }
 
   
@@ -165,13 +194,24 @@ public class Robot extends TimedRobot {
    */
   private void setDefaultProperties() {
     
-    //Motors
+    // Drive Motors
     driveLeft1 = 1;
     driveLeft2 = 1;
     driveLeft3 = 1;
     driveRight1 = 4;
     driveRight2 = 4;
     driveRight3 = 4;
+
+    // Flywheel motors
+    flywheelMotor1 = 7;
+    flywheelMotor2 = 8;
+
+    // Conveyor motors
+    conveyorMotor1 = 9;
+    conveyorMotor2 = 10;
+
+    // Cell Collector Motor
+    collectorMotor1 = 11;
 
     //Pneumatics
     

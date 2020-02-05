@@ -24,6 +24,25 @@ public class Test extends ControlScheme{
     }
 
     public void drive(SingDrive drive/*, DrivePneumatics pneumatics*/) {
+<<<<<<< HEAD
+=======
+        
+    }
+
+    public void flywheel(Flywheel flywheel) {
+
+    }
+
+    public void conveyor(Conveyor conveyor) {
+        
+    }
+
+    public void collector(CellCollector collector) {
+        
+    }
+
+    public void climber(Climber climber) {
+>>>>>>> 7b48ffabbec67757efc00a249cbbe0fc3ca19b6a
         
     }
 
