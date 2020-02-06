@@ -14,7 +14,7 @@ public abstract class AutonControlScheme {
     protected static SingDrive drive;
 
     //TODO find distance per revolution (circumference of the wheels)
-    public static final double DistancePerRevolution = 1;
+    public static final double DistancePerRevolution = 6*Math.PI;
     
     public static final double encoderTicks = 4096;
 
@@ -34,8 +34,10 @@ public abstract class AutonControlScheme {
     //private static double getAverage() { return (drive.getLeftPosition() + drive.getRightPosition()) / 2; }
     public void vertical(double distance, double verticalSpeed){
 
-        while (drive.getCurrentPosition() > -distance*encoderTicks / DistancePerRevolution
-                && drive.getCurrentPosition() < distance*encoderTicks / DistancePerRevolution) {
+        drive.setInitialPosition();
+
+        while (drive.getCurrentPosition() > -distance/ DistancePerRevolution
+                && drive.getCurrentPosition() < distance/ DistancePerRevolution) {
         
             SmartDashboard.putNumber("encoderPosition", drive.getCurrentPosition());
             drive.arcadeDrive(verticalSpeed, 0, 0.0, false, SpeedMode.NORMAL);

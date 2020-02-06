@@ -55,6 +55,8 @@ public class Spark implements MotorController {
         this.m_motor = new CANSparkMax(portNumber, type);
         this.setCoastMode(true);
         this.setRampRate(rampRate);
+
+        this.m_encoder = m_motor.getEncoder();
     }
 
     /**
@@ -67,7 +69,6 @@ public class Spark implements MotorController {
     double kP, double kI, double kD, double kIZ, double kFF, double kMinOut, double kMaxOut) {
         this(portNumber, brushlessMotor, rampRate);
 
-        this.m_encoder = m_motor.getEncoder();
         this.m_pidController = m_motor.getPIDController();
 
         this.putConstantsOnDashboard(name, kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);

@@ -85,14 +85,13 @@ public class BasicDrive extends SingDrive {
 
 		SmartDashboard.putNumber("Output Left", leftOutput);
 		SmartDashboard.putNumber("Output Right", rightOutput);
-
+		
 		// Drive the motors, and all subsequent motors through following.
-		super.m_leftMotor1.setSpeed(super.velocityMultiplier * (-forwardVelocity + rotationVelocity) / maximum);
-		super.m_rightMotor1.setSpeed(super.velocityMultiplier * (forwardVelocity + rotationVelocity) / maximum);
+		super.m_leftMotor1.setSpeed(leftOutput);
+		super.m_rightMotor1.setSpeed(rightOutput);
 	}
-
 	
-	/**
+	/**.
 	 * Standard method for driving based on tank, which means that one joystick controls the left
 	 * drivetrain and another controls the right drivetrain.
 	 * 

@@ -181,6 +181,14 @@ public abstract class SingDrive {
 	}
 
 	/**
+	 * sets the initial position of both encoders
+	 */
+	public void setInitialPosition(){
+		((Spark) this.m_leftMotor1).setInitialPosition();
+		((Spark) this.m_rightMotor1).setInitialPosition();
+	}	
+
+	/**
 	 * This method sets velocityMultiplier, which is used to scale the motor speed, based on speed constants set with the constructor.
 	 * @param speedMode of an enum of type SpeedMode, set to either SLOW, MEDIUM, or FAST
 	 */
