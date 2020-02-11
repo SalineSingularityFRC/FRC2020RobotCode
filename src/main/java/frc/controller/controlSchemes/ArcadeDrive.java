@@ -126,7 +126,7 @@ public class ArcadeDrive extends ControlScheme {
      */
     public void conveyor(Conveyor conveyor){
         //Conveyor will be moved forward with the B button
-        if(armController.getBButton()) {
+        if(armController.getLB()) {
             conveyor.conveyorForward();
         }
         //And reversed with the x button - opposite each other on gamepad
@@ -140,12 +140,20 @@ public class ArcadeDrive extends ControlScheme {
     }
 
     public void collector(CellCollector collector) {
-        if(armController.getLB()) {
+        if(armController.getTriggerLeft() > .5) {
             collector.collectorForward();
         }
 
         else {
             collector.collectorOff();
+        }
+
+        if(armController.getYButton()) {
+            collector.collectorUp();
+        }
+
+        else if(armController.getAButton()) {
+            collector.collectorDown();
         }
     }
 
