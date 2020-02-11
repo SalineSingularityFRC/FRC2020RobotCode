@@ -255,6 +255,7 @@ public class Spark implements MotorController {
      */
     public void setInitialPosition() {
         this.initialPosition = this.m_encoder.getPosition();
+        SmartDashboard.putNumber("init Po", this.initialPosition);
     }
 
     /**

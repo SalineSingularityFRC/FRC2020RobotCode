@@ -5,6 +5,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.lang.Math;
 
 import com.kauailabs.navx.frc.AHRS;
+
+import frc.robot.LimeLight;
 import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SingDrive.*;
 
@@ -12,41 +14,45 @@ public abstract class AutonControlScheme {
 
     protected static AHRS gyro;
     protected static SingDrive drive;
+    protected static LimeLight limeLight;
 
-    //TODO find distance per revolution (circumference of the wheels)
-    public static final double DistancePerRevolution = 6*Math.PI;
+    public static final double radius = 3;
     
     public static final double encoderTicks = 4096;
 
-    public AutonControlScheme(SingDrive drive){
+    public AutonControlScheme(SingDrive drive, LimeLight limeLight){
         //define Limelight and all the sensors
         this.drive = drive;
         this.gyro = new AHRS(SPI.Port.kMXP);
-        
+        this.limeLight = limeLight;
     }
 
     //the main method of each auton programs
     public abstract void moveAuton();
-
-    //TODO Reference the encoders to make the
     
-
-    //private static double getAverage() { return (drive.getLeftPosition() + drive.getRightPosition()) / 2; }
+    /**
+     * How to make the robot move forward or backwards autonomously.
+     * DISCLAIMER If you want the robot to go backwards set verticalSpeed number to negative
+     * @param distance the absolute value of the distance in inches the robot will travel 
+     * @param verticalSpeed The speed between -1 and 1 the robot will go. 
+     */
     public void vertical(double distance, double verticalSpeed){
 
         drive.setInitialPosition();
 
-        while (drive.getCurrentPosition() > -distance/ DistancePerRevolution
-                && drive.getCurrentPosition() < distance/ DistancePerRevolution) {
+        while ( drive.getCurrentPosition() > -distance / radius
+                && drive.getCurrentPosition() < distance / radius) {
         
-            SmartDashboard.putNumber("encoderPosition", drive.getCurrentPosition());
+            SmartDashboard.putNumber("encoderPo", drive.getCurrentPosition());
+            SmartDashboard.putNumber("goal", distance / radius);
+
             drive.arcadeDrive(verticalSpeed, 0, 0.0, false, SpeedMode.NORMAL);
         
 		}
     }
 
     public void rotate(double angle, boolean isCounterClockwise){
-        rotate(0.1, angle, isCounterClockwise);
+        rotate(0.2, angle, isCounterClockwise);
     }
 
     public void rotate(double rotationSpeed, double angle, boolean isCounterClockwise){
@@ -64,8 +70,8 @@ public abstract class AutonControlScheme {
 
     }
 
-    public void detectTarget(){
-        
+    public void adjustToTarget(){
+        while(drive.limeLightDrive(limeLight, drive, gyro, false, true, false));
     }
 
     public void shoot(){

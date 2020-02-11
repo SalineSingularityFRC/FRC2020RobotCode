@@ -5,7 +5,7 @@ import frc.singularityDrive.SingDrive;
 public class TurnAndShoot extends AutonControlScheme {
 
     public TurnAndShoot(SingDrive drive){
-        super(drive);
+        super(drive, limeLight);
     }
 
     public void moveAuton(){

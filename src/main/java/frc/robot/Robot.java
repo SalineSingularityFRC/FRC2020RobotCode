@@ -20,6 +20,7 @@ import com.kauailabs.navx.frc.*;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.cameraserver.CameraServer;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -51,7 +52,7 @@ public class Robot extends TimedRobot {
   //CellCollector collector;
 
   //Creates an all-knowing limelight
-  //LimeLight limeLight;  // or CitrusSight?
+  LimeLight limeLight;  // or CitrusSight?
 
   //Create a gyro
   AHRS gyro;
@@ -85,7 +86,8 @@ public class Robot extends TimedRobot {
     //conveyor = new Conveyor(conveyorMotor1, conveyorMotor2);
     //collector = new CellCollector(collectorMotor1);
     
-    //limeLight = new LimeLight();
+    limeLight = new LimeLight();
+    //limeLight.setCamMode(limeLight, 0.0);
     //DO NOT REMOVE PLZ - starts collecting data from drive cameras
     //CameraServer.getInstance().startAutomaticCapture();
 
@@ -126,7 +128,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    AutonControlScheme hodl = new TestAuton(drive);
+    AutonControlScheme hodl = new TestAuton(drive, limeLight);
     hodl.moveAuton();
   }
 
@@ -155,6 +157,7 @@ public class Robot extends TimedRobot {
     // Allow driver control based on current scheme
     // (we shouldn't need to change this too often- other than commenting)
     currentScheme.drive(drive/*, drivePneumatics*/);
+    SmartDashboard.putNumber("EncoderPosi", drive.getCurrentPosition());
     // partial autonomy via vision
     //currentScheme.ledMode(limeLight);
     //control other various mechanisms
@@ -169,7 +172,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-
     //compressor.start();
   }
 
