@@ -9,10 +9,7 @@ public class TurnAndShoot extends AutonControlScheme {
     }
 
     public void moveAuton(){
-        super.vertical( 12, 0.5);
-        //super.findTarget();
-        //super.shoot();
-        super.rotate(0.5, 180, false);
+        super.vertical(120, 0.5);
     }
 
 }
