@@ -16,7 +16,6 @@ public class TestAuton extends AutonControlScheme{
         super.adjustToTarget();
         //super.vertical(10, 0.1);
         //super.vertical(10, -0.1);
-        //
         super.rotate(20, false);
     } 
 
