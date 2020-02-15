@@ -102,50 +102,33 @@ public class ArcadeDrive extends ControlScheme {
         }
 
     }
-    
-    /**
-     * Controls flywheel - turns only on (forward) and off
-     * @param flywheel Takes in flywheel object to control.
-     */
-    public void flywheel(Flywheel flywheel) {
-        // When A is pressed and held, turn on the flywheel to the constant speed defined in the class.
-        if(armController.getRB()) {
+
+
+    public void collectorConveyorFlywheel(Conveyor conveyor, CellCollector collector, Flywheel flywheel) {
+        if(armController.getTriggerLeft() > .5) {
             flywheel.flywheelForward();
         }
 
         else {
             flywheel.flywheelOff();
         }
-    }
 
-    /**
-     * Controls the conveyor on the bot using two buttons to move it
-     * forward or backward
-     * 
-     * @param converyor Takes in a conveyor object to control
-     */
-    public void conveyor(Conveyor conveyor){
-        //Conveyor will be moved forward with the B button
         if(armController.getLB()) {
-            conveyor.conveyorForward();
-        }
-        //And reversed with the x button - opposite each other on gamepad
-        else if(armController.getXButton()) {
-            conveyor.conveyorReverse();
-        }
-        //turns conveyor off if nothing is happening
-        else {
-            conveyor.converyorOff();
-        }
-    }
-
-    public void collector(CellCollector collector) {
-        if(armController.getTriggerLeft() > .5) {
             collector.collectorForward();
+            conveyor.conveyorForward();
         }
 
         else {
             collector.collectorOff();
+            conveyor.conveyorOff();
+        }
+
+        if(armController.getTriggerRight() > .5) {
+            flywheel.flywheelFeedOn();
+        }
+
+        else {
+            flywheel.flywheelFeedOff();
         }
 
         if(armController.getYButton()) {

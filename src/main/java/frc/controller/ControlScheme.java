@@ -22,9 +22,7 @@ public abstract class ControlScheme {
 	
 	public abstract void drive(SingDrive drive/*, DrivePneumatics pneumatics*/);
 	public abstract void ledMode(LimeLight limeLight);
-	public abstract void flywheel(Flywheel flywheel);
-	public abstract void conveyor(Conveyor conveyor);
-	public abstract void collector(CellCollector collector);
+	public abstract void collectorConveyorFlywheel(Conveyor conveyor, CellCollector collector, Flywheel flywheel);
 	public abstract void climber(Climber climber);
 
 

@@ -10,10 +10,10 @@ public class Conveyor {
     private final double forwardSpeed = 0.25;
     private final double reverseSpeed = -0.25;
 
-    public Conveyor(int port1, int port2) {
+    public Conveyor(int port1) {
         motor1 = new Spark(port1, true, 0.0);
-        motor2 = new Spark(port2, true, 0.0);
-        motor2.follow(motor1, false);
+        //motor2 = new Spark(port2, true, 0.0);
+        //motor2.follow(motor1, false);
     }
 
     public void conveyorForward() {
@@ -24,7 +24,7 @@ public class Conveyor {
         motor1.setSpeed(reverseSpeed);
     }
 
-    public void converyorOff() {
+    public void conveyorOff() {
         motor1.setSpeed(0.0);
     }
 

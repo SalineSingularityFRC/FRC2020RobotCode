@@ -9,19 +9,21 @@ import frc.controller.motorControllers.Spark;
 public class Flywheel {
 
     // Creates two generic motor controller objects to control the two motors (normal NEOs) on the flywheel
-   Spark flywheel1, flywheel2;
+   Spark flywheel1, flywheel2, flywheel3;
 
     // Create two constant speed variables that run the motors forwards and backwars
     // Make these both final, so they can't be changed later, and private, so they're not influenced other places in the code
     // Set a constant speed here so it can be changed in one place when being adjusted
     private final double forwardSpeed = 0.25;
     private final double reverseSpeed = -0.25;
+    private final double feedSpeed = 0.25;
 
     // Init the flywheel object, taking int he two motors and ports and setting the flywheels to follow each other, reverse
     // Settings rampRate here to 0 so we get maximum firepower as fast as possible
-    public Flywheel(int flywheel1Port, int flywheel2Port) {
+    public Flywheel(int flywheel1Port, int flywheel2Port, int flywheel3Port) {
         flywheel1 = new Spark(flywheel1Port, true, 0.00);
         flywheel2 = new Spark(flywheel2Port, true, 0.00);
+        flywheel3 = new Spark(flywheel3Port, true, 0.00);
         flywheel2.follow(flywheel1, true);
     }
 
@@ -40,4 +42,11 @@ public class Flywheel {
         flywheel1.setSpeed(0.0);
     }
 
+    public void flywheelFeedOn() {
+        flywheel3.setSpeed(feedSpeed);
+    }
+
+    public void flywheelFeedOff() {
+        flywheel3.setSpeed(0.0);
+    }
 }

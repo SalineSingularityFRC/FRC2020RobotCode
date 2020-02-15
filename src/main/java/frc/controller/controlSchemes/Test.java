@@ -26,15 +26,7 @@ public class Test extends ControlScheme{
         
     }
 
-    public void flywheel(Flywheel flywheel) {
-
-    }
-
-    public void conveyor(Conveyor conveyor) {
-        
-    }
-
-    public void collector(CellCollector collector) {
+    public void collectorConveyorFlywheel(Conveyor conveyor, CellCollector collector, Flywheel flywheel) {
         
     }
 
