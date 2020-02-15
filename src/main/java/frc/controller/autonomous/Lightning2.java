@@ -14,7 +14,6 @@ public class Lightning2 extends AutonControlScheme {
         super.rotate(90, false);
         super.vertical(59, 0.5);
         super.rotate(90, true);
-
         super.vertical(40, 0.5);
         super.adjustToTarget();
         super.vertical(30, 0.5);

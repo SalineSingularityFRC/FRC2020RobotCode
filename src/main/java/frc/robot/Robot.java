@@ -20,6 +20,7 @@ import com.kauailabs.navx.frc.*;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.cameraserver.CameraServer;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -59,6 +60,9 @@ public class Robot extends TimedRobot {
   boolean gyroResetAtTeleop;
 
   //Compressor compressor;
+  SendableChooser<Integer> goalChooser;
+  SendableChooser<Integer> positionChooser;
+  SendableChooser<Integer> secondaryChooser;
 
   //default ports of certain joysticks in DriverStation
   final int XBOX_PORT = 0;
@@ -96,8 +100,24 @@ public class Robot extends TimedRobot {
     
     
     //compressor = new Compressor();
-    
 
+    goalChooser = new SendableChooser<Integer>();
+    positionChooser = new SendableChooser<Integer>();
+    secondaryChooser = new SendableChooser<Integer>();
+
+    goalChooser.addOption("Target", 0);
+    goalChooser.addOption("Trench", 1);
+
+    positionChooser.addOption("Position 1", 1);
+    positionChooser.addOption("Position 2", 2);
+    positionChooser.addOption("Position 3", 3);
+
+    secondaryChooser.addOption("Trench", 0);
+    secondaryChooser.addOption("Move Away", 1);
+
+    SmartDashboard.putData("Position", positionChooser);
+    SmartDashboard.putData("Primary Goal", goalChooser);
+    SmartDashboard.putData("Secondary Goal", secondaryChooser);
   }
 
   /**
@@ -128,12 +148,27 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    /*AutonControlScheme[] goals={{},
-                                {},
-                                {}};*/
+    //Positions 1,2,3
+    //Goals
+    //  0: Target
+    //  1: Trench
+    //secondaryGoals
+    //  0: move to Trench
+    //  1: move away
+    /*AutonControlScheme[][] goals={{new Lightning1(drive, limeLight), new Trench1(drive, limeLight)},
+                                {new Lightning2(drive, limeLight), new Trench2(drive, limeLight)},
+                                {new Lightning3(drive, limeLight), new Trench3(drive, limeLight)}};
     
+    AutonControlScheme[] secondaryGoals = {new MoveToTrench(drive,limeLight), new MoveAwayFromTarget(drive, limeLight)};*/
+    
+
+    SmartDashboard.putNumber("result of position", positionChooser.getSelected());
+    SmartDashboard.putNumber("result of goals", goalChooser.getSelected());
+    SmartDashboard.putNumber("result of secondary goals", secondaryChooser.getSelected());
+
+    /*
     AutonControlScheme hodl = new TestAuton(drive, limeLight);
-    hodl.moveAuton();
+    hodl.moveAuton();*/
   }
 
   /**
