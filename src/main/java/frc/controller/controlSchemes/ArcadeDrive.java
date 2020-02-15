@@ -131,7 +131,8 @@ public class ArcadeDrive extends ControlScheme {
         }
 
         //When the right trigger is pressed, the green wheel begins feeding power cells into the ramped up intake
-        if(armController.getTriggerRight() > .5) {
+        //Only allow power cells to be fed when the flywheel is running
+        if(armController.getTriggerRight() > .5 && armController.getTriggerRight() > .5) {
             flywheel.flywheelFeedOn();
         }
 
