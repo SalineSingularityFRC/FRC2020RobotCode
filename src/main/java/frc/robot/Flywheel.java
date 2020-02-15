@@ -4,55 +4,59 @@ import frc.controller.MotorController;
 import frc.controller.motorControllers.Spark;
 
 /**
- * Creates a class for flywheel so it has the capability to spin forward, reverse, and turn it off
- * @param no param
+ * Creates class to make the flywheel spin forward, reverse, and stop
  * 
+ * @param no param
  * @author Brian Liu
  */
 public class Flywheel {
 
-    MotorController flywheelMotor1, flywheelMotor2;
+    MotorController motorControl1, motorControl2;
 
     private final double forwardSpeed = 0.25;
     private final double reverseSpeed = -0.25;
 
-    public Flywheel (int motor1Port, int motor2Port) {
-        flywheelMotor1 = new Spark(motor1Port, true, 0);
-        flywheelMotor2 = new Spark(motor2Port, true, 0);
-        flywheelMotor2.follow(flywheelMotor1, true);
+    /**
+     * Creates constructor for the motors
+     * 
+     * @param flywheelMotor1
+     * @param flywheelMotor2
+     * @author Brian Liu
+     */
+    public Flywheel(int flywheelMotor1, int flywheelMotor2) {
+        motorControl1 = new Spark(flywheelMotor1, true, 0);
+        motorControl2 = new Spark(flywheelMotor2, true, 0);
+        motorControl2.follow(motorControl1, true);
     }
 
     /**
-     * Sets the speed of flywheel to forward
-     * @param no param
+     * Sets flywheel speed to forward
      * 
+     * @param no param
      * @author Brian Liu
      */
-
-    public void flywheelForard() {
-        flywheelMotor1.setSpeed(forwardSpeed);
+    public void forwardSpeed() {
+        motorControl1.setSpeed(forwardSpeed);
     }
 
     /**
-     * Sets the speed of flywheel to reverse
-     * @param no param
+     * Sets flywheel speed to reverse
      * 
+     * @param no param
      * @author Brian Liu
      */
-
-    public void flywheelReverse() {
-        flywheelMotor1.setSpeed(reverseSpeed);
+    public void reverseSpeed() {
+        motorControl1.setSpeed(reverseSpeed);
     }
 
     /**
-     * Sets the speed of flywheel to 0
-     * @param no param
+     * Sets flywheel speed to 0
      * 
+     * @param no param
      * @author Brian Liu
      */
-
-    public void flywheelOff() {
-        flywheelMotor1.setSpeed(0);
+    public void offSpeed() {
+        motorControl1.setSpeed(0);
     }
 
 }

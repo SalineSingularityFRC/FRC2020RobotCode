@@ -2,7 +2,7 @@ package frc.robot;
 
 import frc.controller.MotorController;
 import frc.controller.motorControllers.Spark;
-
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 /**
  * Creates a class called CellCollector to make the cell collector go forward, reverse, and off
  * 
@@ -11,7 +11,8 @@ import frc.controller.motorControllers.Spark;
  */
 public class CellCollector {
 
-    MotorController motorControl; 
+    MotorController motorControl;
+    DoubleSolenoid doubleSolenoid; 
 
     private final double forwardSpeed = 0.25;
     private final double reverseSpeed = 0.25;
@@ -19,12 +20,14 @@ public class CellCollector {
     /**
      * Creates the constructor for CellCollector
      * 
-     * @param motorPort1
+     * @param collectorMotor1
      * @author Brian Liu
      */
-    public CellCollector(int motorPort1) {
-        motorControl = new Spark(motorPort1, true, 0);
+    public CellCollector(int collectorMotor1, int forwardChannel, int reverseChannel) {
+        motorControl = new Spark(collectorMotor1, true, 0);
+        doubleSolenoid = new DoubleSolenoid(forwardChannel, reverseChannel);
     }
+
 
     /**
      * Set the speed of the cell collector to forwardSpeed
@@ -54,5 +57,13 @@ public class CellCollector {
          */
     public void cellCollectorOff() {
         motorControl.setSpeed(0);
+    }
+
+    public void setHigh() {
+        doubleSolenoid.set(DoubleSolenoid.Value.kReverse);
+    }
+
+    public void setLow() {
+        doubleSolenoid.set(DoubleSolenoid.Value.kForward);
     }
 }

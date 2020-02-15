@@ -19,13 +19,13 @@ public class ConveyerBelt {
     /**
      * Creates the constructor for ConveyerBelt
      * 
-     * @param motorPort1
-     * @param motorPort2
+     * @param conveyerMotor1
+     * @param conveyerMotor2
      * @author Brian Liu
      */
-    public ConveyerBelt(int motorPort1, int motorPort2) {
-        motorControl1 = new Spark(motorPort1, true, 0);
-        motorControl2 = new Spark(motorPort2, true, 0);
+    public ConveyerBelt(int conveyerMotor1, int conveyerMotor2) {
+        motorControl1 = new Spark(conveyerMotor1, true, 0);
+        motorControl2 = new Spark(conveyerMotor2, true, 0);
         motorControl2.follow(motorControl1, false);
     }
 
@@ -37,6 +37,7 @@ public class ConveyerBelt {
      */
     public void forwardSpeed() {
         motorControl1.setSpeed(forwardSpeed);
+        
     }
 
     /**

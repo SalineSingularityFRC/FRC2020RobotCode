@@ -35,6 +35,9 @@ public class Robot extends TimedRobot {
   //stores the motor controller IDs
   int driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3;
   int drivePneu1, drivePneu2;
+  int flywheelMotor1, flywheelMotor2;
+  int conveyerMotor1, conveyerMotor2;
+  int collectorMotor1, forwardChannel, reverseChannel;
 
   //int ejectorPneuPush, ejectorPneuHold;
   //int hatchMechDown, hatchMechUp;
@@ -52,8 +55,10 @@ public class Robot extends TimedRobot {
   //Declaration of mechanisms
   SingDrive drive;
   DrivePneumatics drivePneumatics;
-
+  Flywheel flywheel;
+  ConveyerBelt conveyerBelt;
   Vision vision;
+  CellCollector cellCollector;
 
   //Create a gyro
   AHRS gyro;
@@ -88,7 +93,9 @@ public class Robot extends TimedRobot {
     //initialize mechanisms
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
     drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
-    
+    flywheel = new Flywheel(flywheelMotor1, flywheelMotor2);
+    conveyerBelt = new ConveyerBelt(conveyerMotor1, conveyerMotor2);
+    cellCollector = new CellCollector(collectorMotor1, forwardChannel, reverseChannel);
     //ejectorPneu = new PneumaticEjector(ejectorPneuPush, ejectorPneuHold);
     
     vision = new Vision();
@@ -175,6 +182,9 @@ public class Robot extends TimedRobot {
     // partial autonomy via vision
     currentScheme.ledMode(vision);
     
+    currentScheme.Flywheel(flywheel);
+    currentScheme.ConveyerBelt(conveyerBelt);
+    currentScheme.CellCollector(cellCollector);
   }
 
   /**
@@ -207,6 +217,16 @@ public class Robot extends TimedRobot {
     elevatorMotor2 = 10; //down motor
     wristMotor = 8;
     intakeMotor = 9;
+
+    flywheelMotor1 = 8;
+    flywheelMotor2 = 9;
+
+    conveyerMotor1 = 9;
+    conveyerMotor2 = 10;
+
+    collectorMotor1 = 11;
+    forwardChannel = 12;
+    reverseChannel = 13;
 
     //Pneumatics
     

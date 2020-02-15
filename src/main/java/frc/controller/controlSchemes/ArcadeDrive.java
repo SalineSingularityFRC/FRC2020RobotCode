@@ -1,7 +1,9 @@
 package frc.controller.controlSchemes;
 
 import frc.controller.*;
+import frc.robot.CellCollector;
 import frc.robot.DrivePneumatics;
+import frc.robot.Flywheel;
 import frc.robot.Vision;
 import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SingDrive.SpeedMode;
@@ -16,125 +18,96 @@ import com.kauailabs.navx.frc.AHRS;
  */
 public class ArcadeDrive extends ControlScheme {
 
-    // make new XBox driveController objects
-    XboxController driveController;
-    XboxController armController;
+    XboxController driveController, armController;
 
-    boolean lowGear;
     SpeedMode speedMode;
 
-    boolean usingVision;
+    boolean lowGear;
 
-    //Hatch Variables
-    //final int grabClawAngle = 120;
-    //final int releaseClawAngle = 60;
-    final double clawSpeed = 0.5;
-    
-    double tx, tv;
-    double ultraIn;
-
-
-    //Need to be adjusted for our robot
-    final double driveSpeedConstant = 0.3;
-    final double txkP = 0.022;
-    final double angleDifferencekP = 0.011;
-    final double endDistance = 2.0;
-
-    boolean bButtonNow, bButtonPrev, driveMulti;
-
-    // Constructor for the ArcadeDrive class
-
+     /**
+      * Sets ports for the drive controller and the arm controller 
+      * Sets the variables for lowGear and speedMode
+      * @param driveControllerPort
+      * @param armControllerPort
+      */
     public ArcadeDrive(int driveControllerPort, int armControllerPort) {
-        //Initiates a new Xbox driveController
         driveController = new XboxController(driveControllerPort);
         armController = new XboxController(armControllerPort);
 
         lowGear = true;
         speedMode = SpeedMode.SLOW;
-
-        usingVision = false;
-
-        driveMulti = false;
-        bButtonNow = false;
-        bButtonPrev = false;
-
-
-        
     }
 
     /**
-     * Drives arcade drive
-     * 
+     * Sets low gear and high gear when you press a button
+     * Sets speed mode to slow or fast if you press a button
      */
     public void drive(SingDrive drive, DrivePneumatics pneumatics) {
-
-        //Set speed mode based on the dpad on the driveController
-        if(driveController.getLB()){
+        if(driveController.getLB()) {
             speedMode = SpeedMode.SLOW;
-
         }
-        else if(driveController.getRB()){
+
+        else if(driveController.getRB()) {
             speedMode = SpeedMode.FAST;
         }
-        SmartDashboard.putString("Speed Mode", ""+ speedMode);
+        SmartDashboard.putString("Speed Mode", "" + speedMode);
 
-        
-        bButtonNow = driveController.getBButton();
-        if(bButtonNow && !bButtonPrev) {
-            driveMulti = !driveMulti;
-        }
-        bButtonPrev = bButtonNow;
-
-
-        //driving arcade drive based on right joystick on driveController
-        //changed boolean poweredInputs from false to true, change back if robot encounters issues
-        //ADDED USINGVISION, SO IF THINGS ARE ACTING WEIRD COME BACK TO THIS
-        if(driveController.getPOVLeft()) {
-            drive.arcadeDrive(0, -0.1, 0.0, false, SpeedMode.FAST);
-        }
-
-        else if (driveController.getPOVUp()) {
-            drive.arcadeDrive(0.1, 0, 0.0, false, SpeedMode.FAST);
-        }
-
-        else if (driveController.getPOVRight()) {
-            drive.arcadeDrive(0.0, 0.1, 0.0, false, SpeedMode.FAST);
-        }
-        
-        else if (driveController.getPOVDown()) {
-            drive.arcadeDrive(-0.1, 0.0, 0.0, false, SpeedMode.FAST);
-        }
-
-        else if (!usingVision) {
-            if (driveMulti) {
-                drive.arcadeDrive((-1 * driveController.getLS_Y()), driveController.getRS_X(), 0.0, true, speedMode);
-            }
-            else {
-                drive.arcadeDrive(driveController.getLS_Y(), driveController.getRS_X(), 0.0, true, speedMode);
-            }
-            
-        }
-
-
-        if(driveController.getBackButton()) {
-           lowGear = true;
-        }
-        else if(driveController.getStartButton()) {
+        if(driveController.getStartButton()) {
             lowGear = false;
         }
 
+        else if(driveController.getBackButton()) {
+            lowGear = true;
+        }
+        
         if(lowGear) {
             pneumatics.setLow();
         }
+
         else {
             pneumatics.setHigh();
         }
+
+        drive.arcadeDrive(driveController.getLS_Y(), driveController.getRS_X(), 0.0, true, speedMode);
+    }
+    /**
+     * Sets flywheel to forward speed and turn off when you press a button
+     * 
+     * @param flywheel
+     */
+    public void Flywheel(Flywheel flywheel) {
+
+        if(armController.getAButton()) {
+            flywheel.forwardSpeed();
+        }
+
+        else {
+            flywheel.offSpeed();
+        }
+
     }
 
-    /**
-     * Method to drive autonomously using limelight and gyro
-     * 
-     */
+    public void CellCollector(CellCollector cellCollector) {
+
+        if(armController.getLB()) {
+            cellCollector.cellCollectorForward();
+        }
+
+        else {
+            cellCollector.cellCollectorOff();
+        }
+
+        if(armController.getYButton()) {
+            cellCollector.setHigh();
+        }
+
+        else if(armController.getAButton()) {
+            cellCollector.setLow();
+        }
+    }
+
+    
+
     public void visionDrive(Vision vision, SingDrive drive, DrivePneumatics dPneumatics, AHRS gyro, Ultrasonic ultra) {
         // Defining tx and tv
         // tx = X coordinate between -27 and 27

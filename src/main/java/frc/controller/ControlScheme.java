@@ -3,7 +3,10 @@ package frc.controller;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Ultrasonic;
+import frc.robot.CellCollector;
+import frc.robot.ConveyerBelt;
 import frc.robot.DrivePneumatics;
+import frc.robot.Flywheel;
 import frc.singularityDrive.SingDrive;
 import frc.robot.Vision;
 
@@ -19,7 +22,10 @@ public abstract class ControlScheme {
 	public abstract void drive(SingDrive drive, DrivePneumatics pneumatics);
 	public abstract void visionDrive(Vision vision, SingDrive drive, DrivePneumatics dPneumatics, AHRS gyro, Ultrasonic ultra);
 	public abstract void ledMode(Vision vision);
-	
+	public abstract void ConveyerBelt(ConveyerBelt conveyorBelt);
+	public abstract void Flywheel(Flywheel flywheel);
+	public abstract void CellCollector(CellCollector cellCollector);
+
 	/**
 	 * 
 	 * @param gyroAngle any gyro value
