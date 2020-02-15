@@ -3,6 +3,7 @@ package frc.controller.autonomous;
 import frc.singularityDrive.SingDrive;
 import frc.robot.LimeLight;
 
+
 public class Lightning3  extends AutonControlScheme{
 
     public Lightning3 (SingDrive drive, LimeLight limeLight){

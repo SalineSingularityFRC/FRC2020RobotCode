@@ -128,6 +128,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    /*AutonControlScheme[] goals={{},
+                                {},
+                                {}};*/
+    
     AutonControlScheme hodl = new TestAuton(drive, limeLight);
     hodl.moveAuton();
   }
