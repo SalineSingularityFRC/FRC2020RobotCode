@@ -94,6 +94,7 @@ public class ArcadeDrive extends ControlScheme {
         //
         //The only line actually needed to drive - takes in control sticks, speed mode, and drives based on BasicDrive.
         drive.arcadeDrive(driveController.getLS_Y(), driveController.getRS_X(), 0.0, true, speedMode);
+        SmartDashboard.putNumber("Encoder Position", drive.getCurrentPosition());
 
         // Use the d-pad/POV hat on the gamepad to drive the robot slowly in any direction for precise adjustments.
         if(driveController.getPOVLeft()) {

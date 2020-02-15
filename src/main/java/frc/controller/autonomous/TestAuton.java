@@ -14,7 +14,10 @@ public class TestAuton extends AutonControlScheme{
     @Override
     public void moveAuton() {
         super.adjustToTarget();
-        super.vertical(20, -0.1);
+        //super.vertical(10, 0.1);
+        //super.vertical(10, -0.1);
+        //
+        super.rotate(20, false);
     } 
 
 }
