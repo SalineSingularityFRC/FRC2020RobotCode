@@ -13,6 +13,12 @@ public class Lightning3 extends AutonControlScheme{
         super.vertical(60, 0.5);
         super.rotate(90, false);
         super.vertical(141.625, 0.5);
+        super.rotate(90, true );
+        super.vertical(40, 0.5);
+        super.adjustToTarget();
+        super.vertical(30, 0.5);
+        super.shoot();
+
         
     }
 }

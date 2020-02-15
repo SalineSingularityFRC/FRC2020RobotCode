@@ -13,7 +13,7 @@ public void moveAuton(){
     super.vertical(60, 0.5);//super because we are referencing the super class(speed is distance beteew 0 and 1)
     super.rotate(90, true);
     super.vertical( 24, 0.5);//look up value 
-    super.rotate(90, true);
+    super.rotate(90, false);
     super.vertical(40, 0.5);
     super.adjustToTarget();
     super.vertical(30, 0.5);
