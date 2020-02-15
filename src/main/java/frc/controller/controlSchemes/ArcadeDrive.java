@@ -150,6 +150,11 @@ public class ArcadeDrive extends ControlScheme {
     }
 
     public void climber(Climber climber) {
+        /*
+        
+        Old code used to drive based on two motors - only using one
+
+
         if(driveController.getBButton()) {
             //check this idk joystick
             climber.climberToPosition(armController.getRS_X());
@@ -171,6 +176,16 @@ public class ArcadeDrive extends ControlScheme {
 
         if(!driveController.getAButton() && climberDown) {
             climber.downStop();
+        }
+
+        */
+
+        if(driveController.getBButton()) {
+            climber.rachetDown();
+        }
+
+        else {
+            climber.rachetOff();
         }
 
         
