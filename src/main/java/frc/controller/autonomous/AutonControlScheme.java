@@ -18,7 +18,7 @@ public abstract class AutonControlScheme {
 
     public static final double radius = 3;
     
-    public static final double encoderTicks = 4096;
+    public static final double encoderTicks = 15;
 
     public AutonControlScheme(SingDrive drive, LimeLight limeLight){
         //define Limelight and all the sensors
@@ -40,8 +40,8 @@ public abstract class AutonControlScheme {
 
         drive.setInitialPosition();
 
-        while ( drive.getCurrentPosition() > -distance / radius
-                && drive.getCurrentPosition() < distance / radius) {
+        while ( drive.getCurrentPosition() / encoderTicks > -distance /( 2* Math.PI *radius)
+                && drive.getCurrentPosition() / encoderTicks < distance / ( 2* Math.PI *radius)) {
         
             SmartDashboard.putNumber("encoderPo", drive.getCurrentPosition());
             SmartDashboard.putNumber("goal", distance / radius);
