@@ -146,6 +146,7 @@ public class Robot extends TimedRobot {
   //Stuff to run when teleop is selected
   @Override
   public void teleopInit() {
+    drive.setInitialPosition();
   }
 
   /**
@@ -182,12 +183,12 @@ public class Robot extends TimedRobot {
   private void setDefaultProperties() {
     
     // Drive Motors
-    driveLeft1 = 1;
-    driveLeft2 = 1;
-    driveLeft3 = 1;
-    driveRight1 = 4;
-    driveRight2 = 4;
-    driveRight3 = 4;
+    driveLeft1 = 4;
+    driveLeft2 = 4;
+    driveLeft3 = 4;
+    driveRight1 = 1;
+    driveRight2 = 1;
+    driveRight3 = 1;
 
     // Flywheel motors
     flywheelMotor1 = 7;

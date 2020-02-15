@@ -149,6 +149,7 @@ public abstract class SingDrive {
 	public SingDrive(int leftMotor1, int leftMotor2, int leftMotor3, int rightMotor1, int rightMotor2, int rightMotor3,
 	double slowSpeedConstant, double normalSpeedConstant, double fastSpeedConstant) {
 
+		SmartDashboard.putNumber("flipper", leftMotor1);
 		this.m_leftMotor1 = new Spark(leftMotor1, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
 		//m_leftMotor1.setInitialPosition();
 		//this.m_leftMotor2 = new Spark(leftMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
@@ -194,7 +195,8 @@ public abstract class SingDrive {
 	 * @return the velocityMultiplier, used to scale motor speed
 	 */
 	public double getCurrentPosition() {
-		return ((Spark) this.m_leftMotor1).getCurrentPosition()/2.0 + ((Spark) this.m_rightMotor1).getCurrentPosition()/2.0;
+		return ((Spark) this.m_leftMotor1).getCurrentPosition()/2.0 + ((this.m_rightMotor1.getCurrentPosition()/-2.0));//that negative is suposed to be there trust me
+		//return this.m_leftMotor1.getCurrentPosition();
 	}
 
 	/**
@@ -347,7 +349,6 @@ public abstract class SingDrive {
 		SmartDashboard.putNumber("tx",tx);
 		SmartDashboard.putNumber("tv",tv);
 		
-
         if(Math.abs(tx) < 1.0){
             return false;
         }
@@ -407,7 +408,7 @@ public abstract class SingDrive {
             // Setting LimeLight drive for tank drive
             left_command += steering_adjust;
             right_command -= steering_adjust;
-            drive.tankDrive(left_command, right_command, 0.0, false, SpeedMode.FAST);
+            drive.tankDrive(left_command, right_command, 0.0, false, SpeedMode.SLOW);
         }
 
         return true;

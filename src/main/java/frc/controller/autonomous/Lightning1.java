@@ -3,6 +3,7 @@ package frc.controller.autonomous;
 import frc.singularityDrive.SingDrive;
 import frc.robot.LimeLight;
 
+
 public class Lightning1 extends AutonControlScheme{//defining a lot of methods in this shceme
     
 public Lightning1(SingDrive drive, LimeLight limeLight){//goal of lightning is for us to shoot in low goal
@@ -21,4 +22,3 @@ public void moveAuton(){
     }
 
 }
-    
