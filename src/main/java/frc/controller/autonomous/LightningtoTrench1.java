@@ -14,7 +14,7 @@ public class LightningtoTrench1 extends AutonControlScheme{
         super.rotate(90, true);
         super.vertical(60, 0.5);
         super.rotate(90, false);
-        super.vertical()
+        //super.vertical();
 
         
     }
