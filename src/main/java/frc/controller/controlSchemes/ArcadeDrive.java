@@ -49,7 +49,7 @@ public class ArcadeDrive extends ControlScheme {
      * Drives arcade drive
      * 
      */
-    public void drive(SingDrive drive/*, DrivePneumatics pneumatics*/) {
+    public void drive(SingDrive drive, DrivePneumatics pneumatics) {
         //Switch speed mode object, set to low with left bumber and high with right bumper
         if(driveController.getLB()) {
             speedMode = SpeedMode.SLOW;
@@ -58,6 +58,7 @@ public class ArcadeDrive extends ControlScheme {
         else if(driveController.getRB()) {
             speedMode = SpeedMode.FAST;
         }
+        
         //Put current speedMode on SmartDashboard
         SmartDashboard.putString("Speed Mode", "" + speedMode);
 
@@ -74,11 +75,11 @@ public class ArcadeDrive extends ControlScheme {
 
         // lowGear is used to actually set the drive pneumatics to intended value.
         if(lowGear) {
-            //pneumatics.setLow();
+            pneumatics.setLow();
         }
 
         else {
-            //pneumatics.setHigh();
+            pneumatics.setHigh();
         }
 
         //
