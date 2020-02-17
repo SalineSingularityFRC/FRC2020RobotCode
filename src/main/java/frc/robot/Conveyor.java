@@ -7,8 +7,8 @@ public class Conveyor {
 
     Spark motor1, motor2;
 
-    private final double forwardSpeed = 0.25;
-    private final double reverseSpeed = -0.25;
+    private final double forwardSpeed = -0.25;
+    private final double reverseSpeed = 0.25;
 
     public Conveyor(int port1) {
         motor1 = new Spark(port1, true, 0.0);

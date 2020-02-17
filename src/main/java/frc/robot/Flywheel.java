@@ -14,9 +14,9 @@ public class Flywheel {
     // Create two constant speed variables that run the motors forwards and backwars
     // Make these both final, so they can't be changed later, and private, so they're not influenced other places in the code
     // Set a constant speed here so it can be changed in one place when being adjusted
-    private final double forwardSpeed = 0.25;
-    private final double reverseSpeed = -0.25;
-    private final double feedSpeed = 0.25;
+    private final double forwardSpeed = -0.75;
+    private final double reverseSpeed = 0.75;
+    private final double feedSpeed = 0.75;
 
     // Init the flywheel object, taking int he two motors and ports and setting the flywheels to follow each other, reverse
     // Settings rampRate here to 0 so we get maximum firepower as fast as possible
@@ -29,24 +29,24 @@ public class Flywheel {
 
     // Set the flywheels to shoot a cell forward
     public void flywheelForward() {
-        flywheel1.setSpeed(forwardSpeed);
+        flywheel1.setPower(forwardSpeed);
     }
 
     // Set the flywheels to go revserse - not sure if needed, but have it in-case
     public void flywheelReverse() {
-        flywheel1.setSpeed(reverseSpeed);
+        flywheel1.setPower(reverseSpeed);
     }
 
     // Turn the flywheels off
     public void flywheelOff() {
-        flywheel1.setSpeed(0.0);
+        flywheel1.setPower(0.0);
     }
 
     public void flywheelFeedOn() {
-        flywheel3.setSpeed(feedSpeed);
+        flywheel3.setPower(feedSpeed);
     }
 
     public void flywheelFeedOff() {
-        flywheel3.setSpeed(0.0);
+        flywheel3.setPower(0.0);
     }
 }

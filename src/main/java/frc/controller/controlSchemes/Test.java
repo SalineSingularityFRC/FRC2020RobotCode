@@ -34,6 +34,10 @@ public class Test extends ControlScheme{
         
     }
 
+    public void climberReset(Climber climber) {
+        
+    }
+
     public void ledMode(LimeLight limeLight){
         
     }

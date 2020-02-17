@@ -36,8 +36,9 @@ public class Robot extends TimedRobot {
   int drivePneu1, drivePneu2;
   int flywheelMotor1, flywheelMotor2, flywheelMotor3;
   int conveyorMotor1, conveyorMotor2;
-  int collectorMotor1;
+  int collectorMotor1, collectorMotor2;
   int collectorSol1, collectorSol2;
+  int downMotorPort;
 
   //Declaration of our driving scheme, which can be initialized to
   //any ControlScheme in robotInit()
@@ -59,6 +60,7 @@ public class Robot extends TimedRobot {
   boolean gyroResetAtTeleop;
 
   //Compressor compressor;
+  Compressor compressor;
 
   //default ports of certain joysticks in DriverStation
   final int XBOX_PORT = 0;
@@ -84,7 +86,8 @@ public class Robot extends TimedRobot {
     drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
     flywheel = new Flywheel(flywheelMotor1, flywheelMotor2, flywheelMotor3);
     conveyor = new Conveyor(conveyorMotor1);
-    collector = new CellCollector(collectorMotor1, collectorSol1, collectorSol2);
+    collector = new CellCollector(collectorMotor1, collectorMotor2, collectorSol1, collectorSol2);
+    climber = new Climber(downMotorPort);
     
     //limeLight = new LimeLight();
     //start collecting data from drive cameras
@@ -95,7 +98,7 @@ public class Robot extends TimedRobot {
     gyroResetAtTeleop = true;
     
     
-    //compressor = new Compressor();
+    compressor = new Compressor();
     
 
   }
@@ -111,7 +114,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
 
-    //compressor.start();
+    compressor.start();
 
   }
 
@@ -168,7 +171,8 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
 
-    //compressor.start();
+    compressor.start();
+    currentScheme.climberReset(climber);
   }
 
   
@@ -178,23 +182,27 @@ public class Robot extends TimedRobot {
   private void setDefaultProperties() {
     
     // Drive Motors
-    driveLeft1 = 4;
-    driveLeft2 = 4;
-    driveLeft3 = 4;
-    driveRight1 = 11;
-    driveRight2 = 11;
-    driveRight3 = 11;
+    driveLeft1 = 1;
+    driveLeft2 = 2;
+    driveLeft3 = 3;
+    driveRight1 = 4;
+    driveRight2 = 5;
+    driveRight3 = 6;
 
     // Flywheel motors
-    flywheelMotor1 = 7;
-    flywheelMotor2 = 8;
-    flywheelMotor3 = 12;
+    flywheelMotor1 = 11;
+    flywheelMotor2 = 12;
+    flywheelMotor3 = 8;
 
     // Conveyor motors
-    conveyorMotor1 = 9;
+    conveyorMotor1 = 7;
 
     // Cell Collector Motor
-    collectorMotor1 = 11;
+    collectorMotor1 = 9;
+    collectorMotor2 = 10;
+
+    // Climber Motor Ports
+    downMotorPort = 13;
 
     //Pneumatics
     

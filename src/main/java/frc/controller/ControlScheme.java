@@ -24,6 +24,7 @@ public abstract class ControlScheme {
 	public abstract void ledMode(LimeLight limeLight);
 	public abstract void collectorConveyorFlywheel(Conveyor conveyor, CellCollector collector, Flywheel flywheel);
 	public abstract void climber(Climber climber);
+	public abstract void climberReset(Climber climber);
 
 
 	// In addation to defining our various different mechanisms to be expanded upon in subclasses (other controlSchemes, i.e. ArcadeDrive),

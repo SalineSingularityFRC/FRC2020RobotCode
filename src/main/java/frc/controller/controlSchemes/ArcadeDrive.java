@@ -58,7 +58,7 @@ public class ArcadeDrive extends ControlScheme {
         else if(driveController.getRB()) {
             speedMode = SpeedMode.FAST;
         }
-        
+
         //Put current speedMode on SmartDashboard
         SmartDashboard.putString("Speed Mode", "" + speedMode);
 
@@ -191,6 +191,16 @@ public class ArcadeDrive extends ControlScheme {
         }
 
         
+    }
+
+    public void climberReset(Climber climber) {
+        if(driveController.getXButton()) {
+            climber.rachetReset();
+        }
+
+        else {
+            climber.rachetOff();
+        }
     }
 
     /**

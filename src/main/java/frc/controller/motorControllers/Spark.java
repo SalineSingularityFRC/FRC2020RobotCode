@@ -33,6 +33,9 @@ public class Spark implements MotorController {
     boolean controlWithJoystick;
 
     boolean usingLimitSwitch, upperLimit;
+    
+    // When controlling by voltage, set the max voltage here
+    private final double maxVoltage = 9.0;
 
 
     /**
@@ -115,6 +118,30 @@ public class Spark implements MotorController {
         if (!this.m_motor.isFollower()) {
             this.m_motor.setOpenLoopRampRate(rampRate);
         }
+    }
+
+    public void setCurrentLimit(int currentLimit) {
+        this.m_motor.setSmartCurrentLimit(currentLimit);
+    }
+
+    /**
+     * Set the motor based on voltage compared to speed to get a more reliable result
+     * @param power from -1 thru 1
+     * multiplys the given power value by maximum voltage, in this case 9 volts
+     */
+    public void setPower(double power) {
+        double voltageTarget = power * maxVoltage;
+
+        //If what were setting to is greater than max votlage, set to max voltage 
+        if(voltageTarget > maxVoltage) {
+            voltageTarget = maxVoltage;
+        }
+
+        else if(voltageTarget < -maxVoltage) {
+            voltageTarget = -maxVoltage;
+        }
+
+        this.m_motor.setVoltage(voltageTarget);
     }
 
     
