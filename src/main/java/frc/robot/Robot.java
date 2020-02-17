@@ -110,7 +110,7 @@ public class Robot extends TimedRobot {
     gyroResetAtTeleop = true;
 
     //
-    colorSensor = new ColorSensor(14);
+    colorSensor = new ColorSensor(16);
     
     //ultra = new Ultrasonic(ultraInput, ultraOutput);
     //ultra.setAutomaticMode(true);
@@ -195,7 +195,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Current Count: ", count);
     SmartDashboard.putString("Byte Transfered: ", byteString);
 */  
-    colorSensor.spinColorWheelColor(2);
+    colorSensor.spinColorWheelRotations(5);
     
     
     
@@ -232,7 +232,7 @@ public class Robot extends TimedRobot {
     wristMotor = 8;
     intakeMotor = 9;
 
-    colorSpinner = 14;
+    colorSpinner = 16;
 
     //Pneumatics
     

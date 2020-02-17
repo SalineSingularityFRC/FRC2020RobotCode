@@ -1,22 +1,40 @@
 package frc.robot;
 
+import java.io.Console;
+import java.util.concurrent.DelayQueue;
+import java.util.concurrent.Delayed;
+
 import com.ctre.phoenix.CANifier;
 import com.ctre.phoenix.CANifier.*;
 //import com.ctre.phoenix.CANifier.GeneralPin;
 
-
-public class Canifier{
+public class Canifier {
     CANifier canifier;
 
-    public Canifier(){
+    public Canifier() {
         canifier = new CANifier(1);
     }
 
-    //GeneralPin pinArray[] = {GeneralPin.QUAD_A, GeneralPin.QUAD_B, GeneralPin.QUAD_IDX, GeneralPin.LIMF, GeneralPin.LIMR, GeneralPin.SPI_CS, GeneralPin.SPI_CLK_PWM0P, GeneralPin.SPI_MOSI_PWM1P};
+    // GeneralPin pinArray[] = {GeneralPin.QUAD_A, GeneralPin.QUAD_B,
+    // GeneralPin.QUAD_IDX, GeneralPin.LIMF, GeneralPin.LIMR, GeneralPin.SPI_CS,
+    // GeneralPin.SPI_CLK_PWM0P, GeneralPin.SPI_MOSI_PWM1P};
 
-    GeneralPin pinArray[] = {GeneralPin.SPI_MOSI_PWM1P, GeneralPin.SPI_CLK_PWM0P, GeneralPin.SPI_CS, GeneralPin.LIMR, GeneralPin.LIMF, GeneralPin.QUAD_IDX, GeneralPin.QUAD_B, GeneralPin.QUAD_A};
+    GeneralPin pinArray[] = { GeneralPin.SPI_MOSI_PWM1P, GeneralPin.SPI_CLK_PWM0P, GeneralPin.SPI_CS, GeneralPin.LIMR,
+            GeneralPin.LIMF, GeneralPin.QUAD_IDX, GeneralPin.QUAD_B, GeneralPin.QUAD_A };
+
+    GeneralPin resetPin = GeneralPin.SDA;
 
     boolean dataBuf[] = new boolean[8];
+
+    public void resetCount() {
+        canifier.setGeneralOutput(resetPin, true, true);
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException exception) {
+            System.err.println(exception.getMessage());
+        }
+        canifier.setGeneralOutput(resetPin, false, true);
+    }
 
     public boolean getPinData()[]{
         for(int i = 0; i < 8; i++){
