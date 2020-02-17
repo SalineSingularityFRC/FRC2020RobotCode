@@ -1,6 +1,5 @@
 package frc.robot;
 
-import frc.controller.MotorController;
 import frc.controller.motorControllers.Spark;
 
 public class Conveyor {
@@ -17,15 +16,15 @@ public class Conveyor {
     }
 
     public void conveyorForward() {
-        motor1.setSpeed(forwardSpeed);
+        motor1.setPower(forwardSpeed);
     }
 
     public void conveyorReverse() {
-        motor1.setSpeed(reverseSpeed);
+        motor1.setPower(reverseSpeed);
     }
 
     public void conveyorOff() {
-        motor1.setSpeed(0.0);
+        motor1.setPower(0.0);
     }
 
 
