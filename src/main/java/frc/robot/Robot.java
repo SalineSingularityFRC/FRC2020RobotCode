@@ -110,21 +110,21 @@ public class Robot extends TimedRobot {
     
     //compressor = new Compressor();
 
-    goalChooser = new SendableChooser();
-    positionChooser = new SendableChooser();
-    secondaryChooser = new SendableChooser();
+    goalChooser = new SendableChooser<String>();
+    positionChooser = new SendableChooser<String>();
+    secondaryChooser = new SendableChooser<String>();
 
-    goalChooser.addDefault("Nothing", -1);
-    goalChooser.addOption("Target", 0);
-    goalChooser.addOption("Trench", 1);
+    goalChooser.addDefault("Nothing", "-1");
+    goalChooser.addOption("Target", "0");
+    goalChooser.addOption("Trench", "1");
 
-    positionChooser.addDefault("Position 1", 0);
-    positionChooser.addOption("Position 2", 1);
-    positionChooser.addOption("Position 3", 2);
+    positionChooser.addDefault("Position 1", "0");
+    positionChooser.addOption("Position 2", "1");
+    positionChooser.addOption("Position 3", "2");
 
-    secondaryChooser.addDefault("Nothing", -1);
-    secondaryChooser.addOption("Trench", 0);
-    secondaryChooser.addOption("Move Away", 1);
+    secondaryChooser.addDefault("Nothing", "-1");
+    secondaryChooser.addOption("Trench", "0");
+    secondaryChooser.addOption("Move Away", "1");
 
     SmartDashboard.putData("Position", positionChooser);
     SmartDashboard.putData("Primary Goal", goalChooser);
@@ -166,24 +166,24 @@ public class Robot extends TimedRobot {
     //secondaryGoals
     //  0: move to Trench
     //  1: move away
-    /*AutonControlScheme[][] goals={{new Lightning1(drive, limeLight), new Trench1(drive, limeLight)},
+   AutonControlScheme[][] goals={{new Lightning1(drive, limeLight), new Trench1(drive, limeLight)},
                                 {new Lightning2(drive, limeLight), new Trench2(drive, limeLight)},
                                 {new Lightning3(drive, limeLight), new Trench3(drive, limeLight)}};
     
-    AutonControlScheme[] secondaryGoals = {new MoveToTrench(drive,limeLight), new MoveAwayFromTarget(drive, limeLight)};*/
+    AutonControlScheme[] secondaryGoals = {new MoveToTrench(drive,limeLight), new MoveAwayFromTarget(drive, limeLight)};
     
-    SmartDashboard.putNumber("result of position", (int) positionChooser.getSelected());
-    SmartDashboard.putNumber("result of goals", (int) goalChooser.getSelected());
-    SmartDashboard.putNumber("result of secondary goals", (int) secondaryChooser.getSelected());
+    SmartDashboard.putNumber("result of position", Integer.parseInt((String)positionChooser.getSelected()));
+    SmartDashboard.putNumber("result of goals", Integer.parseInt((String)positionChooser.getSelected()));
+    SmartDashboard.putNumber("result of secondary goals", Integer.parseInt((String)positionChooser.getSelected()));
 
-    /*if(goalChooser.getSelected() == -1)
+    if(goalChooser.getSelected().equals("-1"))
       new JustMove(drive, limeLight).moveAuton();
     else 
-      goals[positionChooser.getSelected()][goalChooser.getSelected()].moveAuton();
+      goals[Integer.parseInt((String)positionChooser.getSelected())][Integer.parseInt((String)goalChooser.getSelected())].moveAuton();
 
-    if(secondaryChooser.getSelected() != -1)
-      secondaryGoals[secondaryChooser.getSelected()].moveAuton();*/
-
+    if(!secondaryChooser.getSelected().equals("-1"))
+      secondaryGoals[Integer.parseInt((String)secondaryChooser.getSelected())].moveAuton();
+    
     /*AutonControlScheme hodl = new TestAuton(drive, limeLight);
     hodl.moveAuton();*/
   }

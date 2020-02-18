@@ -46,7 +46,7 @@ public abstract class AutonControlScheme {
             SmartDashboard.putNumber("encoderPo", drive.getCurrentPosition());
             SmartDashboard.putNumber("goal", distance / radius);
 
-            drive.arcadeDrive(verticalSpeed, 0, 0.0, false, SpeedMode.NORMAL);
+            drive.arcadeDrive(0.1, 0, 0.0, false, SpeedMode.NORMAL);
         
 		}
     }
