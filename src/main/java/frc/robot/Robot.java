@@ -60,9 +60,13 @@ public class Robot extends TimedRobot {
   boolean gyroResetAtTeleop;
 
   //Compressor compressor;
-  SendableChooser<Integer> goalChooser;
-  SendableChooser<Integer> positionChooser;
-  SendableChooser<Integer> secondaryChooser;
+
+  //SendableChoosers
+  SendableChooser goalChooser;
+  SendableChooser positionChooser;
+  SendableChooser secondaryChooser;
+  
+  //SendableChooser autoChooser;
 
   //default ports of certain joysticks in DriverStation
   final int XBOX_PORT = 0;
@@ -97,21 +101,28 @@ public class Robot extends TimedRobot {
 
     //gyro = new AHRS(SPI.Port.kMXP);
     //gyroResetAtTeleop = true;
-    
+
+    //tutorial code for the sendableChooser in case it breaks
+    /*autoChooser = new SendableChooser();
+    autoChooser.addDefault("Default Auto", new TestAuton(drive, limeLight));
+    autoChooser.addOption("SupremeAuto", new JustMove(drive, limeLight));
+    SmartDashboard.putData("Auto mode", autoChooser);*/
     
     //compressor = new Compressor();
 
-    goalChooser = new SendableChooser<Integer>();
-    positionChooser = new SendableChooser<Integer>();
-    secondaryChooser = new SendableChooser<Integer>();
+    goalChooser = new SendableChooser();
+    positionChooser = new SendableChooser();
+    secondaryChooser = new SendableChooser();
 
+    goalChooser.addDefault("Nothing", -1);
     goalChooser.addOption("Target", 0);
     goalChooser.addOption("Trench", 1);
 
-    positionChooser.addOption("Position 1", 1);
-    positionChooser.addOption("Position 2", 2);
-    positionChooser.addOption("Position 3", 3);
+    positionChooser.addDefault("Position 1", 0);
+    positionChooser.addOption("Position 2", 1);
+    positionChooser.addOption("Position 3", 2);
 
+    secondaryChooser.addDefault("Nothing", -1);
     secondaryChooser.addOption("Trench", 0);
     secondaryChooser.addOption("Move Away", 1);
 
@@ -161,13 +172,19 @@ public class Robot extends TimedRobot {
     
     AutonControlScheme[] secondaryGoals = {new MoveToTrench(drive,limeLight), new MoveAwayFromTarget(drive, limeLight)};*/
     
+    SmartDashboard.putNumber("result of position", (int) positionChooser.getSelected());
+    SmartDashboard.putNumber("result of goals", (int) goalChooser.getSelected());
+    SmartDashboard.putNumber("result of secondary goals", (int) secondaryChooser.getSelected());
 
-    SmartDashboard.putNumber("result of position", positionChooser.getSelected());
-    SmartDashboard.putNumber("result of goals", goalChooser.getSelected());
-    SmartDashboard.putNumber("result of secondary goals", secondaryChooser.getSelected());
+    /*if(goalChooser.getSelected() == -1)
+      new JustMove(drive, limeLight).moveAuton();
+    else 
+      goals[positionChooser.getSelected()][goalChooser.getSelected()].moveAuton();
 
-    /*
-    AutonControlScheme hodl = new TestAuton(drive, limeLight);
+    if(secondaryChooser.getSelected() != -1)
+      secondaryGoals[secondaryChooser.getSelected()].moveAuton();*/
+
+    /*AutonControlScheme hodl = new TestAuton(drive, limeLight);
     hodl.moveAuton();*/
   }
 
