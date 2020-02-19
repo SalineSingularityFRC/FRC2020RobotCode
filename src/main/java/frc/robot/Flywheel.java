@@ -18,18 +18,28 @@ public class Flywheel {
     private final double reverseSpeed = 0.75;
     private final double feedSpeed = 0.75;
 
+    double kP = 6e-5; 
+    double kI = 0;
+    double kD = 0; 
+    double kIz = 0; 
+    double kFF = 0.000015; 
+    double kMaxOutput = 1; 
+    double kMinOutput = -1;
+    double maxRPMFlywheel = 5700;
+    double maxRPMFeed = 5700;
+
     // Init the flywheel object, taking int he two motors and ports and setting the flywheels to follow each other, reverse
     // Settings rampRate here to 0 so we get maximum firepower as fast as possible
     public Flywheel(int flywheel1Port, int flywheel2Port, int flywheel3Port) {
-        flywheel1 = new Spark(flywheel1Port, true, 0.00);
-        flywheel2 = new Spark(flywheel2Port, true, 0.00);
-        flywheel3 = new Spark(flywheel3Port, true, 0.00);
+        flywheel1 = new Spark(flywheel1Port, true, 0.00, "Flywheel1", false, false, kP, kI, kD, kIz, kFF, kMinOutput, kMaxOutput);
+        flywheel2 = new Spark(flywheel2Port, true, 0.00, "Flywheel2", false, false, kP, kI, kD, kIz, kFF, kMinOutput, kMaxOutput);
+        flywheel3 = new Spark(flywheel3Port, true, 0.00, "Flywheel Feed ", false, false, kP, kI, kD, kIz, kFF, kMinOutput, kMaxOutput);
         flywheel2.follow(flywheel1, true);
     }
 
     // Set the flywheels to shoot a cell forward
     public void flywheelForward() {
-        flywheel1.setPower(forwardSpeed);
+        flywheel1.setVelocity(maxRPMFlywheel);
     }
 
     // Set the flywheels to go revserse - not sure if needed, but have it in-case
@@ -39,11 +49,11 @@ public class Flywheel {
 
     // Turn the flywheels off
     public void flywheelOff() {
-        flywheel1.setPower(0.0);
+        flywheel1.setVelocity(0.0);
     }
 
     public void flywheelFeedOn() {
-        flywheel3.setPower(feedSpeed);
+        flywheel3.setVelocity(maxRPMFeed);
     }
 
     public void flywheelFeedOff() {

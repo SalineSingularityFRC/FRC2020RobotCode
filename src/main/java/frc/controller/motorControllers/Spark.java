@@ -47,6 +47,9 @@ public class Spark implements MotorController {
     public Spark(int portNumber, boolean brushlessMotor, double rampRate) {
 
         MotorType type;
+
+        this.m_pidController = m_motor.getPIDController();
+
         //Setting motor to either brushed or brushless
         if (brushlessMotor) {
             type = MotorType.kBrushless;
@@ -215,6 +218,15 @@ public class Spark implements MotorController {
 
     }
 
+    public void setPIDConstantsSilent( double kP, double kI, double kD, double kIZ, double kFF, double kMinOut, double kMaxOut) {
+        this.m_pidController.setP(kP, 0);
+        this.m_pidController.setI(kI, 0);
+        this.m_pidController.setD(kD, 0);
+        this.m_pidController.setIZone(kIZ, 0);
+        this.m_pidController.setFF(kFF, 0);
+        this.m_pidController.setOutputRange(kMinOut, kMaxOut, 0);
+    }
+
     
     /**
      * Update PID constants from the dashboard (primarily for testing purposes)
@@ -364,11 +376,22 @@ public class Spark implements MotorController {
     }
 
     /**
-     * sets velocity of the motor (not likely to be used in 2019)
-     * @param velocity in RPM
+     * sets velocity of the motor 
+     * @param velocity Velocity in RPM
      */
     public void setVelocity(double velocity) {
 
         this.m_pidController.setReference(velocity, ControlType.kVelocity);
+    }
+
+    public void setSmartMotion(double velocity) {
+        this.m_pidController.setReference(velocity, ControlType.kSmartMotion);
+    }
+
+    public void setSmartMotionConstants(double maxVel, double minVel, double maxAcc, double allowedErr, int slot) {
+    m_pidController.setSmartMotionMaxVelocity(maxVel, slot);
+    m_pidController.setSmartMotionMinOutputVelocity(minVel, slot);
+    m_pidController.setSmartMotionMaxAccel(maxAcc, slot);
+    m_pidController.setSmartMotionAllowedClosedLoopError(allowedErr, slot);
     }
 }

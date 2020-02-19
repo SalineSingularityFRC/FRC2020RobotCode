@@ -187,7 +187,7 @@ public class ArcadeDrive extends ControlScheme {
         }
 
         else {
-            climber.rachetOff();
+            climber.rachetOffVel();
         }
 
         
@@ -199,7 +199,7 @@ public class ArcadeDrive extends ControlScheme {
         }
 
         else {
-            climber.rachetOff();
+            climber.rachetOffSpeed();
         }
     }
 

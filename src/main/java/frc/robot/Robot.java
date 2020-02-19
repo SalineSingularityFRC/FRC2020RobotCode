@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
   int drivePneu1, drivePneu2;
   int flywheelMotor1, flywheelMotor2, flywheelMotor3;
   int conveyorMotor1, conveyorMotor2;
-  int collectorMotor1, collectorMotor2;
+  int collectorMotor1;
   int collectorSol1, collectorSol2;
   int downMotorPort;
 
@@ -45,7 +45,7 @@ public class Robot extends TimedRobot {
   ControlScheme currentScheme;
 
   //Declaration of mechanisms
-  SingDrive drive;
+  SingDrive drive; //if we want to use smart motion, change this to SmartSingDrive
   DrivePneumatics drivePneumatics;
   Flywheel flywheel;
   Conveyor conveyor;
@@ -83,10 +83,11 @@ public class Robot extends TimedRobot {
     
     //initialize all mechanisms on the robot
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
+    // ^^^^^^^ change this to SmartBasicDrive if using SmartDrive
     drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
     flywheel = new Flywheel(flywheelMotor1, flywheelMotor2, flywheelMotor3);
     conveyor = new Conveyor(conveyorMotor1);
-    collector = new CellCollector(collectorMotor1, collectorMotor2, collectorSol1, collectorSol2);
+    collector = new CellCollector(collectorMotor1, collectorSol1, collectorSol2);
     climber = new Climber(downMotorPort);
     
     //limeLight = new LimeLight();
@@ -199,7 +200,6 @@ public class Robot extends TimedRobot {
 
     // Cell Collector Motor
     collectorMotor1 = 9;
-    collectorMotor2 = 10;
 
     // Climber Motor Ports
     downMotorPort = 13;
