@@ -44,7 +44,7 @@ public class Flywheel {
 
     // Set the flywheels to go revserse - not sure if needed, but have it in-case
     public void flywheelReverse() {
-        flywheel1.setPower(reverseSpeed);
+        flywheel1.setVelocity(reverseSpeed);
     }
 
     // Turn the flywheels off
@@ -57,6 +57,6 @@ public class Flywheel {
     }
 
     public void flywheelFeedOff() {
-        flywheel3.setPower(0.0);
+        flywheel3.setVelocity(0.0);
     }
 }

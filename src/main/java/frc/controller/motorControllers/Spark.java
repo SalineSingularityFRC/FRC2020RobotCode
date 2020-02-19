@@ -388,6 +388,10 @@ public class Spark implements MotorController {
         this.m_pidController.setReference(velocity, ControlType.kSmartMotion);
     }
 
+    public void setSmartMotionMaxVel(double maxVel) {
+        this.m_pidController.setSmartMotionMaxVelocity(maxVel, 0);
+    }
+
     public void setSmartMotionConstants(double maxVel, double minVel, double maxAcc, double allowedErr, int slot) {
     m_pidController.setSmartMotionMaxVelocity(maxVel, slot);
     m_pidController.setSmartMotionMinOutputVelocity(minVel, slot);

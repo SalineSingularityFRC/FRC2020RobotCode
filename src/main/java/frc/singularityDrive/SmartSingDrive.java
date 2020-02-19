@@ -177,6 +177,9 @@ public abstract class SmartSingDrive {
 		this.m_leftMotor1.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
 		this.m_leftMotor2.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
 		this.m_leftMotor3.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
+		this.m_leftMotor1.setSmartMotionMaxVel(smartMotionMaxRPM);
+		this.m_leftMotor2.setSmartMotionMaxVel(smartMotionMaxRPM);
+		this.m_leftMotor3.setSmartMotionMaxVel(smartMotionMaxRPM);
 
 		this.m_rightMotor1 = new Spark(rightMotor1, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
 		this.m_rightMotor2 = new Spark(rightMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
@@ -186,6 +189,9 @@ public abstract class SmartSingDrive {
 		this.m_rightMotor1.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
 		this.m_rightMotor2.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
 		this.m_rightMotor3.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
+		this.m_rightMotor1.setSmartMotionMaxVel(smartMotionMaxRPM);
+		this.m_rightMotor2.setSmartMotionMaxVel(smartMotionMaxRPM);
+		this.m_rightMotor3.setSmartMotionMaxVel(smartMotionMaxRPM);
 
 		// Set speed constants.
 		this.slowSpeedConstant = slowSpeedConstant;

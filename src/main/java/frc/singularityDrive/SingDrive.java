@@ -29,7 +29,7 @@ public abstract class SingDrive {
 	 * 
 	 * WARNING: These objects will need to be changed if the number, type, or orientation of motor controllers changes!
 	 */
-	protected MotorController m_leftMotor1, m_leftMotor2, m_leftMotor3, m_rightMotor1, m_rightMotor2, m_rightMotor3;
+	protected Spark m_leftMotor1, m_leftMotor2, m_leftMotor3, m_rightMotor1, m_rightMotor2, m_rightMotor3;
 
 	/**
 	 * When using CANSparkMax motor controllers, change DEFAULT_TO_BRUSHLESS based on the drivetrain
@@ -46,6 +46,7 @@ public abstract class SingDrive {
 	protected final static double DEFAULT_SLOW_SPEED_CONSTANT = 0.4;
 	protected final static double DEFAULT_NORMAL_SPEED_CONSTANT = 0.8;
 	protected final static double DEFAULT_FAST_SPEED_CONSTANT = 1.0;
+	protected final static double smartMotionMaxRPM = 11000;
 
 	// All motor control inputs are multiplied by velocityMultiplier. Often, velocityMultiplier will be set to a speed
 	// constant (listed above), or it can be set manually.
@@ -292,6 +293,21 @@ public abstract class SingDrive {
 		double positiveInput = Math.abs(joystickInput);
 		return joystickInput * Math.abs(Math.pow(positiveInput, power - 1));
 		
+	}
+
+	public static double getVelocityOutput(double input, SpeedMode speedMode) {
+
+		double speedModeMaxRPM;
+
+		if (speedMode == SpeedMode.SLOW) {
+			speedModeMaxRPM = smartMotionMaxRPM * .4;
+		}
+		else {
+			speedModeMaxRPM = smartMotionMaxRPM;
+		}
+
+		double output = speedModeMaxRPM * input;
+		return output;
 	}
 
 
