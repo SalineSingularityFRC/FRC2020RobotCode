@@ -6,6 +6,7 @@ import frc.robot.DrivePneumatics;
 import frc.robot.LimeLight;
 import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SingDrive.SpeedMode;
+import edu.wpi.first.wpilibj.Spark;
 //import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 //import com.kauailabs.navx.frc.AHRS;
@@ -25,6 +26,8 @@ public class ArcadeDrive extends ControlScheme {
     SpeedMode speedMode;
 
     boolean usingVision;
+
+    
 
     //Hatch Variables
     //final int grabClawAngle = 120;
@@ -147,6 +150,27 @@ public class ArcadeDrive extends ControlScheme {
         }
         else {
             pneumatics.setHigh();
+        }
+    }
+    
+    public void colorSensor(ColorSensor colorSensor){
+        if(armController.getPOVUp()) {
+            colorSensor.spinColorWheelColor(2);
+        }
+        if(armController.getPOVDown()) {
+            colorSensor.spinColorWheelRotations(24);
+        }
+        if(armController.getPOVLeft()) {
+            colorSensor.setSpeed(0.25);
+        }
+        if(armController.getPOVRight()) {
+            colorSensor.setSpeed(-0.25);
+        }
+        if(armController.getStartButton()) {
+            colorSensor.extend();
+        }
+        if(armController.getBackButton()) {
+            colorSensor.retract();
         }
     }
     

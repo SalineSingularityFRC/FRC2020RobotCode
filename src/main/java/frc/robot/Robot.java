@@ -233,7 +233,7 @@ public class Robot extends TimedRobot {
     wristMotor = 8;
     intakeMotor = 9;
 
-    colorSpinner = 14;
+    colorSpinner = 16;
 
     //Pneumatics
     
