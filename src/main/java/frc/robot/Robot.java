@@ -93,7 +93,7 @@ public class Robot extends TimedRobot {
     //setDefaultProperties();
 
     //initialize our driving scheme to a basic arcade drive
-    //currentScheme = new ArcadeDrive(XBOX_PORT, XBOX_PORT +1);
+    currentScheme = new ArcadeDrive(XBOX_PORT, XBOX_PORT +1);
     
     //initialize mechanisms
     //drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
@@ -110,7 +110,7 @@ public class Robot extends TimedRobot {
     gyroResetAtTeleop = true;
 
     //
-    colorSensor = new ColorSensor(14);
+    colorSensor = new ColorSensor(1);
     
     //ultra = new Ultrasonic(ultraInput, ultraOutput);
     //ultra.setAutomaticMode(true);
@@ -195,8 +195,9 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Current Count: ", count);
     SmartDashboard.putString("Byte Transfered: ", byteString);
 */  
-    colorSensor.spinColorWheelColor(2);
-    
+    //colorSensor.spinColorWheelColor(2);
+    currentScheme.colorSensor(colorSensor);
+    colorSensor.resetCount(true);
     
     
   }

@@ -7,7 +7,8 @@ public class ColorSensor{
 
     Spark colorSpinner;
     Canifier canifier;
-    private double speed = SmartDashboard.getNumber("Current Color Motor Speed: ", 0.75); //subject to change
+    public static final double speed = SmartDashboard.getNumber("Current Color Motor Speed: ", 0.50); //subject to change
+    public static final double lowspeed = SmartDashboard.getNumber("Current Color Motor Speed: ", 0.20); //subject to change
 
 
 
@@ -26,8 +27,11 @@ public class ColorSensor{
         SmartDashboard.putNumber("Current Count: ", count);
         SmartDashboard.putString("Byte Tranfered: ", byteString);
 
-        if(count <= numRotations) {
+        if(count + 2 < numRotations) {
             colorSpinner.setSpeed(this.speed);
+        }
+        else if(count < numRotations) {
+            colorSpinner.setSpeed(this.lowspeed);
         }
         else {
             colorSpinner.setSpeed(0.0);
@@ -44,11 +48,23 @@ public class ColorSensor{
         SmartDashboard.putString("Byte Tranfered: ", byteString);
 
         if(color != targetColor) {
-            colorSpinner.setSpeed(this.speed/2);
+            colorSpinner.setSpeed(this.lowspeed);
         }
         else {
             colorSpinner.setSpeed(0.0);
         }
+    }
+
+    public void stopSpinning() {
+        colorSpinner.setSpeed(0);
+    }
+
+    public void spinSpeed(double speed) {
+        colorSpinner.setSpeed(speed);
+    }
+
+    public void resetCount(boolean value) {
+        canifier.resetPin(true);
     }
 
 } 

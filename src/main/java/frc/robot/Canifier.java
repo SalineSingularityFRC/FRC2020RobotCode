@@ -1,3 +1,4 @@
+
 package frc.robot;
 
 import com.ctre.phoenix.CANifier;
@@ -12,9 +13,9 @@ public class Canifier{
         canifier = new CANifier(1);
     }
 
-    //GeneralPin pinArray[] = {GeneralPin.QUAD_A, GeneralPin.QUAD_B, GeneralPin.QUAD_IDX, GeneralPin.LIMF, GeneralPin.LIMR, GeneralPin.SPI_CS, GeneralPin.SPI_CLK_PWM0P, GeneralPin.SPI_MOSI_PWM1P};
+    GeneralPin pinArray[] = {GeneralPin.SPI_MISO_PWM2P, GeneralPin.SPI_MOSI_PWM1P, GeneralPin.SPI_CLK_PWM0P, GeneralPin.SPI_CS, GeneralPin.LIMR, GeneralPin.LIMF, GeneralPin.QUAD_IDX, GeneralPin.QUAD_B};
 
-    GeneralPin pinArray[] = {GeneralPin.SPI_MOSI_PWM1P, GeneralPin.SPI_CLK_PWM0P, GeneralPin.SPI_CS, GeneralPin.LIMR, GeneralPin.LIMF, GeneralPin.QUAD_IDX, GeneralPin.QUAD_B, GeneralPin.QUAD_A};
+    //GeneralPin pinArray[] = {GeneralPin.SPI_MOSI_PWM1P, GeneralPin.SPI_CLK_PWM0P, GeneralPin.SPI_CS, GeneralPin.LIMR, GeneralPin.LIMF, GeneralPin.QUAD_IDX, GeneralPin.QUAD_B, GeneralPin.QUAD_A};
 
     boolean dataBuf[] = new boolean[8];
 
@@ -58,6 +59,10 @@ public class Canifier{
             }
         }
         return colorBuf;
+    }
+
+    public void resetPin(boolean on){
+        canifier.setGeneralOutput(GeneralPin.QUAD_A, on, true);
     }
 
 }

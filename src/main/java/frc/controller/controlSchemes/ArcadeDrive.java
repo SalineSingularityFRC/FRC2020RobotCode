@@ -66,6 +66,18 @@ public class ArcadeDrive extends ControlScheme {
     public void colorSensor(ColorSensor colorSensor){
         if(armController.getPOVUp()) {
             colorSensor.spinColorWheelColor(2);
+            colorSensor.resetCount(false);
+        } else if (armController.getPOVDown()) {
+            colorSensor.spinColorWheelRotations(26);
+            colorSensor.resetCount(false);
+        } else if (armController.getPOVLeft()) {
+            colorSensor.resetCount(true);
+        } else if (armController.getPOVRight()) {
+            colorSensor.spinSpeed(ColorSensor.lowspeed);
+            colorSensor.resetCount(false);
+        } else {
+            colorSensor.stopSpinning();
+            colorSensor.resetCount(false);
         }
     }
 
