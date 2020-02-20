@@ -9,6 +9,7 @@ import frc.robot.CellCollector;
 import frc.robot.Climber;
 import frc.robot.Conveyor;
 import frc.singularityDrive.SingDrive;
+import frc.singularityDrive.SmartSingDrive;
 import frc.robot.LimeLight;;
 
 
@@ -21,6 +22,7 @@ import frc.robot.LimeLight;;
 public abstract class ControlScheme {
 	
 	public abstract void drive(SingDrive drive, DrivePneumatics pneumatics);
+	public abstract void smartDrive(SmartSingDrive drive, DrivePneumatics pneumatics);
 	public abstract void ledMode(LimeLight limeLight);
 	public abstract void collectorConveyorFlywheel(Conveyor conveyor, CellCollector collector, Flywheel flywheel);
 	public abstract void climber(Climber climber);

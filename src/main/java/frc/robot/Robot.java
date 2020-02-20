@@ -206,11 +206,11 @@ public class Robot extends TimedRobot {
 
     //Pneumatics
     
-    drivePneu1 = 0;
-    drivePneu2 = 1;
+    drivePneu1 = 1;
+    drivePneu2 = 6;
 
     collectorSol1 = 2;
-    collectorSol2 = 3;
+    collectorSol2 = 5;
 
     
 

@@ -9,7 +9,7 @@ import frc.robot.Flywheel;
 import frc.robot.LimeLight;
 import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SmartSingDrive;
-import frc.singularityDrive.SingDrive.SpeedMode;
+import frc.singularityDrive.SmartSingDrive.SpeedMode;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
 //Uncomment to enable gyro stuff
@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.smartdashboard.*;
  * Main class to control the robot
  * 
  */
-public class ArcadeDrive extends ControlScheme {
+public class SmartArcadeDrive extends ControlScheme {
 
     //Create all objects & a speedMode object
     XboxController driveController, armController;
@@ -36,7 +36,7 @@ public class ArcadeDrive extends ControlScheme {
      * @param driveControllerPort Controller port the drive controller is connected to, probably 0
      * @param armControllerPort Controller port the arm controller is connect to, problably 1
      */
-    public ArcadeDrive(int driveControllerPort, int armControllerPort) {
+    public SmartArcadeDrive(int driveControllerPort, int armControllerPort) {
         driveController = new XboxController(driveControllerPort);
         armController = new XboxController(armControllerPort);
 
@@ -46,11 +46,15 @@ public class ArcadeDrive extends ControlScheme {
 
     }
 
+    public void drive(SingDrive drive, DrivePneumatics pneumatics) {
+
+    }
+
     /**
      * Drives arcade drive
      * 
      */
-    public void drive(SingDrive drive, DrivePneumatics pneumatics) {
+    public void smartDrive(SmartSingDrive drive, DrivePneumatics pneumatics) {
         //Switch speed mode object, set to low with left bumber and high with right bumper
         if(driveController.getLB()) {
             speedMode = SpeedMode.SLOW;
@@ -105,10 +109,6 @@ public class ArcadeDrive extends ControlScheme {
 
     }
 
-    public void smartDrive(SmartSingDrive drive, DrivePneumatics pneumatics) {
-
-    }
-
     /**
      * method that controls the conveyor, collector, and flywheel as the three need to move together
      * 
@@ -154,7 +154,6 @@ public class ArcadeDrive extends ControlScheme {
         else if(armController.getAButton()) {
             collector.collectorDown();
         }
-
     }
 
     public void climber(Climber climber) {
@@ -179,6 +178,7 @@ public class ArcadeDrive extends ControlScheme {
             climber.rachetOffSpeed();
         }
     }
+
 
     /**
      * Only turns on the painfully bright Limelight LEDs when they're being used

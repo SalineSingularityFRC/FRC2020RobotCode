@@ -48,7 +48,6 @@ public class Spark implements MotorController {
 
         MotorType type;
 
-        this.m_pidController = m_motor.getPIDController();
 
         //Setting motor to either brushed or brushless
         if (brushlessMotor) {
@@ -61,6 +60,7 @@ public class Spark implements MotorController {
         this.m_motor = new CANSparkMax(portNumber, type);
         this.setCoastMode(true);
         this.setRampRate(rampRate);
+        this.m_pidController = m_motor.getPIDController();
     }
 
     /**

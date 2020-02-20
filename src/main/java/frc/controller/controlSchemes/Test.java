@@ -26,6 +26,10 @@ public class Test extends ControlScheme{
         
     }
 
+    public void smartDrive(SmartSingDrive drive, DrivePneumatics pneumatics) {
+        
+    }
+
     public void collectorConveyorFlywheel(Conveyor conveyor, CellCollector collector, Flywheel flywheel) {
         
     }
@@ -37,6 +41,7 @@ public class Test extends ControlScheme{
     public void climberReset(Climber climber) {
         
     }
+
 
     public void ledMode(LimeLight limeLight){
         

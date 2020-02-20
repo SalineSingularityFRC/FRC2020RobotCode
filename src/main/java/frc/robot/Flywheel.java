@@ -35,6 +35,9 @@ public class Flywheel {
         flywheel2 = new Spark(flywheel2Port, true, 0.00, "Flywheel2", false, false, kP, kI, kD, kIz, kFF, kMinOutput, kMaxOutput);
         flywheel3 = new Spark(flywheel3Port, true, 0.00, "Flywheel Feed ", false, false, kP, kI, kD, kIz, kFF, kMinOutput, kMaxOutput);
         flywheel2.follow(flywheel1, true);
+
+        flywheel1.setCoastMode(true);
+        flywheel2.setCoastMode(true);
     }
 
     // Set the flywheels to shoot a cell forward
