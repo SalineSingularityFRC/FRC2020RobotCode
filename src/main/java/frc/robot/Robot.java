@@ -183,12 +183,12 @@ public class Robot extends TimedRobot {
   private void setDefaultProperties() {
     
     // Drive Motors
-    driveLeft1 = 1;
-    driveLeft2 = 2;
-    driveLeft3 = 3;
-    driveRight1 = 4;
-    driveRight2 = 5;
-    driveRight3 = 6;
+    driveLeft1 = 4;
+    driveLeft2 = 5;
+    driveLeft3 = 6;
+    driveRight1 = 1;
+    driveRight2 = 2;
+    driveRight3 = 3;
 
     // Flywheel motors
     flywheelMotor1 = 11;
