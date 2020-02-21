@@ -22,16 +22,6 @@ public class Canifier {
 
     boolean dataBuf[] = new boolean[8];
 
-    public void resetCount() {
-        canifier.setGeneralOutput(resetPin, true, true);
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException exception) {
-            System.err.println(exception.getMessage());
-        }
-        canifier.setGeneralOutput(resetPin, false, true);
-    }
-
     public boolean getPinData()[]{
         for(int i = 0; i < 8; i++){
             dataBuf[i] = canifier.getGeneralInput(pinArray[i]);	

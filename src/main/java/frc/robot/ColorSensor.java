@@ -19,7 +19,7 @@ public class ColorSensor{
     public ColorSensor(int colorSensorPort){
         colorSpinner = new Spark(colorSensorPort, true, 0.00);
         canifier = new Canifier();
-        colorSolenoid = new DoubleSolenoid(pistonExtend, pistonRetract);
+        //colorSolenoid = new DoubleSolenoid(pistonExtend, pistonRetract);
     }
     public void setSpeed(double speed) {
         colorSpinner.setSpeed(speed);
@@ -72,7 +72,7 @@ public class ColorSensor{
     }
 
     public void resetCount(boolean value) {
-        canifier.resetPin(true);
+        canifier.resetPin(value);
     }
 
     public void extend() {

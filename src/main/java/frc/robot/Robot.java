@@ -197,7 +197,6 @@ public class Robot extends TimedRobot {
 */  
     //colorSensor.spinColorWheelColor(2);
     currentScheme.colorSensor(colorSensor);
-    colorSensor.resetCount(true);
     
     
   }

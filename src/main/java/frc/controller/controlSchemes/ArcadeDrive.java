@@ -153,27 +153,6 @@ public class ArcadeDrive extends ControlScheme {
         }
     }
     
-    public void colorSensor(ColorSensor colorSensor){
-        if(armController.getPOVUp()) {
-            colorSensor.spinColorWheelColor(2);
-        }
-        if(armController.getPOVDown()) {
-            colorSensor.spinColorWheelRotations(24);
-        }
-        if(armController.getPOVLeft()) {
-            colorSensor.setSpeed(0.25);
-        }
-        if(armController.getPOVRight()) {
-            colorSensor.setSpeed(-0.25);
-        }
-        if(armController.getStartButton()) {
-            colorSensor.extend();
-        }
-        if(armController.getBackButton()) {
-            colorSensor.retract();
-        }
-    }
-    
     public void ledMode( LimeLight limeLight ){
         if(driveController.getXButton() || driveController.getYButton()){
             limeLight.ledOff(limeLight);
