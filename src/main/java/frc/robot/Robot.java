@@ -10,8 +10,8 @@ package frc.robot;
 
 import frc.controller.*;
 import frc.singularityDrive.*;
-import frc.singularityDrive.SingDrive;
 import frc.controller.controlSchemes.ArcadeDrive;
+import frc.controller.controlSchemes.SmartArcadeDrive;
 import frc.controller.autonomous.*;
 //import frc.controller.controlSchemes.Test;
 import frc.robot.Canifier;
@@ -53,7 +53,8 @@ public class Robot extends TimedRobot {
   ControlScheme currentScheme;
 
   //Declaration of mechanisms
-  SingDrive drive; //if we want to use smart motion, change this to SmartSingDrive
+  SingDrive drive;
+  SmartSingDrive smartDrive; //if we want to use smart motion, change this to SmartSingDrive
   DrivePneumatics drivePneumatics;
   Flywheel flywheel;
   Conveyor conveyor;
@@ -101,7 +102,7 @@ public class Robot extends TimedRobot {
     setDefaultProperties();
 
     //initialize our driving scheme to a basic arcade drive
-    currentScheme = new ArcadeDrive(XBOX_PORT, XBOX_PORT +1);
+    currentScheme = new SmartArcadeDrive(XBOX_PORT, XBOX_PORT +1);
     
     gyro = new AHRS(SPI.Port.kMXP);
     gyroResetAtTeleop = true;
@@ -109,6 +110,7 @@ public class Robot extends TimedRobot {
     colorSensor = new ColorSensor(colorSpinner, colorSol1, colorSol2);
     
     //initialize all mechanisms on the robot
+    smartDrive = new SmartBasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
     // ^^^^^^^ change this to SmartBasicDrive if using SmartDrive
     drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
@@ -253,7 +255,7 @@ public class Robot extends TimedRobot {
     currentScheme.colorSensor(colorSensor);
 
     SmartDashboard.putNumber("EncoderPosition", drive.getCurrentPosition());
-    currentScheme.drive(drive, drivePneumatics);
+    currentScheme.smartDrive(smartDrive, drivePneumatics);
     // partial autonomy via vision
     //currentScheme.ledMode(limeLight);
     //control other various mechanisms

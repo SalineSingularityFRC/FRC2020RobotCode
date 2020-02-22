@@ -419,14 +419,16 @@ public abstract class SingDrive {
 
 		double speedModeMaxRPM;
 
+		/*
 		if (speedMode == SpeedMode.SLOW) {
 			speedModeMaxRPM = smartMotionMaxRPM * .4;
 		}
 		else {
 			speedModeMaxRPM = smartMotionMaxRPM;
 		}
+		*/
 
-		double output = speedModeMaxRPM * input;
+		double output = smartMotionMaxRPM * input;
 		return output;
 	}
 

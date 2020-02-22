@@ -132,11 +132,17 @@ public class BasicDrive extends SingDrive {
 		double leftMaximum = Math.max(1, Math.abs(leftVelocity));
 		double rightMaximum = Math.max(1, Math.abs(rightVelocity));
 
+		double velRightOut = rightVelocity / rightMaximum;
+		double velLeftOut = leftVelocity / leftMaximum;
+
 		SmartDashboard.putNumber("Left Output", super.velocityMultiplier * leftVelocity / leftMaximum);
 		SmartDashboard.putNumber("Right Output", -super.velocityMultiplier * rightVelocity / rightMaximum);
 		// Drive the motors, and all subsequent motors through following.
 		super.m_leftMotor1.setSpeed(super.velocityMultiplier * leftVelocity / leftMaximum);
 		super.m_rightMotor1.setSpeed(-super.velocityMultiplier * rightVelocity / rightMaximum);
+
+		//super.m_rightMotor1.setVelocity(super.getVelocityOutput(velRightOut, speedMode));
+		//super.m_leftMotor1.setVelocity(super.getVelocityOutput(velLeftOut, speedMode));
 
 	}
 }
