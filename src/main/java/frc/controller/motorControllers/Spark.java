@@ -60,6 +60,7 @@ public class Spark implements MotorController {
         this.m_motor = new CANSparkMax(portNumber, type);
         this.setCoastMode(true);
         this.setRampRate(rampRate);
+        this.m_encoder = m_motor.getEncoder();
         this.m_pidController = m_motor.getPIDController();
     }
 
@@ -73,7 +74,6 @@ public class Spark implements MotorController {
     double kP, double kI, double kD, double kIZ, double kFF, double kMinOut, double kMaxOut) {
         this(portNumber, brushlessMotor, rampRate);
 
-        this.m_encoder = m_motor.getEncoder();
         this.m_pidController = m_motor.getPIDController();
 
         this.putConstantsOnDashboard(name, kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
@@ -111,7 +111,6 @@ public class Spark implements MotorController {
     }
 
     public void setSpeed(double percentOutput) {
-        
         this.m_motor.set(percentOutput);
     }
 
@@ -294,12 +293,19 @@ public class Spark implements MotorController {
      */
     public void setInitialPosition() {
         this.initialPosition = this.m_encoder.getPosition();
+        SmartDashboard.putNumber("init Po", this.initialPosition);
     }
 
+    /**
+     * gets the valueas from the encoders
+     * @return Encoder Position in inches
+     */
     public double getCurrentPosition() {
+        
         if(initialPosition != -100) {
             return this.m_encoder.getPosition() - this.initialPosition;
         }
+
         return m_encoder.getPosition();
         
     }

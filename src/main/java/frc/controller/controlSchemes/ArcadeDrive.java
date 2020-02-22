@@ -11,6 +11,7 @@ import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SmartSingDrive;
 import frc.singularityDrive.SingDrive.SpeedMode;
 import edu.wpi.first.wpilibj.smartdashboard.*;
+import com.kauailabs.navx.frc.AHRS;
 
 //Uncomment to enable gyro stuff
 //import com.kauailabs.navx.frc.AHRS;
@@ -30,6 +31,13 @@ public class ArcadeDrive extends ControlScheme {
     boolean lowGear;
     boolean climberExtended;
     boolean climberDown;
+
+    double tx, tv;
+    
+    final double driveSpeedConstant = 0.3;
+    final double txkP = 0.022;
+    final double angleDifferencekP = 0.011;
+    final double endDistance = 2.0;
 
     /**
      * 
@@ -88,6 +96,7 @@ public class ArcadeDrive extends ControlScheme {
         //
         //The only line actually needed to drive - takes in control sticks, speed mode, and drives based on BasicDrive.
         drive.arcadeDrive(driveController.getLS_Y(), driveController.getRS_X(), 0.0, true, speedMode);
+        SmartDashboard.putNumber("Encoder Position", drive.getCurrentPosition());
 
         // Use the d-pad/POV hat on the gamepad to drive the robot slowly in any direction for precise adjustments.
         if(driveController.getPOVLeft()) {
