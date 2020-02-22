@@ -173,19 +173,24 @@ public class Robot extends TimedRobot {
     AutonControlScheme[] secondaryGoals = {new MoveToTrench(drive,limeLight), new MoveAwayFromTarget(drive, limeLight)};
     
     SmartDashboard.putNumber("result of position", Integer.parseInt((String)positionChooser.getSelected()));
-    SmartDashboard.putNumber("result of goals", Integer.parseInt((String)positionChooser.getSelected()));
-    SmartDashboard.putNumber("result of secondary goals", Integer.parseInt((String)positionChooser.getSelected()));
+    SmartDashboard.putNumber("result of goals", Integer.parseInt((String)goalChooser.getSelected()));
+    SmartDashboard.putNumber("result of secondary goals", Integer.parseInt((String)secondaryChooser.getSelected()));
 
-    if(goalChooser.getSelected().equals("-1"))
+    /*if(goalChooser.getSelected().equals("-1")){
+      //SmartDashboard.putString("autoprogram", "JustMove");
       new JustMove(drive, limeLight).moveAuton();
-    else 
+    }
+    else{
+      //SmartDashboard.putString("autoprogram", "PrimaryGoals");
       goals[Integer.parseInt((String)positionChooser.getSelected())][Integer.parseInt((String)goalChooser.getSelected())].moveAuton();
-
-    if(!secondaryChooser.getSelected().equals("-1"))
+    }
+    if(!secondaryChooser.getSelected().equals("-1") && !goalChooser.getSelected().equals("-1")){
+      //SmartDashboard.putString("autonprogram", "SecondaryGoals");
       secondaryGoals[Integer.parseInt((String)secondaryChooser.getSelected())].moveAuton();
+    }*/
     
-    /*AutonControlScheme hodl = new TestAuton(drive, limeLight);
-    hodl.moveAuton();*/
+    AutonControlScheme hodl = new TestAuton(drive, limeLight);
+    hodl.moveAuton();
   }
 
   /**
