@@ -6,19 +6,28 @@ public class Climber{
 
     Spark upMotor, downMotor;
 
-    private final double upVoltage = 11.5;
-    private final double upSpeed = 0.25;
+    //private final double upVoltage = 11.5;
+    private final double upSpeed = -0.25;
     private final double downSpeed = 0.25;
-    private final double constantSpeed = 0.1;
-    private final int upPosition = 5000;
+    //private final double constantSpeed = 0.1;
+   // private final int upPosition = 5000;
 
-    public Climber(int upMotorPort, int downMotorPort) {
-        upMotor = new Spark(upMotorPort, true, 0.0);
-        downMotor = new Spark(downMotorPort, true, 0.0);
-        upMotor.setCoastMode(false);
+   double kP = 6e-5; 
+   double kI = 0;
+   double kD = 0; 
+   double kIz = 0; 
+   double kFF = 0.000015; 
+   double kMaxOutput = 1; 
+   double kMinOutput = -1;
+   double maxRPM = 5700;
+
+    public Climber(int downMotorPort) {
+        downMotor = new Spark(downMotorPort, true, 0.0, "Climber", false, false, kP, kI, kD, kIz, kFF, kMinOutput, kMaxOutput);
         downMotor.setCoastMode(false);
     }
 
+    /*
+        Old code based on using two motors, were only using one now
     public void climberToPosition(double joystickControl) {
         //11.5 volts, probably need to change that
         upMotor.setToPosition(joystickControl, upPosition, upVoltage);
@@ -46,5 +55,22 @@ public class Climber{
         else {
             downMotor.setSpeed(downSpeed);
         }
+    }
+    */
+
+    public void rachetDown() {
+        downMotor.setVelocity(maxRPM);
+    }
+
+    public void rachetReset() {
+        downMotor.setSpeed(upSpeed);
+    }
+
+    public void rachetOffVel() {
+        downMotor.setVelocity(0);
+    }
+
+    public void rachetOffSpeed() {
+        downMotor.setSpeed(0);
     }
 }

@@ -9,9 +9,8 @@ import frc.robot.Flywheel;
 import frc.robot.LimeLight;
 import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SmartSingDrive;
-import frc.singularityDrive.SingDrive.SpeedMode;
+import frc.singularityDrive.SmartSingDrive.SpeedMode;
 import edu.wpi.first.wpilibj.smartdashboard.*;
-import com.kauailabs.navx.frc.AHRS;
 
 //Uncomment to enable gyro stuff
 //import com.kauailabs.navx.frc.AHRS;
@@ -21,7 +20,7 @@ import com.kauailabs.navx.frc.AHRS;
  * Main class to control the robot
  * 
  */
-public class ArcadeDrive extends ControlScheme {
+public class SmartArcadeDrive extends ControlScheme {
 
     //Create all objects & a speedMode object
     XboxController driveController, armController;
@@ -32,19 +31,12 @@ public class ArcadeDrive extends ControlScheme {
     boolean climberExtended;
     boolean climberDown;
 
-    double tx, tv;
-    
-    final double driveSpeedConstant = 0.3;
-    final double txkP = 0.022;
-    final double angleDifferencekP = 0.011;
-    final double endDistance = 2.0;
-
     /**
      * 
      * @param driveControllerPort Controller port the drive controller is connected to, probably 0
      * @param armControllerPort Controller port the arm controller is connect to, problably 1
      */
-    public ArcadeDrive(int driveControllerPort, int armControllerPort) {
+    public SmartArcadeDrive(int driveControllerPort, int armControllerPort) {
         driveController = new XboxController(driveControllerPort);
         armController = new XboxController(armControllerPort);
 
@@ -54,11 +46,15 @@ public class ArcadeDrive extends ControlScheme {
 
     }
 
+    public void drive(SingDrive drive, DrivePneumatics pneumatics) {
+
+    }
+
     /**
      * Drives arcade drive
      * 
      */
-    public void drive(SingDrive drive, DrivePneumatics pneumatics) {
+    public void smartDrive(SmartSingDrive drive, DrivePneumatics pneumatics) {
         //Switch speed mode object, set to low with left bumber and high with right bumper
         if(driveController.getLB()) {
             speedMode = SpeedMode.SLOW;
@@ -96,7 +92,6 @@ public class ArcadeDrive extends ControlScheme {
         //
         //The only line actually needed to drive - takes in control sticks, speed mode, and drives based on BasicDrive.
         drive.arcadeDrive(driveController.getLS_Y(), driveController.getRS_X(), 0.0, true, speedMode);
-        SmartDashboard.putNumber("Encoder Position", drive.getCurrentPosition());
 
         // Use the d-pad/POV hat on the gamepad to drive the robot slowly in any direction for precise adjustments.
         if(driveController.getPOVLeft()) {
@@ -111,10 +106,6 @@ public class ArcadeDrive extends ControlScheme {
         else if (driveController.getPOVUp()) {
             drive.arcadeDrive(0.1, 0, 0.0, false, SpeedMode.FAST);
         }
-
-    }
-
-    public void smartDrive(SmartSingDrive drive, DrivePneumatics pneumatics) {
 
     }
 
@@ -163,7 +154,6 @@ public class ArcadeDrive extends ControlScheme {
         else if(armController.getAButton()) {
             collector.collectorDown();
         }
-
     }
 
     public void climber(Climber climber) {
@@ -188,6 +178,7 @@ public class ArcadeDrive extends ControlScheme {
             climber.rachetOffSpeed();
         }
     }
+
 
     /**
      * Only turns on the painfully bright Limelight LEDs when they're being used
