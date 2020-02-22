@@ -135,6 +135,8 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("SupremeAuto", new JustMove(drive, limeLight));
     SmartDashboard.putData("Auto mode", autoChooser);*/
     
+    smartDrive.setInitialPosition();
+
     compressor = new Compressor();
     goalChooser = new SendableChooser<String>();
     positionChooser = new SendableChooser<String>();
@@ -231,7 +233,7 @@ public class Robot extends TimedRobot {
   //Stuff to run when teleop is selected
   @Override
   public void teleopInit() {
-    drive.setInitialPosition();
+    //drive.setInitialPosition();
   }
 
   /**
@@ -254,7 +256,7 @@ public class Robot extends TimedRobot {
     //colorSensor.spinColorWheelColor(2);
     currentScheme.colorSensor(colorSensor);
 
-    SmartDashboard.putNumber("EncoderPosition", drive.getCurrentPosition());
+    //SmartDashboard.putNumber("EncoderPosition", drive.getCurrentPosition());
     currentScheme.smartDrive(smartDrive, drivePneumatics);
     // partial autonomy via vision
     //currentScheme.ledMode(limeLight);
@@ -262,6 +264,8 @@ public class Robot extends TimedRobot {
     currentScheme.collectorConveyorFlywheel(conveyor, collector, flywheel);
     currentScheme.climber(climber);
     
+    SmartDashboard.getNumber("EncoderPosition", smartDrive.getCurrentPosition());
+
   }
 
   /**
@@ -269,7 +273,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    SmartDashboard.getNumber("EncoderPosition", drive.getCurrentPosition());
+    SmartDashboard.getNumber("EncoderPosition", smartDrive.getCurrentPosition());
     //compressor.start();
     //currentScheme.climberReset(climber);
   }
@@ -288,13 +292,7 @@ public class Robot extends TimedRobot {
     driveRight2 = 2;
     driveRight3 = 3;
 
-    colorSpinner = 16;
-
-    driveLeft2 = 5;
-    driveLeft3 = 6;
-    driveRight1 = 1;
-    driveRight2 = 2;
-    driveRight3 = 3;
+    colorSpinner = 14;
 
     // Flywheel motors
     flywheelMotor1 = 11;
@@ -305,7 +303,7 @@ public class Robot extends TimedRobot {
     conveyorMotor1 = 7;
 
     // Cell Collector Motor
-    collectorMotor1 = 9;
+    collectorMotor1 = 10;
 
     // Climber Motor Ports
     downMotorPort = 13;
@@ -316,11 +314,11 @@ public class Robot extends TimedRobot {
     drivePneu1 = 1;
     drivePneu2 = 6;
 
-    collectorSol1 = 2;
-    collectorSol2 = 5;
+    collectorSol1 = 5;
+    collectorSol2 = 2;
 
-    colorSol1 = 0;
-    colorSol2 = 7;
+    colorSol1 = 7;
+    colorSol2 = 0;
 
     
 

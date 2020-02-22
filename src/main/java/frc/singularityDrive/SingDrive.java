@@ -49,7 +49,7 @@ public abstract class SingDrive {
 	protected final static double DEFAULT_SLOW_SPEED_CONSTANT = 0.4;
 	protected final static double DEFAULT_NORMAL_SPEED_CONSTANT = 0.8;
 	protected final static double DEFAULT_FAST_SPEED_CONSTANT = 1.0;
-	protected final static double smartMotionMaxRPM = 11000;
+	protected final static double smartMotionMaxRPM = 5700;
 
 	//the shuit i need for limelight
 
@@ -193,6 +193,8 @@ public abstract class SingDrive {
 	/**
 	 * @return the velocityMultiplier, used to scale motor speed
 	 */
+
+	 /** LEFT IS REVERSED. GOING FORWARD PUSHES THE LEFT ENCODER VALUES IN THE NEGATIVE DIRECTION */
 	public double getCurrentPosition() {
 		SmartDashboard.putNumber("left position1", ((Spark) this.m_leftMotor1).getCurrentPosition());
 		SmartDashboard.putNumber("left position2", ((Spark) this.m_leftMotor2).getCurrentPosition());
@@ -200,7 +202,9 @@ public abstract class SingDrive {
 		SmartDashboard.putNumber("right position1", ((Spark) this.m_rightMotor1).getCurrentPosition());
 		SmartDashboard.putNumber("right position2", ((Spark) this.m_rightMotor2).getCurrentPosition());
 		SmartDashboard.putNumber("right position3", ((Spark) this.m_rightMotor3).getCurrentPosition());
-		return ((Spark) this.m_leftMotor1).getCurrentPosition()/2.0 + ((this.m_rightMotor1.getCurrentPosition()/-2.0));//that negative is suposed to be there trust me
+		return  ((Spark) this.m_leftMotor1).getCurrentPosition()/-6.0 + ((Spark)this.m_rightMotor1).getCurrentPosition()/6.0 +
+				((Spark) this.m_leftMotor2).getCurrentPosition()/-6.0 + ((Spark)this.m_rightMotor2).getCurrentPosition()/6.0 +
+				((Spark) this.m_leftMotor3).getCurrentPosition()/-6.0 + ((Spark)this.m_rightMotor3).getCurrentPosition()/6.0;//that negative is suposed to be there trust me
 		//return this.m_leftMotor1.getCurrentPosition();
 	}
 
@@ -210,6 +214,10 @@ public abstract class SingDrive {
 	public void setInitialPosition(){
 		((Spark) this.m_leftMotor1).setInitialPosition();
 		((Spark) this.m_rightMotor1).setInitialPosition();
+		((Spark) this.m_leftMotor2).setInitialPosition();
+		((Spark) this.m_rightMotor2).setInitialPosition();
+		((Spark) this.m_leftMotor3).setInitialPosition();
+		((Spark) this.m_rightMotor3).setInitialPosition();
 	}	
 
 	/**
@@ -423,7 +431,7 @@ public abstract class SingDrive {
 
 	public static double getVelocityOutput(double input, SpeedMode speedMode) {
 
-		double speedModeMaxRPM;
+		//double speedModeMaxRPM;
 
 		/*
 		if (speedMode == SpeedMode.SLOW) {
@@ -433,6 +441,8 @@ public abstract class SingDrive {
 			speedModeMaxRPM = smartMotionMaxRPM;
 		}
 		*/
+		
+		//SmartDashboard.putNumber("SMMaxRPM", speedModeMaxRPM);
 
 		double output = smartMotionMaxRPM * input;
 		return output;

@@ -132,10 +132,16 @@ public class SmartArcadeDrive extends ControlScheme {
             conveyor.conveyorForward();
         }
 
+        else if(armController.getXButton()) {
+            conveyor.conveyorReverse();
+        }
+
         else {
             collector.collectorOff();
             conveyor.conveyorOff();
         }
+
+
 
         //When the right trigger is pressed, the green wheel begins feeding power cells into the ramped up intake
         //Only allow power cells to be fed when the flywheel is running

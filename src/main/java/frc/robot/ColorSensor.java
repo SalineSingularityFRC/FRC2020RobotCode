@@ -8,8 +8,8 @@ public class ColorSensor{
 
     Spark colorSpinner;
     Canifier canifier;
-    public static final double speed = SmartDashboard.getNumber("Current Color Motor Speed: ", 0.50); //subject to change
-    public static final double lowspeed = SmartDashboard.getNumber("Current Color Motor Speed: ", 0.20); //subject to change
+    public static final double speed = SmartDashboard.getNumber("Current Color Motor Speed: ", -0.50); //subject to change
+    public static final double lowspeed = SmartDashboard.getNumber("Current Color Motor Speed: ", -0.20); //subject to change
     DoubleSolenoid colorSolenoid;
     int pistonExtend;
     int pistonRetract;
@@ -20,6 +20,8 @@ public class ColorSensor{
         colorSpinner = new Spark(colorSensorPort, true, 0.00);
         canifier = new Canifier();
         colorSolenoid = new DoubleSolenoid(pistonExtend, pistonRetract);
+        colorSpinner.setCurrentLimit(20);
+        colorSpinner.setCoastMode(false);
     }
     public void setSpeed(double speed) {
         colorSpinner.setSpeed(speed);

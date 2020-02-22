@@ -36,11 +36,11 @@ public class CellCollector {
     }
 
     public void collectorForward() {
-        collectorMotor1.setVelocity(maxRPM);
+        collectorMotor1.setVelocity(-maxRPM);
     }
 
     public void collectorReverse() {
-        collectorMotor1.setVelocity(-maxRPM);
+        collectorMotor1.setVelocity(maxRPM);
     }
 
     public void collectorOff() {

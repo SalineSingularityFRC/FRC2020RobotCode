@@ -22,7 +22,7 @@ public abstract class AutonControlScheme {
 
     public static final double radius = 3;
     
-    public static final double encoderTicks = 15;
+    public static final double encoderTicks = 16.28;
 
     public AutonControlScheme(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor){
         //define Limelight and all the sensors
@@ -80,6 +80,7 @@ public abstract class AutonControlScheme {
 
     public void shoot(){
         flywheel.flywheelForward();
+        flywheel.flywheelFeedOn();
         conveyor.conveyorForward();
 
         try {
@@ -89,6 +90,7 @@ public abstract class AutonControlScheme {
         }
             
         flywheel.flywheelOff();
+        flywheel.flywheelFeedOff();
         conveyor.conveyorOff();
     }
 

@@ -42,7 +42,7 @@ public class Flywheel {
 
     // Set the flywheels to shoot a cell forward
     public void flywheelForward() {
-        flywheel1.setVelocity(maxRPMFlywheel);
+        flywheel1.setVelocity(-maxRPMFlywheel);
     }
 
     // Set the flywheels to go revserse - not sure if needed, but have it in-case

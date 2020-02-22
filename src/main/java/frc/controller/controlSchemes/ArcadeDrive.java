@@ -219,9 +219,13 @@ public class ArcadeDrive extends ControlScheme {
             climber.rachetReset();
         }
 
+        else if(driveController.getBButton()) {
+            climber.rachetWind();
+        }
+
         else {
             climber.rachetOffSpeed();
-        }
+        } 
     }
 
     /**
