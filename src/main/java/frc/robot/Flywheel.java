@@ -26,7 +26,7 @@ public class Flywheel {
     double kMaxOutput = 1; 
     double kMinOutput = -1;
     double maxRPMFlywheel = 5700;
-    double maxRPMFeed = 5700;
+    double maxRPMFeed = 2800;
 
     // Init the flywheel object, taking int he two motors and ports and setting the flywheels to follow each other, reverse
     // Settings rampRate here to 0 so we get maximum firepower as fast as possible
