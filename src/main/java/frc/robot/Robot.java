@@ -39,6 +39,7 @@ public class Robot extends TimedRobot {
   //stores the motor controller IDs
   int driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3;
   int drivePneu1, drivePneu2;
+  int colorSol1, colorSol2;
   int colorSpinner;
   
   int flywheelMotor1, flywheelMotor2, flywheelMotor3;
@@ -97,7 +98,7 @@ public class Robot extends TimedRobot {
     //TODO un-comment methods
     //initialize motor controller ports IDs
     //Uncomment to initialize motor controllers aswell - commented for texting purposes
-    //setDefaultProperties();
+    setDefaultProperties();
 
     //initialize our driving scheme to a basic arcade drive
     currentScheme = new ArcadeDrive(XBOX_PORT, XBOX_PORT +1);
@@ -105,7 +106,7 @@ public class Robot extends TimedRobot {
     gyro = new AHRS(SPI.Port.kMXP);
     gyroResetAtTeleop = true;
 
-    colorSensor = new ColorSensor(1);
+    colorSensor = new ColorSensor(colorSpinner, colorSol1, colorSol2);
     
     //initialize all mechanisms on the robot
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
@@ -306,7 +307,7 @@ public class Robot extends TimedRobot {
     // Climber Motor Ports
     downMotorPort = 13;
 
-}
+
     //Pneumatics
     
     drivePneu1 = 1;
@@ -314,6 +315,9 @@ public class Robot extends TimedRobot {
 
     collectorSol1 = 2;
     collectorSol2 = 5;
+
+    colorSol1 = 0;
+    colorSol2 = 7;
 
     
 

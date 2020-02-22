@@ -3,6 +3,7 @@ package frc.controller.controlSchemes;
 import frc.controller.*;
 import frc.robot.CellCollector;
 import frc.robot.Climber;
+import frc.robot.ColorSensor;
 import frc.robot.Conveyor;
 import frc.robot.DrivePneumatics;
 import frc.robot.Flywheel;
@@ -153,6 +154,40 @@ public class SmartArcadeDrive extends ControlScheme {
 
         else if(armController.getAButton()) {
             collector.collectorDown();
+        }
+    }
+
+    public void colorSensor(ColorSensor colorSensor){
+        if(armController.getPOVUp()) {
+            colorSensor.spinColorWheelColor(2);
+            colorSensor.resetCount(false);
+        } 
+        
+        else if (armController.getPOVDown()) {
+            colorSensor.spinColorWheelRotations(26);
+            colorSensor.resetCount(false);
+        } 
+        
+        else if (armController.getPOVLeft()) {
+            colorSensor.resetCount(true);
+        } 
+        
+        else if (armController.getPOVRight()) {
+            colorSensor.spinSpeed(ColorSensor.lowspeed);
+            colorSensor.resetCount(false);
+        } 
+        
+        else {
+            colorSensor.stopSpinning();
+            colorSensor.resetCount(false);
+        }
+
+        if(armController.getStartButton()) {
+            colorSensor.extend();
+        }
+
+        else if(armController.getBackButton()) {
+            colorSensor.retract();
         }
     }
 
