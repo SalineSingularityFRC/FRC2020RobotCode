@@ -37,20 +37,23 @@ public class Robot extends TimedRobot {
   //stores the motor controller IDs
   int driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3;
   int drivePneu1, drivePneu2;
-  int flywheelMotor1, flywheelMotor2;
+  int flywheelMotor1, flywheelMotor2, flywheelMotor3;
   int conveyorMotor1, conveyorMotor2;
   int collectorMotor1;
+  int collectorSol1, collectorSol2;
+  int downMotorPort;
 
   //Declaration of our driving scheme, which can be initialized to
   //any ControlScheme in robotInit()
   ControlScheme currentScheme;
 
   //Declaration of mechanisms
-  SingDrive drive;
-  //DrivePneumatics drivePneumatics;
-  //Flywheel flywheel;
-  //Conveyor conveyor;
-  //CellCollector collector;
+  SingDrive drive; //if we want to use smart motion, change this to SmartSingDrive
+  DrivePneumatics drivePneumatics;
+  Flywheel flywheel;
+  Conveyor conveyor;
+  CellCollector collector;
+  Climber climber;
 
   //Creates an all-knowing limelight
   LimeLight limeLight;  // or CitrusSight?
@@ -60,6 +63,7 @@ public class Robot extends TimedRobot {
   boolean gyroResetAtTeleop;
 
   //Compressor compressor;
+  Compressor compressor;
 
   //SendableChoosers
   SendableChooser goalChooser;
@@ -89,14 +93,18 @@ public class Robot extends TimedRobot {
     
     //initialize all mechanisms on the robot
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
-    //drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
-    //flywheel = new Flywheel(flywheelMotor1, flywheelMotor2);
-    //conveyor = new Conveyor(conveyorMotor1, conveyorMotor2);
-    //collector = new CellCollector(collectorMotor1);
+    // ^^^^^^^ change this to SmartBasicDrive if using SmartDrive
+    drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
+    flywheel = new Flywheel(flywheelMotor1, flywheelMotor2, flywheelMotor3);
+    conveyor = new Conveyor(conveyorMotor1);
+    collector = new CellCollector(collectorMotor1, collectorSol1, collectorSol2);
+    climber = new Climber(downMotorPort);
     
     limeLight = new LimeLight();
     //limeLight.setCamMode(limeLight, 0.0);
     //DO NOT REMOVE PLZ - starts collecting data from drive cameras
+    //start collecting data from drive cameras
+    // This is not used if the raspberry pi is being used for image compression
     //CameraServer.getInstance().startAutomaticCapture();
 
     //gyro = new AHRS(SPI.Port.kMXP);
@@ -108,7 +116,7 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("SupremeAuto", new JustMove(drive, limeLight));
     SmartDashboard.putData("Auto mode", autoChooser);*/
     
-    //compressor = new Compressor();
+    compressor = new Compressor();
 
     goalChooser = new SendableChooser<String>();
     positionChooser = new SendableChooser<String>();
@@ -142,7 +150,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
 
-    //compressor.start();
+    compressor.start();
 
   }
 
@@ -193,9 +201,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
-    currentScheme.drive(drive/*, drivePneumatics*/);
-    
-    //TODO un-comment
+    //currentScheme.drive(drive, drivePneumatics);
     //currentScheme.ledMode(limeLight);
   }
 
@@ -213,14 +219,14 @@ public class Robot extends TimedRobot {
 
     // Allow driver control based on current scheme
     // (we shouldn't need to change this too often- other than commenting)
-    currentScheme.drive(drive/*, drivePneumatics*/);
-    SmartDashboard.putNumber("EncoderPosi", drive.getCurrentPosition());
+
+    SmartDashboard.putNumber("EncoderPosition", drive.getCurrentPosition());
+    currentScheme.drive(drive, drivePneumatics);
     // partial autonomy via vision
     //currentScheme.ledMode(limeLight);
     //control other various mechanisms
-    //currentScheme.flywheel(flywheel);
-    //currentScheme.conveyor(conveyor);
-    //currentScheme.collector(collector);
+    currentScheme.collectorConveyorFlywheel(conveyor, collector, flywheel);
+    currentScheme.climber(climber);
     
   }
 
@@ -229,7 +235,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    //compressor.start();
+    compressor.start();
+    currentScheme.climberReset(climber);
   }
 
   
@@ -240,27 +247,34 @@ public class Robot extends TimedRobot {
     
     // Drive Motors
     driveLeft1 = 4;
-    driveLeft2 = 4;
-    driveLeft3 = 4;
+
+    driveLeft2 = 5;
+    driveLeft3 = 6;
     driveRight1 = 1;
-    driveRight2 = 1;
-    driveRight3 = 1;
+    driveRight2 = 2;
+    driveRight3 = 3;
 
     // Flywheel motors
-    flywheelMotor1 = 7;
-    flywheelMotor2 = 8;
+    flywheelMotor1 = 11;
+    flywheelMotor2 = 12;
+    flywheelMotor3 = 8;
 
     // Conveyor motors
-    conveyorMotor1 = 9;
-    conveyorMotor2 = 10;
+    conveyorMotor1 = 7;
 
     // Cell Collector Motor
-    collectorMotor1 = 11;
+    collectorMotor1 = 9;
+
+    // Climber Motor Ports
+    downMotorPort = 13;
 
     //Pneumatics
     
-    drivePneu1 = 0;
-    drivePneu2 = 1;
+    drivePneu1 = 1;
+    drivePneu2 = 6;
+
+    collectorSol1 = 2;
+    collectorSol2 = 5;
 
     
 

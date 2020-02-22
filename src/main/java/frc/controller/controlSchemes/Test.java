@@ -23,25 +23,26 @@ public class Test extends ControlScheme{
         armController = new XboxController(armControllerPort);
     }
 
-    public void drive(SingDrive drive/*, DrivePneumatics pneumatics*/) {
+    public void drive(SingDrive drive, DrivePneumatics pneumatics) {
         
     }
 
-    public void flywheel(Flywheel flywheel) {
-
-    }
-
-    public void conveyor(Conveyor conveyor) {
+    public void smartDrive(SmartSingDrive drive, DrivePneumatics pneumatics) {
         
     }
 
-    public void collector(CellCollector collector) {
+    public void collectorConveyorFlywheel(Conveyor conveyor, CellCollector collector, Flywheel flywheel) {
         
     }
 
     public void climber(Climber climber) {
         
     }
+
+    public void climberReset(Climber climber) {
+        
+    }
+
 
     public void ledMode(LimeLight limeLight){
         
