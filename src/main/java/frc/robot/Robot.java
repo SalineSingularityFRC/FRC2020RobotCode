@@ -192,7 +192,7 @@ public class Robot extends TimedRobot {
       //SmartDashboard.putString("autoprogram", "PrimaryGoals");
       goals[Integer.parseInt((String)positionChooser.getSelected())][Integer.parseInt((String)goalChooser.getSelected())].moveAuton();
     }
-    if(!secondaryChooser.getSelected().equals("-1") && !goalChooser.getSelected().equals("-1")){
+    if(!secondaryChooser.getSelected().equals("-1") && goalChooser.getSelected().equals("0")){
       //SmartDashboard.putString("autonprogram", "SecondaryGoals");
       secondaryGoals[Integer.parseInt((String)secondaryChooser.getSelected())].moveAuton();
     }
