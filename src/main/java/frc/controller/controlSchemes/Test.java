@@ -18,6 +18,10 @@ public class Test extends ControlScheme{
     XboxController driveController;
     XboxController armController;
 
+    public void colorSensor(ColorSensor colorSensor) {
+        
+    }
+
     public Test(int driveControllerPort, int armControllerPort){
         driveController = new XboxController(driveControllerPort);
         armController = new XboxController(armControllerPort);

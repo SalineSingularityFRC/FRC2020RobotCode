@@ -14,6 +14,7 @@ import frc.singularityDrive.SingDrive;
 import frc.controller.controlSchemes.ArcadeDrive;
 import frc.controller.autonomous.*;
 //import frc.controller.controlSchemes.Test;
+import frc.robot.Canifier;
 
 import com.kauailabs.navx.frc.*;
 
@@ -24,6 +25,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.cameraserver.CameraServer;
 //import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,6 +39,8 @@ public class Robot extends TimedRobot {
   //stores the motor controller IDs
   int driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3;
   int drivePneu1, drivePneu2;
+  int colorSpinner;
+  
   int flywheelMotor1, flywheelMotor2, flywheelMotor3;
   int conveyorMotor1, conveyorMotor2;
   int collectorMotor1;
@@ -57,6 +61,12 @@ public class Robot extends TimedRobot {
 
   //Creates an all-knowing limelight
   LimeLight limeLight;  // or CitrusSight?
+
+  //Create a CANifier
+  Canifier canifier;
+
+  //Create a ColorSensor
+  ColorSensor colorSensor;
 
   //Create a gyro
   AHRS gyro;
@@ -86,10 +96,16 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     //TODO un-comment methods
     //initialize motor controller ports IDs
-    setDefaultProperties();
+    //Uncomment to initialize motor controllers aswell - commented for texting purposes
+    //setDefaultProperties();
 
     //initialize our driving scheme to a basic arcade drive
     currentScheme = new ArcadeDrive(XBOX_PORT, XBOX_PORT +1);
+    
+    gyro = new AHRS(SPI.Port.kMXP);
+    gyroResetAtTeleop = true;
+
+    colorSensor = new ColorSensor(1);
     
     //initialize all mechanisms on the robot
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
@@ -117,7 +133,6 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto mode", autoChooser);*/
     
     compressor = new Compressor();
-
     goalChooser = new SendableChooser<String>();
     positionChooser = new SendableChooser<String>();
     secondaryChooser = new SendableChooser<String>();
@@ -222,8 +237,19 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
 
-    // Allow driver control based on current scheme
-    // (we shouldn't need to change this too often- other than commenting)
+    // Allow driver control based on current schem
+/*
+    boolean colorData[] = canifier.getPinData();
+    int color = canifier.binToDecColor(colorData);
+    int count = canifier.binToDecCount(colorData);
+    String byteString = canifier.byteArrayToString(colorData);
+
+    SmartDashboard.putNumber("Current Color: ", color);
+    SmartDashboard.putNumber("Current Count: ", count);
+    SmartDashboard.putString("Byte Transfered: ", byteString);
+*/  
+    //colorSensor.spinColorWheelColor(2);
+    currentScheme.colorSensor(colorSensor);
 
     SmartDashboard.putNumber("EncoderPosition", drive.getCurrentPosition());
     currentScheme.drive(drive, drivePneumatics);
@@ -252,6 +278,13 @@ public class Robot extends TimedRobot {
     
     // Drive Motors
     driveLeft1 = 4;
+    driveLeft2 = 5;
+    driveLeft3 = 6;
+    driveRight1 = 1;
+    driveRight2 = 2;
+    driveRight3 = 3;
+
+    colorSpinner = 16;
 
     driveLeft2 = 5;
     driveLeft3 = 6;
@@ -273,6 +306,7 @@ public class Robot extends TimedRobot {
     // Climber Motor Ports
     downMotorPort = 13;
 
+}
     //Pneumatics
     
     drivePneu1 = 1;
