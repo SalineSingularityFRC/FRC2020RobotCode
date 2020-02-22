@@ -1,6 +1,7 @@
 package frc.controller.controlSchemes;
 
 import frc.controller.*;
+import frc.robot.ColorSensor;
 import frc.robot.CellCollector;
 import frc.robot.Climber;
 import frc.robot.Conveyor;
@@ -11,6 +12,7 @@ import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SmartSingDrive;
 import frc.singularityDrive.SingDrive.SpeedMode;
 import edu.wpi.first.wpilibj.smartdashboard.*;
+import com.kauailabs.navx.frc.AHRS;
 
 //Uncomment to enable gyro stuff
 //import com.kauailabs.navx.frc.AHRS;
@@ -31,6 +33,13 @@ public class ArcadeDrive extends ControlScheme {
     boolean climberExtended;
     boolean climberDown;
 
+    double tx, tv;
+    
+    final double driveSpeedConstant = 0.3;
+    final double txkP = 0.022;
+    final double angleDifferencekP = 0.011;
+    final double endDistance = 2.0;
+
     /**
      * 
      * @param driveControllerPort Controller port the drive controller is connected to, probably 0
@@ -44,6 +53,24 @@ public class ArcadeDrive extends ControlScheme {
         climberExtended = false;
         speedMode = SpeedMode.SLOW;
 
+    }
+
+    public void colorSensor(ColorSensor colorSensor){
+        if(armController.getPOVUp()) {
+            colorSensor.spinColorWheelColor(2);
+            colorSensor.resetCount(false);
+        } else if (armController.getPOVDown()) {
+            colorSensor.spinColorWheelRotations(26);
+            colorSensor.resetCount(false);
+        } else if (armController.getPOVLeft()) {
+            colorSensor.resetCount(true);
+        } else if (armController.getPOVRight()) {
+            colorSensor.spinSpeed(ColorSensor.lowspeed);
+            colorSensor.resetCount(false);
+        } else {
+            colorSensor.stopSpinning();
+            colorSensor.resetCount(false);
+        }
     }
 
     /**
@@ -88,6 +115,7 @@ public class ArcadeDrive extends ControlScheme {
         //
         //The only line actually needed to drive - takes in control sticks, speed mode, and drives based on BasicDrive.
         drive.arcadeDrive(driveController.getLS_Y(), driveController.getRS_X(), 0.0, true, speedMode);
+        SmartDashboard.putNumber("Encoder Position", drive.getCurrentPosition());
 
         // Use the d-pad/POV hat on the gamepad to drive the robot slowly in any direction for precise adjustments.
         if(driveController.getPOVLeft()) {
@@ -197,4 +225,8 @@ public class ArcadeDrive extends ControlScheme {
     }
 
 }
-    
+
+/**
+ * Pseudocode for Limelight targeting 
+ * Use a p controller
+ */

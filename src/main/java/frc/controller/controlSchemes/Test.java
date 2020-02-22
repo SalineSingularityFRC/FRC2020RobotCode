@@ -3,6 +3,7 @@ package frc.controller.controlSchemes;
 import frc.controller.*;
 import frc.robot.*;
 import frc.singularityDrive.*;
+import com.kauailabs.navx.frc.AHRS;
 
 // Alternative ControlScheme to ArcadeDrive.java (control scheme) to test different mechaninsms without breaking everything
 // ControlSchemes can be changed in Robot.java
@@ -16,6 +17,10 @@ import frc.singularityDrive.*;
 public class Test extends ControlScheme{
     XboxController driveController;
     XboxController armController;
+
+    public void colorSensor(ColorSensor colorSensor) {
+        
+    }
 
     public Test(int driveControllerPort, int armControllerPort){
         driveController = new XboxController(driveControllerPort);
@@ -45,5 +50,9 @@ public class Test extends ControlScheme{
 
     public void ledMode(LimeLight limeLight){
         
+    }
+
+    public boolean limeLightDrive(LimeLight limeLight, SingDrive drive, AHRS gryo, boolean isAuto){
+        return false;
     }
 }

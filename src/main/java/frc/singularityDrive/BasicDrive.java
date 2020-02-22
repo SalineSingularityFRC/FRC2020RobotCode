@@ -61,7 +61,7 @@ public class BasicDrive extends SingDrive {
 	public void arcadeDrive(double vertical, double rotation, double horizontal, boolean poweredInputs, SpeedMode speedMode) {
 
 		double forwardVelocity = vertical, rotationVelocity = -rotation;
-		
+
 		// Account for joystick drift.
 		forwardVelocity = super.threshold(forwardVelocity);
 		if (forwardVelocity != vertical) {
@@ -96,10 +96,12 @@ public class BasicDrive extends SingDrive {
 		super.m_leftMotor1.setVelocity(super.getVelocityOutput(velLeftOutput, speedMode));
 		super.m_rightMotor1.setVelocity(super.getVelocityOutput(velRightOutput, speedMode));
 		
+		// Drive the motors, and all subsequent motors through following.
+		super.m_leftMotor1.setSpeed(leftOutput);
+		super.m_rightMotor1.setSpeed(rightOutput);
 	}
-
 	
-	/**
+	/**.
 	 * Standard method for driving based on tank, which means that one joystick controls the left
 	 * drivetrain and another controls the right drivetrain.
 	 * 
@@ -130,7 +132,8 @@ public class BasicDrive extends SingDrive {
 		double leftMaximum = Math.max(1, Math.abs(leftVelocity));
 		double rightMaximum = Math.max(1, Math.abs(rightVelocity));
 
-
+		SmartDashboard.putNumber("Left Output", super.velocityMultiplier * leftVelocity / leftMaximum);
+		SmartDashboard.putNumber("Right Output", -super.velocityMultiplier * rightVelocity / rightMaximum);
 		// Drive the motors, and all subsequent motors through following.
 		super.m_leftMotor1.setSpeed(super.velocityMultiplier * leftVelocity / leftMaximum);
 		super.m_rightMotor1.setSpeed(-super.velocityMultiplier * rightVelocity / rightMaximum);
