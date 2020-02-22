@@ -59,7 +59,7 @@ public abstract class SmartSingDrive {
 	// Motion
 
 	public double kP = 5e-5;
-	public double kI = 1e-6;
+	public double kI = 0; //1e-6
 	public double kD = 0;
 	public double kIZ = 0;
 	public double kFF = 0.000156;

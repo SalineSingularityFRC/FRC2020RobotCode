@@ -90,11 +90,11 @@ public class BasicDrive extends SingDrive {
 		SmartDashboard.putNumber("Output Right", rightOutput);
 
 		// Drive the motors, and all subsequent motors through following.
-		super.m_leftMotor1.setSpeed(super.velocityMultiplier * (-forwardVelocity + rotationVelocity) / maximum);
-		super.m_rightMotor1.setSpeed(super.velocityMultiplier * (forwardVelocity + rotationVelocity) / maximum);
+		//super.m_leftMotor1.setSpeed(super.velocityMultiplier * (-forwardVelocity + rotationVelocity) / maximum);
+		//super.m_rightMotor1.setSpeed(super.velocityMultiplier * (forwardVelocity + rotationVelocity) / maximum);
 
-		//super.m_leftMotor1.setVelocity(super.getVelocityOutput(velLeftOutput, speedMode));
-		//super.m_rightMotor1.setVelocity(super.getVelocityOutput(velRightOutput, speedMode));
+		super.m_leftMotor1.setVelocity(super.getVelocityOutput(velLeftOutput, speedMode));
+		super.m_rightMotor1.setVelocity(super.getVelocityOutput(velRightOutput, speedMode));
 		
 	}
 
