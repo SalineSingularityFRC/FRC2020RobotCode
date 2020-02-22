@@ -6,21 +6,25 @@ import java.lang.Math;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import frc.robot.Flywheel;
 import frc.robot.LimeLight;
 import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SingDrive.*;
+import frc.robot.Conveyor;
 
 public abstract class AutonControlScheme {
 
     protected static AHRS gyro;
     protected static SingDrive drive;
     protected static LimeLight limeLight;
+    protected static Flywheel flywheel;
+    protected static Conveyor conveyor;
 
     public static final double radius = 3;
     
     public static final double encoderTicks = 15;
 
-    public AutonControlScheme(SingDrive drive, LimeLight limeLight){
+    public AutonControlScheme(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor){
         //define Limelight and all the sensors
         this.drive = drive;
         this.gyro = new AHRS(SPI.Port.kMXP);
@@ -75,7 +79,17 @@ public abstract class AutonControlScheme {
     }
 
     public void shoot(){
+        flywheel.flywheelForward();
+        conveyor.conveyorForward();
 
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            flywheel.flywheelOff();
+        }
+            
+        flywheel.flywheelOff();
+        conveyor.conveyorOff();
     }
 
 
