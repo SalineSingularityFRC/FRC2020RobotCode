@@ -209,9 +209,13 @@ public class SmartArcadeDrive extends ControlScheme {
             climber.rachetReset();
         }
 
+        else if(driveController.getYButton()) {
+            climber.rachetWind();
+        }
         else {
             climber.rachetOffSpeed();
         }
+
     }
 
 

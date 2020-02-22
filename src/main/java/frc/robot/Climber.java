@@ -62,6 +62,10 @@ public class Climber{
         downMotor.setVelocity(maxRPM);
     }
 
+    public void rachetWind() {
+        downMotor.setPower(0.1);
+    }
+
     public void rachetReset() {
         downMotor.setSpeed(upSpeed);
     }
