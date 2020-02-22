@@ -269,8 +269,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    compressor.start();
-    currentScheme.climberReset(climber);
+    SmartDashboard.getNumber("EncoderPosition", drive.getCurrentPosition());
+    //compressor.start();
+    //currentScheme.climberReset(climber);
   }
 
   
