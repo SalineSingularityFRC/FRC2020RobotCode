@@ -33,6 +33,9 @@ public class Spark implements MotorController {
     boolean controlWithJoystick;
 
     boolean usingLimitSwitch, upperLimit;
+    
+    // When controlling by voltage, set the max voltage here
+    private final double maxVoltage = 9.0;
 
 
     /**
@@ -44,6 +47,8 @@ public class Spark implements MotorController {
     public Spark(int portNumber, boolean brushlessMotor, double rampRate) {
 
         MotorType type;
+
+
         //Setting motor to either brushed or brushless
         if (brushlessMotor) {
             type = MotorType.kBrushless;
@@ -55,6 +60,8 @@ public class Spark implements MotorController {
         this.m_motor = new CANSparkMax(portNumber, type);
         this.setCoastMode(true);
         this.setRampRate(rampRate);
+        this.m_encoder = m_motor.getEncoder();
+        this.m_pidController = m_motor.getPIDController();
     }
 
     /**
@@ -67,7 +74,6 @@ public class Spark implements MotorController {
     double kP, double kI, double kD, double kIZ, double kFF, double kMinOut, double kMaxOut) {
         this(portNumber, brushlessMotor, rampRate);
 
-        this.m_encoder = m_motor.getEncoder();
         this.m_pidController = m_motor.getPIDController();
 
         this.putConstantsOnDashboard(name, kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
@@ -105,7 +111,6 @@ public class Spark implements MotorController {
     }
 
     public void setSpeed(double percentOutput) {
-        
         this.m_motor.set(percentOutput);
     }
 
@@ -115,6 +120,30 @@ public class Spark implements MotorController {
         if (!this.m_motor.isFollower()) {
             this.m_motor.setOpenLoopRampRate(rampRate);
         }
+    }
+
+    public void setCurrentLimit(int currentLimit) {
+        this.m_motor.setSmartCurrentLimit(currentLimit);
+    }
+
+    /**
+     * Set the motor based on voltage compared to speed to get a more reliable result
+     * @param power from -1 thru 1
+     * multiplys the given power value by maximum voltage, in this case 9 volts
+     */
+    public void setPower(double power) {
+        double voltageTarget = power * maxVoltage;
+
+        //If what were setting to is greater than max votlage, set to max voltage 
+        if(voltageTarget > maxVoltage) {
+            voltageTarget = maxVoltage;
+        }
+
+        else if(voltageTarget < -maxVoltage) {
+            voltageTarget = -maxVoltage;
+        }
+
+        this.m_motor.setVoltage(voltageTarget);
     }
 
     
@@ -188,6 +217,15 @@ public class Spark implements MotorController {
 
     }
 
+    public void setPIDConstantsSilent( double kP, double kI, double kD, double kIZ, double kFF, double kMinOut, double kMaxOut) {
+        this.m_pidController.setP(kP, 0);
+        this.m_pidController.setI(kI, 0);
+        this.m_pidController.setD(kD, 0);
+        this.m_pidController.setIZone(kIZ, 0);
+        this.m_pidController.setFF(kFF, 0);
+        this.m_pidController.setOutputRange(kMinOut, kMaxOut, 0);
+    }
+
     
     /**
      * Update PID constants from the dashboard (primarily for testing purposes)
@@ -255,12 +293,19 @@ public class Spark implements MotorController {
      */
     public void setInitialPosition() {
         this.initialPosition = this.m_encoder.getPosition();
+        SmartDashboard.putNumber("init Po", this.initialPosition);
     }
 
+    /**
+     * gets the valueas from the encoders
+     * @return Encoder Position in inches
+     */
     public double getCurrentPosition() {
+        
         if(initialPosition != -100) {
             return this.m_encoder.getPosition() - this.initialPosition;
         }
+
         return m_encoder.getPosition();
         
     }
@@ -337,11 +382,26 @@ public class Spark implements MotorController {
     }
 
     /**
-     * sets velocity of the motor (not likely to be used in 2019)
-     * @param velocity in RPM
+     * sets velocity of the motor 
+     * @param velocity Velocity in RPM
      */
     public void setVelocity(double velocity) {
 
         this.m_pidController.setReference(velocity, ControlType.kVelocity);
+    }
+
+    public void setSmartMotion(double velocity) {
+        this.m_pidController.setReference(velocity, ControlType.kSmartMotion);
+    }
+
+    public void setSmartMotionMaxVel(double maxVel) {
+        this.m_pidController.setSmartMotionMaxVelocity(maxVel, 0);
+    }
+
+    public void setSmartMotionConstants(double maxVel, double minVel, double maxAcc, double allowedErr, int slot) {
+    m_pidController.setSmartMotionMaxVelocity(maxVel, slot);
+    m_pidController.setSmartMotionMinOutputVelocity(minVel, slot);
+    m_pidController.setSmartMotionMaxAccel(maxAcc, slot);
+    m_pidController.setSmartMotionAllowedClosedLoopError(allowedErr, slot);
     }
 }

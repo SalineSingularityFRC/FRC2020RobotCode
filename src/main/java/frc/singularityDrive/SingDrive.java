@@ -1,10 +1,13 @@
 package frc.singularityDrive;
 
-
+import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.controller.MotorController;
-import frc.controller.motorControllers.*;
+import frc.controller.motorControllers.Spark;
+import frc.controller.controlSchemes.*;
+import frc.robot.LimeLight;
+import frc.controller.ControlScheme;
 
 /**
  * SingDrive (short for Singularity Drive) is the base class for all drive trains for 5066. It is
@@ -29,7 +32,7 @@ public abstract class SingDrive {
 	 * 
 	 * WARNING: These objects will need to be changed if the number, type, or orientation of motor controllers changes!
 	 */
-	protected MotorController m_leftMotor1, m_leftMotor2, m_leftMotor3, m_rightMotor1, m_rightMotor2, m_rightMotor3;
+	protected Spark m_leftMotor1, m_leftMotor2, m_leftMotor3, m_rightMotor1, m_rightMotor2, m_rightMotor3;
 
 	/**
 	 * When using CANSparkMax motor controllers, change DEFAULT_TO_BRUSHLESS based on the drivetrain
@@ -46,6 +49,9 @@ public abstract class SingDrive {
 	protected final static double DEFAULT_SLOW_SPEED_CONSTANT = 0.4;
 	protected final static double DEFAULT_NORMAL_SPEED_CONSTANT = 0.8;
 	protected final static double DEFAULT_FAST_SPEED_CONSTANT = 1.0;
+	protected final static double smartMotionMaxRPM = 11000;
+
+	//the shuit i need for limelight
 
 	// All motor control inputs are multiplied by velocityMultiplier. Often, velocityMultiplier will be set to a speed
 	// constant (listed above), or it can be set manually.
@@ -80,7 +86,20 @@ public abstract class SingDrive {
 	// is 2.0, joystick inputs will be squared when DEFAULT_INPUT_POWER is passed to this.setInputToPower().
 	// Suggested values: 1.0 to 3.0 (still needs testing)
 	public final static double DEFAULT_INPUT_POWER = 1.5;
-	
+
+
+	SpeedMode speedMode;
+
+    boolean lowGear;
+    boolean climberExtended;
+    boolean climberDown;
+
+    double tx, tv;
+    
+    //final double driveSpeedConstant = 0.3;
+    final double txkP = 0.0022;
+    final double angleDifferencekP = 0.011;
+    final double endDistance = 2.0;
     
     
 	// All subclasses must implement the following drive methods:
@@ -131,9 +150,11 @@ public abstract class SingDrive {
 	public SingDrive(int leftMotor1, int leftMotor2, int leftMotor3, int rightMotor1, int rightMotor2, int rightMotor3,
 	double slowSpeedConstant, double normalSpeedConstant, double fastSpeedConstant) {
 
+		SmartDashboard.putNumber("flipper", leftMotor1);
 		this.m_leftMotor1 = new Spark(leftMotor1, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
 		this.m_leftMotor2 = new Spark(leftMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
 		this.m_leftMotor3 = new Spark(leftMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+
 		// Setting one motor controller to follow another means that it will automatically set output voltage of the follower
 		// controller to the value of the followee motor controller. Setting the boolean value to true inverts the s0ignal
 		// in case that the motor controllers are naturally reversed.
@@ -145,7 +166,6 @@ public abstract class SingDrive {
 		this.m_rightMotor3 = new Spark(rightMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
 		this.m_rightMotor2.follow(this.m_rightMotor1, false);
 		this.m_rightMotor3.follow(this.m_rightMotor1, false);
-
 
 		// Set speed constants.
 		this.slowSpeedConstant = slowSpeedConstant;
@@ -169,6 +189,22 @@ public abstract class SingDrive {
 	public double getVelocityMultiplier() {
 		return this.velocityMultiplier;
 	}
+
+	/**
+	 * @return the velocityMultiplier, used to scale motor speed
+	 */
+	public double getCurrentPosition() {
+		return ((Spark) this.m_leftMotor1).getCurrentPosition()/2.0 + ((this.m_rightMotor1.getCurrentPosition()/-2.0));//that negative is suposed to be there trust me
+		//return this.m_leftMotor1.getCurrentPosition();
+	}
+
+	/**
+	 * sets the initial position of both encoders
+	 */
+	public void setInitialPosition(){
+		((Spark) this.m_leftMotor1).setInitialPosition();
+		((Spark) this.m_rightMotor1).setInitialPosition();
+	}	
 
 	/**
 	 * This method sets velocityMultiplier, which is used to scale the motor speed, based on speed constants set with the constructor.
@@ -295,6 +331,104 @@ public abstract class SingDrive {
 	}
 
 
+	 /**
+     * A method to adjust the robot if there is a target
+     * @param limeLight the camera
+     * @param drive the singDrive
+     * @param gyro the gyroscope
+     * @return whether or not the robot can/should move because the robot is on angle
+     */
+    public boolean limeLightDrive(LimeLight limeLight, SingDrive drive, AHRS gyro, boolean squareButton, 
+                                boolean offSetButton, boolean aButton ) {
+        // Defining tx and tv
+        // tx = X coordinate between -27 and 27
+        // tv = 0 if no target found, 1 is target found
+        tx = limeLight.tx.getDouble(0.0);
+		tv = limeLight.tv.getDouble(0.0);
+		
+		SmartDashboard.putNumber("tx",tx);
+		SmartDashboard.putNumber("tv",tv);
+		
+        if(Math.abs(tx) < 1.0){
+            return false;
+        }
+
+        //SmartDashboard.putNumber("Inches", ultraIn);
+
+        //TODO put this in teleOp
+        // Declaring and instantiating buttons used for enabling LimeLight drive
+        /*boolean squareButton = false, offSetButton = false;
+        squareButton = driveController.getXButton();
+        offSetButton = driveController.getYButton();*/
+        
+        // Defining and Declaring currentAngle as angle from gyro, between 0 and 360 degrees
+        double currentAngle = ControlScheme.smooshGyroAngle(gyro.getAngle());
+        SmartDashboard.putNumber("current angle:", currentAngle);
+
+        // Resets gyro value to 0
+        if (aButton) {
+            gyro.setAngleAdjustment(0);
+            gyro.setAngleAdjustment(-ControlScheme.smooshGyroAngle(gyro.getAngle()));
+        }
+
+        
+        //Starts driving based on LimeLight if the button is pushed and we have a target
+        if ( (squareButton || offSetButton ) && tv == 1.0/* && ultraIn > endDistance*/) {
+            
+            //Declaring the left and right command speeds and setting it equal to the driveSpeedConstant
+            double left_command = 0.0;
+            double right_command = 0.0;
+
+            //Declares and instaniates steering_adjust, and sets it to txkP * tx
+            double steering_adjust = 0.0;
+            steering_adjust += txkP *  tx;
+            
+            //TODO fix this
+            // Declare and adjust targetAngle based on currentAngle
+            double targetAngle;
+            if(squareButton) {
+                targetAngle = ControlScheme.getSquareAngleForPort(currentAngle);
+            }
+            else {
+                targetAngle = ControlScheme.getOffsetHatchAngle(currentAngle);
+            }
+
+            //Declaring the offset angle for turning
+            double angleDifference = currentAngle - targetAngle;
+            //This is an alternative angleDifference
+            double secondAngleDifference = targetAngle - 360 + currentAngle; 
+            //This is where we define which one we want to use. 
+            //Takes which ever one is closer to 0
+            if (Math.abs(secondAngleDifference) < Math.abs(angleDifference)) {
+                angleDifference = secondAngleDifference;
+            }
+            //To remove gyro control, comment out this line:
+            steering_adjust += angleDifferencekP * angleDifference;
+            
+            // Setting LimeLight drive for tank drive
+            left_command += steering_adjust;
+            right_command -= steering_adjust;
+            drive.tankDrive(left_command, right_command, 0.0, false, SpeedMode.SLOW);
+        }
+
+        return true;
+
+    }
+
+	public static double getVelocityOutput(double input, SpeedMode speedMode) {
+
+		double speedModeMaxRPM;
+
+		if (speedMode == SpeedMode.SLOW) {
+			speedModeMaxRPM = smartMotionMaxRPM * .4;
+		}
+		else {
+			speedModeMaxRPM = smartMotionMaxRPM;
+		}
+
+		double output = speedModeMaxRPM * input;
+		return output;
+	}
 
 	/*
 	For information on driving straight certain distances, or different angles, go to:
