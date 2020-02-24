@@ -17,7 +17,7 @@ public class Canifier {
     }
 
     GeneralPin pinArray[] = {GeneralPin.SPI_MISO_PWM2P, GeneralPin.SPI_MOSI_PWM1P, GeneralPin.SPI_CLK_PWM0P, GeneralPin.SPI_CS, GeneralPin.LIMR, GeneralPin.LIMF, GeneralPin.QUAD_IDX, GeneralPin.QUAD_B};
-
+    
     //GeneralPin pinArray[] = {GeneralPin.SPI_MOSI_PWM1P, GeneralPin.SPI_CLK_PWM0P, GeneralPin.SPI_CS, GeneralPin.LIMR, GeneralPin.LIMF, GeneralPin.QUAD_IDX, GeneralPin.QUAD_B, GeneralPin.QUAD_A};
 
     boolean dataBuf[] = new boolean[8];
