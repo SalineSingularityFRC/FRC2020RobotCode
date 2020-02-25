@@ -16,7 +16,7 @@ public class Conveyor {
     double kFF = 0.000015; 
     double kMaxOutput = 1; 
     double kMinOutput = -1;
-    double maxRPM = -5700;
+    double maxRPM = -2000;
 
     public Conveyor(int port1) {
         motor1 = new Spark(port1, true, 0.0, "Conveyor", false, false, kP, kI, kD, kIz, kFF, kMinOutput, kMaxOutput);
