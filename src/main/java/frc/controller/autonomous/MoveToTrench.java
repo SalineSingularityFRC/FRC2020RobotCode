@@ -16,7 +16,7 @@ public class MoveToTrench extends AutonControlScheme{
         super.rotate(90, true);
         super.vertical(66.91, -0.5);
         super.rotate(90, false);
-        super.vertical(260, -0.5);
+        super.vertical(140, -0.5);
     }
 
 }

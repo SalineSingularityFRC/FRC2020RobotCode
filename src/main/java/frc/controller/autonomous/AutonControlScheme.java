@@ -38,14 +38,16 @@ public abstract class AutonControlScheme {
      * How to make the robot move forward or backwards autonomously.
      * DISCLAIMER If you want the robot to go backwards set verticalSpeed number to negative
      * @param distance the absolute value of the distance in inches the robot will travel 
-     * @param verticalSpeed The speed between -1 and 1 the robot will go. 
+     * @param verticalSpeed The speed between 0 and 1 the robot will go. 
      */
     public void vertical(double distance, double verticalSpeed){
 
+        if(distance < 0) verticalSpeed *= -1;
+
         drive.setInitialPosition();
 
-        while ( drive.getCurrentPosition() / encoderTicks > -distance /( 2* Math.PI *radius)
-                && drive.getCurrentPosition() / encoderTicks < distance / ( 2* Math.PI *radius)) {
+        while ( drive.getCurrentPosition() / encoderTicks > -1 * Math.abs(distance) /( 2* Math.PI *radius)
+                && drive.getCurrentPosition() / encoderTicks < Math.abs(distance) / ( 2* Math.PI *radius)) {
         
             SmartDashboard.putNumber("encoderPo", drive.getCurrentPosition());
             SmartDashboard.putNumber("goal", distance / radius);
@@ -53,6 +55,10 @@ public abstract class AutonControlScheme {
             drive.arcadeDrive(0.1, 0, 0.0, false, SpeedMode.NORMAL);
         
 		}
+    }
+
+    public void vertical(double distance){
+        vertical(distance, 0.5);
     }
 
     public void rotate(double angle, boolean isCounterClockwise){
@@ -80,18 +86,18 @@ public abstract class AutonControlScheme {
 
     public void shoot(){
         flywheel.flywheelForward();
+        flywheel.flywheelFeedOn();
         conveyor.conveyorForward();
 
         try {
             Thread.sleep(2000);
         } catch (InterruptedException ex) {
-            flywheel.flywheelOff();
-        }
             
+        }
+        
         flywheel.flywheelOff();
+        flywheel.flywheelFeedOff();
         conveyor.conveyorOff();
     }
-
-
 
 }
