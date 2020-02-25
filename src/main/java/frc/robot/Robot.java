@@ -221,7 +221,7 @@ public class Robot extends TimedRobot {
     //currentScheme.flywheel(flywheel);
     //currentScheme.conveyor(conveyor);
     //currentScheme.collector(collector);
-    currentScheme.limeLightDrive(limeLight, drive);
+    currentScheme.limeLightDrive(limeLight, drive, false);
     
   }
 

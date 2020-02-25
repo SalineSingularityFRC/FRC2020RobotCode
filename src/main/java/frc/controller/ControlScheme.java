@@ -23,7 +23,7 @@ public abstract class ControlScheme {
 	
 	public abstract void drive(SingDrive drive/*, DrivePneumatics pneumatics*/);
 	public abstract void ledMode(LimeLight limeLight);
-	public abstract void limeLightDrive(LimeLight limeLight, SingDrive drive);
+	public abstract void limeLightDrive(LimeLight limeLight, SingDrive drive, boolean runLimeLight);
 	//public abstract boolean limeLightDrive( LimeLight limeLight, SingDrive drive, AHRS gyro, boolean LLDriveButton);
 
 	// In addation to defining our various different mechanisms to be expanded upon in subclasses (other controlSchemes, i.e. ArcadeDrive),

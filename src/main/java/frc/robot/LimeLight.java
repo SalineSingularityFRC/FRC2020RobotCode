@@ -19,6 +19,7 @@ public class LimeLight{
     final double kpAim = -0.1;
     final double kpDistance = -0.1;
     final double min_aim_command = 0.05;
+    final double DistanceCorrection = 0.5;
 
 
     /**
@@ -106,7 +107,7 @@ public class LimeLight{
             double right_comand = 0.0;
             
             double heading_error = -tx.getDouble(0.0);
-            double distance_error = -ty.getDouble(0.0);
+            double distance_error = -ty.getDouble(0.0) + DistanceCorrection;
             double steering_adjust = 0.0;
             
             
