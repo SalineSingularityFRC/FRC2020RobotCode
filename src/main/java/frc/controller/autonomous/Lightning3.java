@@ -4,11 +4,12 @@ import frc.singularityDrive.SingDrive;
 import frc.robot.LimeLight;
 import frc.robot.Flywheel;
 import frc.robot.Conveyor;
+import frc.robot.CellCollector;
 
 public class Lightning3  extends AutonControlScheme{
 
-    public Lightning3 (SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor) {
-        super(drive, limeLight, flywheel, conveyor);
+    public Lightning3 (SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor, CellCollector cellCollector) {
+        super(drive, limeLight, flywheel, conveyor, cellCollector);
     }
 
     public void moveAuton(){
