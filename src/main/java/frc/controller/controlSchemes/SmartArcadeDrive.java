@@ -165,7 +165,7 @@ public class SmartArcadeDrive extends ControlScheme {
 
     public void colorSensor(ColorSensor colorSensor){
         if(armController.getPOVUp()) {
-            colorSensor.spinColorWheelColor(2);
+            colorSensor.spinColorWheelColor();
             colorSensor.resetCount(false);
         } 
         

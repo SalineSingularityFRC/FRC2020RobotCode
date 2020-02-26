@@ -48,6 +48,7 @@ public class ColorSensor{
         }
     }
     public void spinColorWheelColor(/*int targetColor*/) {
+        String gameData = DriverStation.getInstance().getGameSpecificMessage();
         boolean colorData[] = canifier.getPinData();
         int color = canifier.binToDecColor(colorData);
         int count = canifier.binToDecCount(colorData);
