@@ -1,20 +1,20 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.controller.motorControllers.Spark;
 
 public class ColorSensor{
 
+    String gameData = DriverStation.getInstance().getGameSpecificMessage();
     Spark colorSpinner;
-    Canifier canifier;
+    Canifier canifier; 
     public static final double speed = SmartDashboard.getNumber("Current Color Motor Speed: ", 0.50); //subject to change
     public static final double lowspeed = SmartDashboard.getNumber("Current Color Motor Speed: ", 0.20); //subject to change
     DoubleSolenoid colorSolenoid;
     int pistonExtend;
     int pistonRetract;
-
-
 
     public ColorSensor(int colorSensorPort){
         colorSpinner = new Spark(colorSensorPort, true, 0.00);
@@ -46,15 +46,40 @@ public class ColorSensor{
             
         }
     }
-    public void spinColorWheelColor(int targetColor) {
+    public void spinColorWheelColor() {
         boolean colorData[] = canifier.getPinData();
         int color = canifier.binToDecColor(colorData);
         int count = canifier.binToDecCount(colorData);
         String byteString = canifier.byteArrayToString(colorData);
+        int targetColor;
         
         SmartDashboard.putNumber("Current Color: ", color);
         SmartDashboard.putNumber("Current Count: ", count);
         SmartDashboard.putString("Byte Tranfered: ", byteString);
+
+        //TargetColor values are shifted to accomedate for the difference between
+        //robot color sensor position and game color sensor position
+        //ie, they will always see different colors
+        if(gameData.length() > 0) {
+            switch(gameData.charAt(0)) {
+                case 'B' :
+                    targetColor = 2;
+                    break;
+                case 'G' :
+                    targetColor = 3;
+                    break;
+                case 'R' :
+                    targetColor = 1;
+                    break;
+                case 'Y' :
+                    targetColor = 0;
+                    break;
+                default :
+
+                    break;
+
+            }
+        }
 
         if(color != targetColor) {
             colorSpinner.setSpeed(this.lowspeed);
