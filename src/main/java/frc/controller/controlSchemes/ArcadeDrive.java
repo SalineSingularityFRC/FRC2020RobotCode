@@ -223,6 +223,17 @@ public class ArcadeDrive extends ControlScheme {
             climber.rachetWind();
         }
 
+        
+    }*/
+
+
+    public void limeLightDrive(LimeLight limeLight, SingDrive drive, boolean runLimeLight){
+        if(armController.getAButton()){
+            limeLight.runLimeLight(drive);
+        }
+        if(runLimeLight){
+            limeLight.runLimeLight(drive);
+        }
         else {
             climber.rachetOffSpeed();
         } 
@@ -234,14 +245,14 @@ public class ArcadeDrive extends ControlScheme {
      */
     public void ledMode(LimeLight limeLight ){
 
-        /*
-        if(driveController.getXButton() || driveController.getYButton()){
+        
+        if(driveController.getAButton()){
             limeLight.ledOff(limeLight);
         }
         else{
             limeLight.ledOn(limeLight);;
         }
-        */
+        
     }
 
 }
