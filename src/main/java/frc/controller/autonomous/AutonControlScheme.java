@@ -10,6 +10,7 @@ import frc.robot.Flywheel;
 import frc.robot.LimeLight;
 import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SingDrive.*;
+import frc.robot.CellCollector;
 import frc.robot.Conveyor;
 
 public abstract class AutonControlScheme {
@@ -19,16 +20,20 @@ public abstract class AutonControlScheme {
     protected static LimeLight limeLight;
     protected static Flywheel flywheel;
     protected static Conveyor conveyor;
+    protected static CellCollector cellCollector;
 
-    public static final double radius = 3;
+    public static final double radius = 3.125;
     
     public static final double encoderTicks = 15;
 
-    public AutonControlScheme(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor){
+    public AutonControlScheme(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor, CellCollector cellCollector){
         //define Limelight and all the sensors
         this.drive = drive;
         this.gyro = new AHRS(SPI.Port.kMXP);
         this.limeLight = limeLight;
+        this.flywheel = flywheel;
+        this.conveyor = conveyor;
+        this.cellCollector = cellCollector;
     }
 
     //the main method of each auton programs
@@ -60,6 +65,14 @@ public abstract class AutonControlScheme {
     public void vertical(double distance){
         vertical(distance, 0.5);
     }
+
+    public void verticalWithCollector(double distance){
+        cellCollector.collectorForward();
+        conveyor.conveyorForward();
+        vertical(distance);
+        cellCollector.collectorOff();
+    }
+
 
     public void rotate(double angle, boolean isCounterClockwise){
         rotate(0.2, angle, isCounterClockwise);
