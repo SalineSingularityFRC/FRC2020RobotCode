@@ -2,11 +2,13 @@ package frc.controller.autonomous;
 
 import frc.singularityDrive.SingDrive;
 import frc.robot.LimeLight;
+import frc.robot.Flywheel;
+import frc.robot.Conveyor;
 
 public class Trench1 extends AutonControlScheme {
 
-    public Trench1(SingDrive drive, LimeLight limeLight) {
-        super(drive, limeLight);
+    public Trench1(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor) {
+        super(drive, limeLight, flywheel, conveyor);
     }
 
     //The back of the robot should be facing in the direction of the side of the field with the trench//

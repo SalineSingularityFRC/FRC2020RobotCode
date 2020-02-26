@@ -2,11 +2,13 @@ package frc.controller.autonomous;
 
 import frc.singularityDrive.SingDrive;
 import frc.robot.LimeLight;
+import frc.robot.Flywheel;
+import frc.robot.Conveyor;
 
 public class MoveToTrench extends AutonControlScheme{
 
-    public MoveToTrench(SingDrive drive, LimeLight limeLight){
-        super(drive, limeLight);
+    public MoveToTrench(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor) {
+        super(drive, limeLight, flywheel, conveyor);
     }
 
     public void moveAuton(){

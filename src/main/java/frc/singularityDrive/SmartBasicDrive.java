@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * The simplest subclass of SingDrive, meant to represent a drivetrain with two sets of in-line
  * wheels and motors (for examples, 3 motors on the left and 3 on the right).
  */
-public class BasicDrive extends SingDrive {
+public class SmartBasicDrive extends SmartSingDrive {
 	
 	
 	/**
@@ -27,10 +27,11 @@ public class BasicDrive extends SingDrive {
 	 * 
 	 * WARNING: This method will need to be changed if the number, type, or orientation of motor controllers changes!
 	 */
-	public BasicDrive(int leftMotor1, int leftMotor2, int leftMotor3, int rightMotor1, int rightMotor2, int rightMotor3,
+	public SmartBasicDrive(int leftMotor1, int leftMotor2, int leftMotor3, int rightMotor1, int rightMotor2, int rightMotor3,
 	double slowSpeedConstant, double normalSpeedConstant, double fastSpeedConstant) {
 
 		super(leftMotor1, leftMotor2, leftMotor3, rightMotor1, rightMotor2, rightMotor3, slowSpeedConstant, normalSpeedConstant, fastSpeedConstant);
+
 	}
 
 
@@ -40,7 +41,7 @@ public class BasicDrive extends SingDrive {
 	 * 
 	 * WARNING: This method will need to be changed if the number, type, or orientation of motor controllers changes!
 	 */
-	public BasicDrive(int leftMotor1, int leftMotor2, int leftMotor3, int rightMotor1, int rightMotor2,  int rightMotor3) {
+	public SmartBasicDrive(int leftMotor1, int leftMotor2, int leftMotor3, int rightMotor1, int rightMotor2,  int rightMotor3) {
 
 		this(leftMotor1, leftMotor2, leftMotor3, rightMotor1, rightMotor2, rightMotor3,
 		DEFAULT_SLOW_SPEED_CONSTANT, DEFAULT_NORMAL_SPEED_CONSTANT, DEFAULT_FAST_SPEED_CONSTANT);
@@ -61,7 +62,8 @@ public class BasicDrive extends SingDrive {
 	public void arcadeDrive(double vertical, double rotation, double horizontal, boolean poweredInputs, SpeedMode speedMode) {
 
 		double forwardVelocity = vertical, rotationVelocity = -rotation;
-
+		
+		
 		// Account for joystick drift.
 		forwardVelocity = super.threshold(forwardVelocity);
 		if (forwardVelocity != vertical) {
@@ -75,7 +77,7 @@ public class BasicDrive extends SingDrive {
 		}
 
 		// Change veloctiyMultiplier.
-		setVelocityMultiplierBasedOnSpeedMode(speedMode);
+		//setVelocityMultiplierBasedOnSpeedMode(speedMode);
 
 		// If translation + rotation > 1, we will divide by this value, maximum, in order to only set motors to power -1 to 1.
 		double maximum = Math.max(1, Math.abs(forwardVelocity) + Math.abs(rotationVelocity));
@@ -83,25 +85,26 @@ public class BasicDrive extends SingDrive {
 		double leftOutput = super.velocityMultiplier * (-forwardVelocity + rotationVelocity) / maximum;
 		double rightOutput = super.velocityMultiplier * (forwardVelocity + rotationVelocity) / maximum;
 
-		double velLeftOutput = (-forwardVelocity + rotationVelocity) / maximum;
-		double velRightOutput = (forwardVelocity + rotationVelocity) / maximum;
-
 		SmartDashboard.putNumber("Output Left", leftOutput);
 		SmartDashboard.putNumber("Output Right", rightOutput);
 
+		SmartDashboard.putNumber("Left RPM", super.getVelocityOutput(leftOutput, speedMode));
+		SmartDashboard.putNumber("Right RPM", super.getVelocityOutput(rightOutput, speedMode));
+			
+		
 		// Drive the motors, and all subsequent motors through following.
-		//super.m_leftMotor1.setSpeed(super.velocityMultiplier * (-forwardVelocity + rotationVelocity) / maximum);
-		//super.m_rightMotor1.setSpeed(super.velocityMultiplier * (forwardVelocity + rotationVelocity) / maximum);
 
 		super.m_leftMotor1.setVelocity(super.getVelocityOutput(leftOutput, speedMode));
 		super.m_rightMotor1.setVelocity(super.getVelocityOutput(rightOutput, speedMode));
 		
-		// Drive the motors, and all subsequent motors through following.
-		//super.m_leftMotor1.setSpeed(leftOutput);
-		//super.m_rightMotor1.setSpeed(rightOutput);
+
+		//super.m_leftMotor1.setSmartMotion(super.getVelocityOutput(leftOutput, speedMode));
+		//super.m_rightMotor1.setSmartMotion(super.getVelocityOutput(rightOutput, speedMode));
+		
 	}
+
 	
-	/**.
+	/**
 	 * Standard method for driving based on tank, which means that one joystick controls the left
 	 * drivetrain and another controls the right drivetrain.
 	 * 
@@ -135,14 +138,9 @@ public class BasicDrive extends SingDrive {
 		double velRightOut = rightVelocity / rightMaximum;
 		double velLeftOut = leftVelocity / leftMaximum;
 
-		SmartDashboard.putNumber("Left Output", super.velocityMultiplier * leftVelocity / leftMaximum);
-		SmartDashboard.putNumber("Right Output", -super.velocityMultiplier * rightVelocity / rightMaximum);
-		// Drive the motors, and all subsequent motors through following.
-		super.m_leftMotor1.setSpeed(super.velocityMultiplier * leftVelocity / leftMaximum);
-		super.m_rightMotor1.setSpeed(-super.velocityMultiplier * rightVelocity / rightMaximum);
 
-		//super.m_rightMotor1.setVelocity(super.getVelocityOutput(velRightOut, speedMode));
-		//super.m_leftMotor1.setVelocity(super.getVelocityOutput(velLeftOut, speedMode));
-
+		// Drive the motors, and all subsequent motors through following.		
+		super.m_rightMotor1.setVelocity(super.getVelocityOutput(velRightOut, speedMode));
+		super.m_leftMotor1.setVelocity(super.getVelocityOutput(velLeftOut, speedMode));
 	}
 }

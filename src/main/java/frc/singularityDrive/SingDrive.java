@@ -49,6 +49,7 @@ public abstract class SingDrive {
 	protected final static double DEFAULT_SLOW_SPEED_CONSTANT = 0.4;
 	protected final static double DEFAULT_NORMAL_SPEED_CONSTANT = 0.8;
 	protected final static double DEFAULT_FAST_SPEED_CONSTANT = 1.0;
+	protected final static double smartMotionMaxRPM = 5700;
 
 	//the shuit i need for limelight
 
@@ -151,22 +152,20 @@ public abstract class SingDrive {
 
 		SmartDashboard.putNumber("flipper", leftMotor1);
 		this.m_leftMotor1 = new Spark(leftMotor1, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		//m_leftMotor1.setInitialPosition();
-		//this.m_leftMotor2 = new Spark(leftMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		//this.m_leftMotor3 = new Spark(leftMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+		this.m_leftMotor2 = new Spark(leftMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+		this.m_leftMotor3 = new Spark(leftMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+
 		// Setting one motor controller to follow another means that it will automatically set output voltage of the follower
 		// controller to the value of the followee motor controller. Setting the boolean value to true inverts the s0ignal
 		// in case that the motor controllers are naturally reversed.
-		//this.m_leftMotor2.follow(this.m_leftMotor1, false);
-		//this.m_leftMotor3.follow(this.m_leftMotor1, false);
+		this.m_leftMotor2.follow(this.m_leftMotor1, false);
+		this.m_leftMotor3.follow(this.m_leftMotor1, false);
 
 		this.m_rightMotor1 = new Spark(rightMotor1, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		//m_rightMotor1.setInitialPosition();
-		//this.m_rightMotor2 = new Spark(rightMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		//this.m_rightMotor3 = new Spark(rightMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		///this.m_rightMotor2.follow(this.m_rightMotor1, false);
-		//this.m_rightMotor3.follow(this.m_rightMotor1, false);
-
+		this.m_rightMotor2 = new Spark(rightMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+		this.m_rightMotor3 = new Spark(rightMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+		this.m_rightMotor2.follow(this.m_rightMotor1, false);
+		this.m_rightMotor3.follow(this.m_rightMotor1, false);
 
 		// Set speed constants.
 		this.slowSpeedConstant = slowSpeedConstant;
@@ -194,8 +193,18 @@ public abstract class SingDrive {
 	/**
 	 * @return the velocityMultiplier, used to scale motor speed
 	 */
+
+	 /** LEFT IS REVERSED. GOING FORWARD PUSHES THE LEFT ENCODER VALUES IN THE NEGATIVE DIRECTION */
 	public double getCurrentPosition() {
-		return ((Spark) this.m_leftMotor1).getCurrentPosition()/2.0 + ((this.m_rightMotor1.getCurrentPosition()/-2.0));//that negative is suposed to be there trust me
+		SmartDashboard.putNumber("left position1", ((Spark) this.m_leftMotor1).getCurrentPosition());
+		SmartDashboard.putNumber("left position2", ((Spark) this.m_leftMotor2).getCurrentPosition());
+		SmartDashboard.putNumber("left position3", ((Spark) this.m_leftMotor3).getCurrentPosition());
+		SmartDashboard.putNumber("right position1", ((Spark) this.m_rightMotor1).getCurrentPosition());
+		SmartDashboard.putNumber("right position2", ((Spark) this.m_rightMotor2).getCurrentPosition());
+		SmartDashboard.putNumber("right position3", ((Spark) this.m_rightMotor3).getCurrentPosition());
+		return  ((Spark) this.m_leftMotor1).getCurrentPosition()/-6.0 + ((Spark)this.m_rightMotor1).getCurrentPosition()/6.0 +
+				((Spark) this.m_leftMotor2).getCurrentPosition()/-6.0 + ((Spark)this.m_rightMotor2).getCurrentPosition()/6.0 +
+				((Spark) this.m_leftMotor3).getCurrentPosition()/-6.0 + ((Spark)this.m_rightMotor3).getCurrentPosition()/6.0;//that negative is suposed to be there trust me
 		//return this.m_leftMotor1.getCurrentPosition();
 	}
 
@@ -205,6 +214,10 @@ public abstract class SingDrive {
 	public void setInitialPosition(){
 		((Spark) this.m_leftMotor1).setInitialPosition();
 		((Spark) this.m_rightMotor1).setInitialPosition();
+		((Spark) this.m_leftMotor2).setInitialPosition();
+		((Spark) this.m_rightMotor2).setInitialPosition();
+		((Spark) this.m_leftMotor3).setInitialPosition();
+		((Spark) this.m_rightMotor3).setInitialPosition();
 	}	
 
 	/**
@@ -259,12 +272,12 @@ public abstract class SingDrive {
 	 */
 	public void rampVoltage(double rampRate) {
 		this.m_leftMotor1.setRampRate(rampRate);
-		//this.m_leftMotor2.setRampRate(rampRate);
-		//this.m_leftMotor3.setRampRate(rampRate);
+		this.m_leftMotor2.setRampRate(rampRate);
+		this.m_leftMotor3.setRampRate(rampRate);
 
 		this.m_rightMotor1.setRampRate(rampRate);
-		//this.m_rightMotor2.setRampRate(rampRate);
-		//this.m_rightMotor3.setRampRate(rampRate);
+		this.m_rightMotor2.setRampRate(rampRate);
+		this.m_rightMotor3.setRampRate(rampRate);
 	}
 	/**
 	 * Used to return rampRate of motors to the default to avoid wear on motors (recommended for any normal driving).
@@ -273,12 +286,12 @@ public abstract class SingDrive {
 	 */
 	public void rampDefaultVoltage() {
 		this.m_leftMotor1.setRampRate(DEFAULT_RAMP_RATE);
-		//this.m_leftMotor2.setRampRate(DEFAULT_RAMP_RATE);
-		//this.m_leftMotor3.setRampRate(DEFAULT_RAMP_RATE);
+		this.m_leftMotor2.setRampRate(DEFAULT_RAMP_RATE);
+		this.m_leftMotor3.setRampRate(DEFAULT_RAMP_RATE);
 
 		this.m_rightMotor1.setRampRate(DEFAULT_RAMP_RATE);
-		//this.m_rightMotor2.setRampRate(DEFAULT_RAMP_RATE);
-		//this.m_rightMotor3.setRampRate(DEFAULT_RAMP_RATE);
+		this.m_rightMotor2.setRampRate(DEFAULT_RAMP_RATE);
+		this.m_rightMotor3.setRampRate(DEFAULT_RAMP_RATE);
 	}
 
 	/**
@@ -290,12 +303,12 @@ public abstract class SingDrive {
 	 */
 	public void setDriveToCoast(boolean coast) {
 		this.m_leftMotor1.setCoastMode(coast);
-		//this.m_leftMotor2.setCoastMode(coast);
-		//this.m_leftMotor3.setCoastMode(coast);
+		this.m_leftMotor2.setCoastMode(coast);
+		this.m_leftMotor3.setCoastMode(coast);
 
 		this.m_rightMotor1.setCoastMode(coast);
-		//this.m_rightMotor2.setCoastMode(coast);
-		//this.m_rightMotor3.setCoastMode(coast);
+		this.m_rightMotor2.setCoastMode(coast);
+		this.m_rightMotor3.setCoastMode(coast);
 	}
 	
 	
@@ -330,6 +343,7 @@ public abstract class SingDrive {
 		return joystickInput * Math.abs(Math.pow(positiveInput, power - 1));
 		
 	}
+
 
 	 /**
      * A method to adjust the robot if there is a target
@@ -414,6 +428,25 @@ public abstract class SingDrive {
         return true;
 
     }
+
+	public static double getVelocityOutput(double input, SpeedMode speedMode) {
+
+		//double speedModeMaxRPM;
+
+		/*
+		if (speedMode == SpeedMode.SLOW) {
+			speedModeMaxRPM = smartMotionMaxRPM * .4;
+		}
+		else {
+			speedModeMaxRPM = smartMotionMaxRPM;
+		}
+		*/
+		
+		//SmartDashboard.putNumber("SMMaxRPM", speedModeMaxRPM);
+
+		double output = smartMotionMaxRPM * input;
+		return output;
+	}
 
 	/*
 	For information on driving straight certain distances, or different angles, go to:
