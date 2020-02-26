@@ -46,20 +46,13 @@ public class ColorSensor{
             
         }
     }
-    public void spinColorWheelColor() {
+    public void spinColorWheelColor(/*int targetColor*/) {
         boolean colorData[] = canifier.getPinData();
         int color = canifier.binToDecColor(colorData);
         int count = canifier.binToDecCount(colorData);
         String byteString = canifier.byteArrayToString(colorData);
-        int targetColor;
+        int targetColor = 0;
         
-        SmartDashboard.putNumber("Current Color: ", color);
-        SmartDashboard.putNumber("Current Count: ", count);
-        SmartDashboard.putString("Byte Tranfered: ", byteString);
-
-        //TargetColor values are shifted to accomedate for the difference between
-        //robot color sensor position and game color sensor position
-        //ie, they will always see different colors
         if(gameData.length() > 0) {
             switch(gameData.charAt(0)) {
                 case 'B' :
@@ -75,11 +68,21 @@ public class ColorSensor{
                     targetColor = 0;
                     break;
                 default :
-
+                    targetColor = 0; //THIS IS ONLY FOR A TEST!!! REMOVE!
                     break;
 
             }
         }
+
+        SmartDashboard.putNumber("Current Color: ", color);
+        SmartDashboard.putNumber("Current Count: ", count);
+        SmartDashboard.putString("Byte Tranfered: ", byteString);
+        SmartDashboard.putNumber("Target Color: ", targetColor);
+
+        //TargetColor values are shifted to accomedate for the difference between
+        //robot color sensor position and game color sensor position
+        //ie, they will always see different colors
+
 
         if(color != targetColor) {
             colorSpinner.setSpeed(this.lowspeed);
