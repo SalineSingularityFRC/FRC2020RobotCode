@@ -56,7 +56,4 @@ public class Test extends ControlScheme{
         
     }
 
-    public void limeLightDrive(LimeLight limeLight, SingDrive drive){
-        
-    }
 }
