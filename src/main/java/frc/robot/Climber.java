@@ -19,7 +19,7 @@ public class Climber{
    double kFF = 0.000015; 
    double kMaxOutput = 1; 
    double kMinOutput = -1;
-   double maxRPM = 5700;
+   double maxRPM = 4500;
 
     public Climber(int downMotorPort) {
         downMotor = new Spark(downMotorPort, true, 0.0, "Climber", false, false, kP, kI, kD, kIz, kFF, kMinOutput, kMaxOutput);
@@ -60,6 +60,10 @@ public class Climber{
 
     public void rachetDown() {
         downMotor.setVelocity(maxRPM);
+    }
+
+    public void rachetWind() {
+        downMotor.setPower(0.4);
     }
 
     public void rachetReset() {

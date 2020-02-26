@@ -59,17 +59,33 @@ public class ArcadeDrive extends ControlScheme {
         if(armController.getPOVUp()) {
             colorSensor.spinColorWheelColor();
             colorSensor.resetCount(false);
-        } else if (armController.getPOVDown()) {
+        } 
+        
+        else if (armController.getPOVDown()) {
             colorSensor.spinColorWheelRotations(26);
             colorSensor.resetCount(false);
-        } else if (armController.getPOVLeft()) {
+        } 
+        
+        else if (armController.getPOVLeft()) {
             colorSensor.resetCount(true);
-        } else if (armController.getPOVRight()) {
+        } 
+        
+        else if (armController.getPOVRight()) {
             colorSensor.spinSpeed(ColorSensor.lowspeed);
             colorSensor.resetCount(false);
-        } else {
+        } 
+        
+        else {
             colorSensor.stopSpinning();
             colorSensor.resetCount(false);
+        }
+
+        if(armController.getStartButton()) {
+            colorSensor.extend();
+        }
+
+        else if(armController.getBackButton()) {
+            colorSensor.retract();
         }
     }
 
@@ -203,8 +219,24 @@ public class ArcadeDrive extends ControlScheme {
             climber.rachetReset();
         }
 
+        else if(driveController.getBButton()) {
+            climber.rachetWind();
+        }
+
         else {
             climber.rachetOffSpeed();
+        } 
+
+        
+    }
+
+
+    public void limeLightDrive(LimeLight limeLight, SingDrive drive, boolean runLimeLight){
+        if(armController.getAButton()){
+            limeLight.runLimeLight(drive);
+        }
+        if(runLimeLight){
+            limeLight.runLimeLight(drive);
         }
     }
 
@@ -214,14 +246,14 @@ public class ArcadeDrive extends ControlScheme {
      */
     public void ledMode(LimeLight limeLight ){
 
-        /*
-        if(driveController.getXButton() || driveController.getYButton()){
-            limeLight.ledOff(limeLight);
+        
+        if(driveController.getAButton()){
+            limeLight.ledOn(limeLight);
         }
         else{
-            limeLight.ledOn(limeLight);;
+            limeLight.ledOff(limeLight);;
         }
-        */
+        
     }
 
 }

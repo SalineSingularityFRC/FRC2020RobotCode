@@ -6,25 +6,34 @@ import java.lang.Math;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import frc.robot.Flywheel;
 import frc.robot.LimeLight;
 import frc.singularityDrive.SingDrive;
 import frc.singularityDrive.SingDrive.*;
+import frc.robot.CellCollector;
+import frc.robot.Conveyor;
 
 public abstract class AutonControlScheme {
 
     protected static AHRS gyro;
     protected static SingDrive drive;
     protected static LimeLight limeLight;
+    protected static Flywheel flywheel;
+    protected static Conveyor conveyor;
+    protected static CellCollector cellCollector;
 
-    public static final double radius = 3;
+    public static final double radius = 3.125;
     
-    public static final double encoderTicks = 15;
+    public static final double encoderTicks = 16.28;
 
-    public AutonControlScheme(SingDrive drive, LimeLight limeLight){
+    public AutonControlScheme(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor, CellCollector cellCollector){
         //define Limelight and all the sensors
         this.drive = drive;
         this.gyro = new AHRS(SPI.Port.kMXP);
         this.limeLight = limeLight;
+        this.flywheel = flywheel;
+        this.conveyor = conveyor;
+        this.cellCollector = cellCollector;
     }
 
     //the main method of each auton programs
@@ -34,14 +43,16 @@ public abstract class AutonControlScheme {
      * How to make the robot move forward or backwards autonomously.
      * DISCLAIMER If you want the robot to go backwards set verticalSpeed number to negative
      * @param distance the absolute value of the distance in inches the robot will travel 
-     * @param verticalSpeed The speed between -1 and 1 the robot will go. 
+     * @param verticalSpeed The speed between 0 and 1 the robot will go. 
      */
     public void vertical(double distance, double verticalSpeed){
 
+        if(distance < 0) verticalSpeed *= -1;
+
         drive.setInitialPosition();
 
-        while ( drive.getCurrentPosition() / encoderTicks > -distance /( 2* Math.PI *radius)
-                && drive.getCurrentPosition() / encoderTicks < distance / ( 2* Math.PI *radius)) {
+        while ( drive.getCurrentPosition() / encoderTicks > -1 * Math.abs(distance) /( 2* Math.PI *radius)
+                && drive.getCurrentPosition() / encoderTicks < Math.abs(distance) / ( 2* Math.PI *radius)) {
         
             SmartDashboard.putNumber("encoderPo", drive.getCurrentPosition());
             SmartDashboard.putNumber("goal", distance / radius);
@@ -50,6 +61,18 @@ public abstract class AutonControlScheme {
         
 		}
     }
+
+    public void vertical(double distance){
+        vertical(distance, 0.5);
+    }
+
+    public void verticalWithCollector(double distance){
+        cellCollector.collectorForward();
+        conveyor.conveyorForward();
+        vertical(distance);
+        cellCollector.collectorOff();
+    }
+
 
     public void rotate(double angle, boolean isCounterClockwise){
         rotate(0.2, angle, isCounterClockwise);
@@ -75,9 +98,19 @@ public abstract class AutonControlScheme {
     }
 
     public void shoot(){
+        flywheel.flywheelForward();
+        flywheel.flywheelFeedOn();
+        conveyor.conveyorForward();
 
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException ex) {
+            
+        }
+        
+        flywheel.flywheelOff();
+        flywheel.flywheelFeedOff();
+        conveyor.conveyorOff();
     }
-
-
 
 }

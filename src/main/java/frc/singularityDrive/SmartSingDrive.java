@@ -48,7 +48,7 @@ public abstract class SmartSingDrive {
 	protected final static double DEFAULT_SLOW_SPEED_CONSTANT = 0.4;
 	protected final static double DEFAULT_NORMAL_SPEED_CONSTANT = 0.8;
 	protected final static double DEFAULT_FAST_SPEED_CONSTANT = 1.0;
-	protected final static double smartMotionMaxRPM = 11000;
+	protected final static double smartMotionMaxRPM = 5700;
 
 	// All motor control inputs are multiplied by velocityMultiplier. Often,
 	// velocityMultiplier will be set to a speed
@@ -58,8 +58,8 @@ public abstract class SmartSingDrive {
 	// Setting default PID values for the motor controllers in order to use Smart
 	// Motion
 
-	public double kP = 5e-5;
-	public double kI = 1e-6;
+	public double kP = 5e-6;
+	public double kI = 0; //1e-6 
 	public double kD = 0;
 	public double kIZ = 0;
 	public double kFF = 0.000156;
@@ -319,6 +319,26 @@ public abstract class SmartSingDrive {
 		this.m_rightMotor3.setCoastMode(coast);
 	}
 
+	public void setInitialPosition(){
+		this.m_leftMotor1.setInitialPosition();
+		this.m_leftMotor2.setInitialPosition();
+		this.m_leftMotor3.setInitialPosition();
+		this.m_rightMotor1.setInitialPosition();
+		this.m_rightMotor2.setInitialPosition();
+		this.m_rightMotor3.setInitialPosition();
+	}
+
+	public double getCurrentPosition() {
+		SmartDashboard.putNumber("left position1", ((Spark) this.m_leftMotor1).getCurrentPosition());
+		SmartDashboard.putNumber("left position2", ((Spark) this.m_leftMotor2).getCurrentPosition());
+		SmartDashboard.putNumber("left position3", ((Spark) this.m_leftMotor3).getCurrentPosition());
+		SmartDashboard.putNumber("right position1", ((Spark) this.m_rightMotor1).getCurrentPosition());
+		SmartDashboard.putNumber("right position2", ((Spark) this.m_rightMotor2).getCurrentPosition());
+		SmartDashboard.putNumber("right position3", ((Spark) this.m_rightMotor3).getCurrentPosition());
+		return ((Spark) this.m_leftMotor1).getCurrentPosition()/2.0 + ((this.m_rightMotor1.getCurrentPosition()/-2.0));//that negative is suposed to be there trust me
+		//return this.m_leftMotor1.getCurrentPosition();
+	}
+
 	/**
 	 * Threshold is intended to be used by subclasses to limit the drift on joystick
 	 * axes.
@@ -356,16 +376,7 @@ public abstract class SmartSingDrive {
 
 	public static double getVelocityOutput(double input, SpeedMode speedMode) {
 
-		double speedModeMaxRPM;
-
-		if (speedMode == SpeedMode.SLOW) {
-			speedModeMaxRPM = smartMotionMaxRPM * .4;
-		}
-		else {
-			speedModeMaxRPM = smartMotionMaxRPM;
-		}
-
-		double output = speedModeMaxRPM * input;
+		double output = smartMotionMaxRPM * input;
 		return output;
 	}
 

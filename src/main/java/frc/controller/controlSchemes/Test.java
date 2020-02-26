@@ -52,7 +52,11 @@ public class Test extends ControlScheme{
         
     }
 
-    public boolean limeLightDrive(LimeLight limeLight, SingDrive drive, AHRS gryo, boolean isAuto){
-        return false;
+    public void limeLightDrive(LimeLight limeLight, SingDrive drive, boolean isAuto){
+        
+    }
+
+    public void limeLightDrive(LimeLight limeLight, SingDrive drive){
+        
     }
 }

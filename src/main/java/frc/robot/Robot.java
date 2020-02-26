@@ -10,8 +10,8 @@ package frc.robot;
 
 import frc.controller.*;
 import frc.singularityDrive.*;
-import frc.singularityDrive.SingDrive;
 import frc.controller.controlSchemes.ArcadeDrive;
+import frc.controller.controlSchemes.SmartArcadeDrive;
 import frc.controller.autonomous.*;
 //import frc.controller.controlSchemes.Test;
 import frc.robot.Canifier;
@@ -39,6 +39,7 @@ public class Robot extends TimedRobot {
   //stores the motor controller IDs
   int driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3;
   int drivePneu1, drivePneu2;
+  int colorSol1, colorSol2;
   int colorSpinner;
   
   int flywheelMotor1, flywheelMotor2, flywheelMotor3;
@@ -52,7 +53,8 @@ public class Robot extends TimedRobot {
   ControlScheme currentScheme;
 
   //Declaration of mechanisms
-  SingDrive drive; //if we want to use smart motion, change this to SmartSingDrive
+  SingDrive drive;
+  SmartSingDrive smartDrive; //if we want to use smart motion, change this to SmartSingDrive
   DrivePneumatics drivePneumatics;
   Flywheel flywheel;
   Conveyor conveyor;
@@ -97,17 +99,18 @@ public class Robot extends TimedRobot {
     //TODO un-comment methods
     //initialize motor controller ports IDs
     //Uncomment to initialize motor controllers aswell - commented for texting purposes
-    //setDefaultProperties();
+    setDefaultProperties();
 
     //initialize our driving scheme to a basic arcade drive
-    currentScheme = new ArcadeDrive(XBOX_PORT, XBOX_PORT +1);
+    currentScheme = new SmartArcadeDrive(XBOX_PORT, XBOX_PORT +1);
     
     gyro = new AHRS(SPI.Port.kMXP);
     gyroResetAtTeleop = true;
 
-    colorSensor = new ColorSensor(1);
+    colorSensor = new ColorSensor(colorSpinner, colorSol1, colorSol2);
     
     //initialize all mechanisms on the robot
+    smartDrive = new SmartBasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
     // ^^^^^^^ change this to SmartBasicDrive if using SmartDrive
     drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
@@ -132,6 +135,8 @@ public class Robot extends TimedRobot {
     autoChooser.addOption("SupremeAuto", new JustMove(drive, limeLight));
     SmartDashboard.putData("Auto mode", autoChooser);*/
     
+    smartDrive.setInitialPosition();
+
     compressor = new Compressor();
     goalChooser = new SendableChooser<String>();
     positionChooser = new SendableChooser<String>();
@@ -139,15 +144,13 @@ public class Robot extends TimedRobot {
 
     goalChooser.addDefault("Nothing", "-1");
     goalChooser.addOption("Target", "0");
-    goalChooser.addOption("Trench", "1");
 
     positionChooser.addDefault("Position 1", "0");
     positionChooser.addOption("Position 2", "1");
     positionChooser.addOption("Position 3", "2");
 
     secondaryChooser.addDefault("Nothing", "-1");
-    secondaryChooser.addOption("Trench", "0");
-    secondaryChooser.addOption("Move Away", "1");
+    secondaryChooser.addOption("And Collect And Shoot", "0");
 
     SmartDashboard.putData("Position", positionChooser);
     SmartDashboard.putData("Primary Goal", goalChooser);
@@ -189,11 +192,9 @@ public class Robot extends TimedRobot {
     //secondaryGoals
     //  0: move to Trench
     //  1: move away
-   AutonControlScheme[][] goals={{new Lightning1(drive, limeLight), new Trench1(drive, limeLight)},
-                                {new Lightning2(drive, limeLight), new Trench2(drive, limeLight)},
-                                {new Lightning3(drive, limeLight), new Trench3(drive, limeLight)}};
-    
-    AutonControlScheme[] secondaryGoals = {new MoveToTrench(drive,limeLight), new MoveAwayFromTarget(drive, limeLight)};
+   AutonControlScheme[] goals={ new Trench1(drive, limeLight, flywheel, conveyor, collector),
+                                 new Trench2(drive, limeLight, flywheel, conveyor, collector),
+                                 new Trench3(drive, limeLight, flywheel, conveyor, collector)};
     
     SmartDashboard.putNumber("result of position", Integer.parseInt((String)positionChooser.getSelected()));
     SmartDashboard.putNumber("result of goals", Integer.parseInt((String)goalChooser.getSelected()));
@@ -201,18 +202,18 @@ public class Robot extends TimedRobot {
 
     /*if(goalChooser.getSelected().equals("-1")){
       //SmartDashboard.putString("autoprogram", "JustMove");
-      new JustMove(drive, limeLight).moveAuton();
+      new JustMove(drive, limeLight, flywheel, conveyor, collector).moveAuton();
     }
     else{
       //SmartDashboard.putString("autoprogram", "PrimaryGoals");
-      goals[Integer.parseInt((String)positionChooser.getSelected())][Integer.parseInt((String)goalChooser.getSelected())].moveAuton();
+      goals[Integer.parseInt((String)positionChooser.getSelected())].moveAuton();
     }
-    if(!secondaryChooser.getSelected().equals("-1") && !goalChooser.getSelected().equals("-1")){
+    if(!secondaryChooser.getSelected().equals("-1") && goalChooser.getSelected().equals("0")){
       //SmartDashboard.putString("autonprogram", "SecondaryGoals");
-      secondaryGoals[Integer.parseInt((String)secondaryChooser.getSelected())].moveAuton();
+      new AndCollectAndShoot(drive, limeLight, flywheel, conveyor, collector).moveAuton();
     }*/
     
-    AutonControlScheme hodl = new TestAuton(drive, limeLight);
+    AutonControlScheme hodl = new TestAuton(drive, limeLight, flywheel, conveyor, collector);
     hodl.moveAuton();
   }
 
@@ -228,7 +229,7 @@ public class Robot extends TimedRobot {
   //Stuff to run when teleop is selected
   @Override
   public void teleopInit() {
-    drive.setInitialPosition();
+    //drive.setInitialPosition();
   }
 
   /**
@@ -251,14 +252,17 @@ public class Robot extends TimedRobot {
     //colorSensor.spinColorWheelColor(2);
     currentScheme.colorSensor(colorSensor);
 
-    SmartDashboard.putNumber("EncoderPosition", drive.getCurrentPosition());
-    currentScheme.drive(drive, drivePneumatics);
+    //SmartDashboard.putNumber("EncoderPosition", drive.getCurrentPosition());
+    currentScheme.smartDrive(smartDrive, drivePneumatics);
     // partial autonomy via vision
     //currentScheme.ledMode(limeLight);
     //control other various mechanisms
+    currentScheme.limeLightDrive(limeLight, drive, false);
     currentScheme.collectorConveyorFlywheel(conveyor, collector, flywheel);
     currentScheme.climber(climber);
     
+    SmartDashboard.getNumber("EncoderPosition", smartDrive.getCurrentPosition());
+
   }
 
   /**
@@ -266,8 +270,9 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    compressor.start();
-    currentScheme.climberReset(climber);
+    SmartDashboard.getNumber("EncoderPosition", smartDrive.getCurrentPosition());
+    //compressor.start();
+    //currentScheme.climberReset(climber);
   }
 
   
@@ -284,13 +289,7 @@ public class Robot extends TimedRobot {
     driveRight2 = 2;
     driveRight3 = 3;
 
-    colorSpinner = 16;
-
-    driveLeft2 = 5;
-    driveLeft3 = 6;
-    driveRight1 = 1;
-    driveRight2 = 2;
-    driveRight3 = 3;
+    colorSpinner = 14;
 
     // Flywheel motors
     flywheelMotor1 = 11;
@@ -301,19 +300,22 @@ public class Robot extends TimedRobot {
     conveyorMotor1 = 7;
 
     // Cell Collector Motor
-    collectorMotor1 = 9;
+    collectorMotor1 = 10;
 
     // Climber Motor Ports
     downMotorPort = 13;
 
-}
+
     //Pneumatics
     
     drivePneu1 = 1;
     drivePneu2 = 6;
 
-    collectorSol1 = 2;
-    collectorSol2 = 5;
+    collectorSol1 = 5;
+    collectorSol2 = 2;
+
+    colorSol1 = 7;
+    colorSol2 = 0;
 
     
 

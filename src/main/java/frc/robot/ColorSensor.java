@@ -16,10 +16,11 @@ public class ColorSensor{
     int pistonExtend;
     int pistonRetract;
 
-    public ColorSensor(int colorSensorPort){
+
+    public ColorSensor(int colorSensorPort, int pistionExtend, int pistionRetract){
         colorSpinner = new Spark(colorSensorPort, true, 0.00);
         canifier = new Canifier();
-        //colorSolenoid = new DoubleSolenoid(pistonExtend, pistonRetract);
+        colorSolenoid = new DoubleSolenoid(pistonExtend, pistonRetract);
     }
     public void setSpeed(double speed) {
         colorSpinner.setSpeed(speed);

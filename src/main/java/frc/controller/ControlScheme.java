@@ -27,12 +27,13 @@ public abstract class ControlScheme {
 	public abstract void drive(SingDrive drive, DrivePneumatics pneumatics);
 	public abstract void smartDrive(SmartSingDrive drive, DrivePneumatics pneumatics);
 	public abstract void ledMode(LimeLight limeLight);
-
+	public abstract void limeLightDrive(LimeLight limeLight, SingDrive drive, boolean runLimeLight);
+	//public abstract boolean limeLightDrive( LimeLight limeLight, SingDrive drive, AHRS gyro, boolean LLDriveButton);
 	//public abstract boolean limeLightDrive( LimeLight limeLight, SingDrive drive, AHRS gyro, boolean isAuto);
 	public abstract void collectorConveyorFlywheel(Conveyor conveyor, CellCollector collector, Flywheel flywheel);
 	public abstract void climber(Climber climber);
 	public abstract void climberReset(Climber climber);
-  public abstract void colorSensor(ColorSensor colorSensor);
+ 	public abstract void colorSensor(ColorSensor colorSensor);
 
 	// In addation to defining our various different mechanisms to be expanded upon in subclasses (other controlSchemes, i.e. ArcadeDrive),
 	// various different methods to interact with the gyro are also included in here. Why? I don't know, but they can be accessed anywhere from
