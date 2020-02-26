@@ -206,8 +206,7 @@ public class SmartArcadeDrive extends ControlScheme {
         else {
             climber.rachetOffVel();
         }
-
-        
+ 
     }
 
     public void climberReset(Climber climber) {
@@ -218,10 +217,20 @@ public class SmartArcadeDrive extends ControlScheme {
         else if(driveController.getYButton()) {
             climber.rachetWind();
         }
+
         else {
             climber.rachetOffSpeed();
         }
 
+    }
+
+    public void limeLightDrive(LimeLight limeLight, SingDrive drive, boolean runLimeLight){
+        if(armController.getAButton()){
+            limeLight.runLimeLight(drive);
+        }
+        if(runLimeLight){
+            limeLight.runLimeLight(drive);
+        }
     }
 
 
@@ -231,14 +240,12 @@ public class SmartArcadeDrive extends ControlScheme {
      */
     public void ledMode(LimeLight limeLight ){
 
-        /*
-        if(driveController.getXButton() || driveController.getYButton()){
-            limeLight.ledOff(limeLight);
+        if(driveController.getAButton()){
+            limeLight.ledOn(limeLight);
         }
         else{
-            limeLight.ledOn(limeLight);;
+            limeLight.ledOff(limeLight);;
         }
-        */
     }
 
 }
