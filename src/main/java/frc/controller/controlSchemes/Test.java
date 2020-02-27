@@ -52,7 +52,7 @@ public class Test extends ControlScheme{
         
     }
 
-    public void limeLightDrive(LimeLight limeLight, SingDrive drive, boolean isAuto){
+    public void limeLightDrive(LimeLight limeLight, SmartSingDrive drive, boolean isAuto){
         
     }
 

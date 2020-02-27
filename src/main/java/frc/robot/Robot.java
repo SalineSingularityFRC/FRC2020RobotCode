@@ -257,11 +257,12 @@ public class Robot extends TimedRobot {
     // partial autonomy via vision
     //currentScheme.ledMode(limeLight);
     //control other various mechanisms
-    currentScheme.limeLightDrive(limeLight, drive, false);
+    currentScheme.limeLightDrive(limeLight, smartDrive, false);
     currentScheme.collectorConveyorFlywheel(conveyor, collector, flywheel);
     currentScheme.climber(climber);
     
     SmartDashboard.getNumber("EncoderPosition", smartDrive.getCurrentPosition());
+    SmartDashboard.getNumber("Gyro Position", gyro.getAngle());
 
   }
 
@@ -272,7 +273,7 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     SmartDashboard.getNumber("EncoderPosition", smartDrive.getCurrentPosition());
     //compressor.start();
-    //currentScheme.climberReset(climber);
+    currentScheme.climberReset(climber);
   }
 
   

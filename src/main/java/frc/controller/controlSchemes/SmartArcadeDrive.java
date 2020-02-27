@@ -129,7 +129,6 @@ public class SmartArcadeDrive extends ControlScheme {
         //turns of when released
         if(armController.getLB()) {
             collector.collectorForward();
-            conveyor.conveyorForward();
         }
 
         else if(armController.getXButton()) {
@@ -138,6 +137,14 @@ public class SmartArcadeDrive extends ControlScheme {
 
         else {
             collector.collectorOff();
+        }
+
+
+        if(armController.getRB()) {
+            conveyor.conveyorForward();
+        }
+
+        else {
             conveyor.conveyorOff();
         }
 
@@ -147,6 +154,10 @@ public class SmartArcadeDrive extends ControlScheme {
         //Only allow power cells to be fed when the flywheel is running
         if(armController.getTriggerRight() > .5 && armController.getTriggerRight() > .5) {
             flywheel.flywheelFeedOn();
+        }
+
+        else if(armController.getBButton()) {
+            flywheel.flywheelFeedReverse();
         }
 
         else {
@@ -224,8 +235,9 @@ public class SmartArcadeDrive extends ControlScheme {
 
     }
 
-    public void limeLightDrive(LimeLight limeLight, SingDrive drive, boolean runLimeLight){
-        if(armController.getAButton()){
+    public void limeLightDrive(LimeLight limeLight, SmartSingDrive drive, boolean runLimeLight){
+        SmartDashboard.putNumber("got here", 69.0);
+        if(driveController.getAButton()){
             limeLight.runLimeLight(drive);
         }
         if(runLimeLight){

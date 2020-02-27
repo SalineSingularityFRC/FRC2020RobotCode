@@ -25,8 +25,8 @@ public class Flywheel {
     double kFF = 0.000015; 
     double kMaxOutput = 1; 
     double kMinOutput = -1;
-    double maxRPMFlywheel = 5700;
-    double maxRPMFeed = 2800;
+    double maxRPMFlywheel = 11000;
+    double maxRPMFeed = 4000;
 
     // Init the flywheel object, taking int he two motors and ports and setting the flywheels to follow each other, reverse
     // Settings rampRate here to 0 so we get maximum firepower as fast as possible
@@ -47,7 +47,7 @@ public class Flywheel {
 
     // Set the flywheels to go revserse - not sure if needed, but have it in-case
     public void flywheelReverse() {
-        flywheel1.setVelocity(reverseSpeed);
+        flywheel1.setVelocity(maxRPMFlywheel);
     }
 
     // Turn the flywheels off
@@ -57,6 +57,10 @@ public class Flywheel {
 
     public void flywheelFeedOn() {
         flywheel3.setVelocity(maxRPMFeed);
+    }
+
+    public void flywheelFeedReverse() {
+        flywheel3.setVelocity(-maxRPMFeed);
     }
 
     public void flywheelFeedOff() {

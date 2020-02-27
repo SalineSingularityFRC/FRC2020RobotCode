@@ -46,8 +46,8 @@ public abstract class AutonControlScheme {
      * @param verticalSpeed The speed between 0 and 1 the robot will go. 
      */
     public void vertical(double distance, double verticalSpeed){
-
-        if(distance < 0) verticalSpeed *= -1;
+        
+        //if(distance < 0) verticalSpeed *= -1;
 
         drive.setInitialPosition();
 
@@ -57,13 +57,16 @@ public abstract class AutonControlScheme {
             SmartDashboard.putNumber("encoderPo", drive.getCurrentPosition());
             SmartDashboard.putNumber("goal", distance / radius);
 
-            drive.arcadeDrive(0.1, 0, 0.0, false, SpeedMode.NORMAL);
+            drive.arcadeDrive(verticalSpeed, 0, 0.0, false, SpeedMode.NORMAL);
         
-		}
+        }
+        
+        drive.arcadeDrive(0, 0, 0.0, false, SpeedMode.NORMAL);
+
     }
 
     public void vertical(double distance){
-        vertical(distance, 0.5);
+        vertical(distance, distance / Math.abs(distance) *0.1);
     }
 
     public void verticalWithCollector(double distance){
@@ -84,7 +87,8 @@ public abstract class AutonControlScheme {
 		while(gyro.getAngle() < angle) {
 			
 			//TODO accelerate motors slowly
-			//drive.rampVoltage();
+            //drive.rampVoltage();
+            SmartDashboard.putNumber("gyro       Angle", gyro.getAngle());
 			
 			drive.arcadeDrive(0.0, rotationSpeed, 0.0, false, SpeedMode.NORMAL);
 		}
@@ -94,7 +98,7 @@ public abstract class AutonControlScheme {
     }
 
     public void adjustToTarget(){
-        while(drive.limeLightDrive(limeLight, drive, gyro, false, true, false));
+        while(drive.limeLightDrive(limeLight));
     }
 
     public void shoot(){

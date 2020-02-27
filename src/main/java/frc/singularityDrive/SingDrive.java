@@ -345,6 +345,11 @@ public abstract class SingDrive {
 	}
 
 
+	public boolean limeLightDrive(LimeLight limeLight){
+		return limeLight.runLimeLight(this);
+    }
+
+
 	 /**
      * A method to adjust the robot if there is a target
      * @param limeLight the camera

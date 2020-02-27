@@ -6,6 +6,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import frc.singularityDrive.SingDrive;
+import frc.singularityDrive.SmartSingDrive;
 import frc.singularityDrive.SingDrive.SpeedMode;
 
 public class LimeLight{
@@ -18,8 +19,9 @@ public class LimeLight{
     //LimeLightDrive 
     final double kpAim = -0.1;
     final double kpDistance = -0.1;
-    final double min_aim_command = 0.05;
-    final double DistanceCorrection = 0.5;
+    final double min_aim_command = 0.075;
+    final double DistanceCorrection = 0.0;
+    //final double headingCorrector = -2.0;
 
 
     /**
@@ -97,7 +99,7 @@ public class LimeLight{
      * @author Branden Amstutz
      * @param LLDrive stands for LimeLightDrive btw
      */
-    public void runLimeLight( SingDrive drive){
+    public void runLimeLight( SmartSingDrive drive){
 
         double hasVision = tv.getDouble(0.0);
 
@@ -112,20 +114,55 @@ public class LimeLight{
             
             
 
-            if( tx.getDouble(0.0) > 1.0 ){
+            if( tx.getDouble(0.0) > 1.5 ){
                 steering_adjust = kpAim*heading_error - min_aim_command;
             }
-            else if(tx.getDouble(0.0) < 1.0){
+            else if(tx.getDouble(0.0) < 1.5){
                 steering_adjust = kpAim*heading_error + min_aim_command;
             }
 
             double distance_adjust = kpAim*distance_error;
 
-            left_comand += steering_adjust + distance_adjust;
-            right_comand -= steering_adjust + distance_adjust;
-            drive.tankDrive(left_comand, right_comand, 0.0, false, SpeedMode.SLOW);
+            left_comand += heading_error * 0.055;
+            right_comand -= heading_error * 0.055;
+            drive.arcadeDrive(left_comand, right_comand, 0.0, false, SmartSingDrive.SpeedMode.SLOW);
         
         }
+
+    }
+
+
+    public boolean runLimeLight( SingDrive drive){
+
+        double hasVision = tv.getDouble(0.0);
+        
+        if(hasVision == 1.0 && !(tx.getDouble(0.0) <= 0.1 && tx.getDouble(0.0) >= -0.1)){
+            
+            double left_comand = 0.0;
+            double right_comand = 0.0;
+            
+            double heading_error = -tx.getDouble(0.0);
+            double distance_error = -ty.getDouble(0.0) + DistanceCorrection;
+            double steering_adjust = 0.0;
+
+            if( tx.getDouble(0.0) > 1.5 ){
+                steering_adjust = kpAim*heading_error - min_aim_command;
+            }
+            else if(tx.getDouble(0.0) < 1.5){
+                steering_adjust = kpAim*heading_error + min_aim_command;
+            }
+
+            double distance_adjust = kpAim*distance_error;
+
+            left_comand += heading_error * 0.055;
+            right_comand -= heading_error * 0.055;
+            drive.arcadeDrive(left_comand, right_comand, 0.0, false, SingDrive.SpeedMode.SLOW);
+
+            return true;
+        
+        }
+
+        return false;
 
     }
 }

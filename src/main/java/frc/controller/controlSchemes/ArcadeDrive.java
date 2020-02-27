@@ -231,7 +231,7 @@ public class ArcadeDrive extends ControlScheme {
     }
 
 
-    public void limeLightDrive(LimeLight limeLight, SingDrive drive, boolean runLimeLight){
+    public void limeLightDrive(LimeLight limeLight, SmartSingDrive drive, boolean runLimeLight){
         if(armController.getAButton()){
             limeLight.runLimeLight(drive);
         }

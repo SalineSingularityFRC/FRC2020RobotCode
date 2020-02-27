@@ -11,7 +11,7 @@ public class ColorSensor{
     Spark colorSpinner;
     Canifier canifier; 
     public static final double speed = SmartDashboard.getNumber("Current Color Motor Speed: ", 0.50); //subject to change
-    public static final double lowspeed = SmartDashboard.getNumber("Current Color Motor Speed: ", 0.20); //subject to change
+    public static final double lowspeed = SmartDashboard.getNumber("Current Color Motor Speed: ", 0.15); //subject to change
     DoubleSolenoid colorSolenoid;
     int pistonExtend;
     int pistonRetract;
@@ -20,7 +20,7 @@ public class ColorSensor{
     public ColorSensor(int colorSensorPort, int pistionExtend, int pistionRetract){
         colorSpinner = new Spark(colorSensorPort, true, 0.00);
         canifier = new Canifier();
-        colorSolenoid = new DoubleSolenoid(pistonExtend, pistonRetract);
+        colorSolenoid = new DoubleSolenoid(7, 0);
     }
     public void setSpeed(double speed) {
         colorSpinner.setSpeed(speed);
@@ -58,16 +58,16 @@ public class ColorSensor{
         if(gameData.length() > 0) {
             switch(gameData.charAt(0)) {
                 case 'B' :
-                    targetColor = 2;
+                    targetColor = 2;  // correct 0
                     break;
                 case 'G' :
-                    targetColor = 3;
+                    targetColor = 3; // correct 1
                     break;
                 case 'R' :
-                    targetColor = 1;
+                    targetColor = 0; // correct 2
                     break;
                 case 'Y' :
-                    targetColor = 0;
+                    targetColor = 1;  // correct 3
                     break;
                 default :
                     targetColor = 0; //THIS IS ONLY FOR A TEST!!! REMOVE!

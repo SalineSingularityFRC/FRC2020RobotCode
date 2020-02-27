@@ -6,11 +6,8 @@ public class Climber{
 
     Spark upMotor, downMotor;
 
-    //private final double upVoltage = 11.5;
-    private final double upSpeed = -0.25;
-    private final double downSpeed = 0.25;
-    //private final double constantSpeed = 0.1;
-   // private final int upPosition = 5000;
+    //speed only used when resettings
+    private final double upSpeed = -0.;
 
    double kP = 6e-5; 
    double kI = 0;

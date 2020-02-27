@@ -77,7 +77,7 @@ public class SmartBasicDrive extends SmartSingDrive {
 		}
 
 		// Change veloctiyMultiplier.
-		//setVelocityMultiplierBasedOnSpeedMode(speedMode);
+		setVelocityMultiplierBasedOnSpeedMode(speedMode);
 
 		// If translation + rotation > 1, we will divide by this value, maximum, in order to only set motors to power -1 to 1.
 		double maximum = Math.max(1, Math.abs(forwardVelocity) + Math.abs(rotationVelocity));

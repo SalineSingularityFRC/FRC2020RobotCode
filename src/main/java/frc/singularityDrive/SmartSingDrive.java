@@ -58,7 +58,7 @@ public abstract class SmartSingDrive {
 	// Setting default PID values for the motor controllers in order to use Smart
 	// Motion
 
-	public double kP = 5e-6;
+	public double kP = 5e-7;
 	public double kI = 0; //1e-6 
 	public double kD = 0;
 	public double kIZ = 0;

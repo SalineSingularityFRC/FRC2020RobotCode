@@ -24,7 +24,7 @@ public class CellCollector {
     double kFF = 0.000015; 
     double kMaxOutput = 1; 
     double kMinOutput = -1;
-    double maxRPM = 2000;
+    double maxRPM = 5000;
 
     /**
      * Class to control a power cell collector using a single 550 motor and Spark controller

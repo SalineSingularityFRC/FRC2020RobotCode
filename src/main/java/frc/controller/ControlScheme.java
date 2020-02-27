@@ -27,7 +27,7 @@ public abstract class ControlScheme {
 	public abstract void drive(SingDrive drive, DrivePneumatics pneumatics);
 	public abstract void smartDrive(SmartSingDrive drive, DrivePneumatics pneumatics);
 	public abstract void ledMode(LimeLight limeLight);
-	public abstract void limeLightDrive(LimeLight limeLight, SingDrive drive, boolean runLimeLight);
+	public abstract void limeLightDrive(LimeLight limeLight, SmartSingDrive drive, boolean runLimeLight);
 	//public abstract boolean limeLightDrive( LimeLight limeLight, SingDrive drive, AHRS gyro, boolean LLDriveButton);
 	//public abstract boolean limeLightDrive( LimeLight limeLight, SingDrive drive, AHRS gyro, boolean isAuto);
 	public abstract void collectorConveyorFlywheel(Conveyor conveyor, CellCollector collector, Flywheel flywheel);
