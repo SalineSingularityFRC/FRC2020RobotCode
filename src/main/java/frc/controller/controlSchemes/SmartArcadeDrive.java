@@ -256,7 +256,7 @@ public class SmartArcadeDrive extends ControlScheme {
             limeLight.ledOn(limeLight);
         }
         else{
-            limeLight.ledOff(limeLight);;
+            limeLight.ledOff(limeLight);
         }
     }
 

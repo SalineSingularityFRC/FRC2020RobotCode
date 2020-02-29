@@ -103,11 +103,25 @@ public abstract class AutonControlScheme {
 
     public void shoot(){
         flywheel.flywheelForward();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            
+        }
+
         flywheel.flywheelFeedOn();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            
+        }
+
         conveyor.conveyorForward();
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (InterruptedException ex) {
             
         }

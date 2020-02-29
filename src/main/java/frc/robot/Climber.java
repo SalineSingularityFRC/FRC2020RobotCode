@@ -7,7 +7,7 @@ public class Climber{
     Spark upMotor, downMotor;
 
     //speed only used when resettings
-    private final double upSpeed = -0.;
+    private final double upSpeed = -0.4;
 
    double kP = 6e-5; 
    double kI = 0;
@@ -16,7 +16,7 @@ public class Climber{
    double kFF = 0.000015; 
    double kMaxOutput = 1; 
    double kMinOutput = -1;
-   double maxRPM = 4500;
+   double maxRPM = 6000;
 
     public Climber(int downMotorPort) {
         downMotor = new Spark(downMotorPort, true, 0.0, "Climber", false, false, kP, kI, kD, kIz, kFF, kMinOutput, kMaxOutput);

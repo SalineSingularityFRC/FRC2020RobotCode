@@ -139,22 +139,22 @@ public class Robot extends TimedRobot {
 
     compressor = new Compressor();
     goalChooser = new SendableChooser<String>();
-    positionChooser = new SendableChooser<String>();
-    secondaryChooser = new SendableChooser<String>();
+    //positionChooser = new SendableChooser<String>();
+    //secondaryChooser = new SendableChooser<String>();
 
-    goalChooser.addDefault("Nothing", "-1");
-    goalChooser.addOption("Target", "0");
+    goalChooser.addDefault("Move", "-0");
+    goalChooser.addOption("Move and Shoot", "1");
 
-    positionChooser.addDefault("Position 1", "0");
+    /*positionChooser.addDefault("Position 1", "0");
     positionChooser.addOption("Position 2", "1");
     positionChooser.addOption("Position 3", "2");
 
     secondaryChooser.addDefault("Nothing", "-1");
-    secondaryChooser.addOption("And Collect And Shoot", "0");
+    secondaryChooser.addOption("And Collect And Shoot", "0");*/
 
-    SmartDashboard.putData("Position", positionChooser);
+    //SmartDashboard.putData("Position", positionChooser);
     SmartDashboard.putData("Primary Goal", goalChooser);
-    SmartDashboard.putData("Secondary Goal", secondaryChooser);
+    //SmartDashboard.putData("Secondary Goal", secondaryChooser);
   }
 
   /**
@@ -192,13 +192,13 @@ public class Robot extends TimedRobot {
     //secondaryGoals
     //  0: move to Trench
     //  1: move away
-   AutonControlScheme[] goals={ new Trench1(drive, limeLight, flywheel, conveyor, collector),
+   /*AutonControlScheme[] goals={ new Trench1(drive, limeLight, flywheel, conveyor, collector),
                                  new Trench2(drive, limeLight, flywheel, conveyor, collector),
                                  new Trench3(drive, limeLight, flywheel, conveyor, collector)};
     
     SmartDashboard.putNumber("result of position", Integer.parseInt((String)positionChooser.getSelected()));
     SmartDashboard.putNumber("result of goals", Integer.parseInt((String)goalChooser.getSelected()));
-    SmartDashboard.putNumber("result of secondary goals", Integer.parseInt((String)secondaryChooser.getSelected()));
+    SmartDashboard.putNumber("result of secondary goals", Integer.parseInt((String)secondaryChooser.getSelected()));*/
 
     /*if(goalChooser.getSelected().equals("-1")){
       //SmartDashboard.putString("autoprogram", "JustMove");
@@ -213,8 +213,19 @@ public class Robot extends TimedRobot {
       new AndCollectAndShoot(drive, limeLight, flywheel, conveyor, collector).moveAuton();
     }*/
     
-    AutonControlScheme hodl = new TestAuton(drive, limeLight, flywheel, conveyor, collector);
-    hodl.moveAuton();
+    if(((String)goalChooser.getSelected()).equals("0")){
+      new TestAuton(drive, limeLight, flywheel, conveyor, collector).moveAuton();
+      SmartDashboard.putString("AutonMode", "Just Move");
+    }
+    
+    else{
+      new MoveAndShoot(drive, limeLight, flywheel, conveyor, collector).moveAuton();
+      SmartDashboard.putString("AutonMode", "Move and Shoot");
+    }
+
+    //AutonControlScheme hodl = new TestAuton(drive, limeLight, flywheel, conveyor, collector);
+    //AutonControlScheme hodl = new MoveAndShoot(drive, limeLight, flywheel, conveyor, collector);
+    //hodl.moveAuton();
   }
 
   /**
@@ -255,7 +266,7 @@ public class Robot extends TimedRobot {
     //SmartDashboard.putNumber("EncoderPosition", drive.getCurrentPosition());
     currentScheme.smartDrive(smartDrive, drivePneumatics);
     // partial autonomy via vision
-    //currentScheme.ledMode(limeLight);
+    currentScheme.ledMode(limeLight);
     //control other various mechanisms
     currentScheme.limeLightDrive(limeLight, smartDrive, false);
     currentScheme.collectorConveyorFlywheel(conveyor, collector, flywheel);

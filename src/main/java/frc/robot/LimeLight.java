@@ -69,13 +69,13 @@ public class LimeLight{
     // turn on the LEDs, takes a liemlight object
     public void ledOn( LimeLight limeLight ){
         
-        limeLight.ledMode.setDouble(1.0);
+        limeLight.ledMode.setDouble(3.0);
 
     }
 
     // turn off the LEDs, takes a LimeLight object
     public void ledOff(LimeLight limeLight){
-        limeLight.ledMode.setDouble(3.0);
+        limeLight.ledMode.setDouble(1.0);
     }
 
     // method to change between pipeLines, takes an int and a LimeLight object
