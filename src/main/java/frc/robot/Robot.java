@@ -82,7 +82,8 @@ public class Robot extends TimedRobot {
   SendableChooser positionChooser;
   SendableChooser secondaryChooser;
   
-  //SendableChooser autoChooser;
+  //SendableChooser autoChooser;  
+
 
   //default ports of certain joysticks in DriverStation
   final int XBOX_PORT = 0;
@@ -100,6 +101,8 @@ public class Robot extends TimedRobot {
     //initialize motor controller ports IDs
     //Uncomment to initialize motor controllers aswell - commented for texting purposes
     setDefaultProperties();
+    CameraServer.getInstance().startAutomaticCapture();
+    CameraServer.getInstance().startAutomaticCapture();
 
     //initialize our driving scheme to a basic arcade drive
     currentScheme = new SmartArcadeDrive(XBOX_PORT, XBOX_PORT +1);
@@ -213,19 +216,19 @@ public class Robot extends TimedRobot {
       new AndCollectAndShoot(drive, limeLight, flywheel, conveyor, collector).moveAuton();
     }*/
     
-    if(((String)goalChooser.getSelected()).equals("0")){
-      new TestAuton(drive, limeLight, flywheel, conveyor, collector).moveAuton();
-      SmartDashboard.putString("AutonMode", "Just Move");
-    }
+    //if(((String)goalChooser.getSelected()).equals("0")){
+    //new TestAuton(drive, limeLight, flywheel, conveyor, collector).moveAuton();
+      //SmartDashboard.putString("AutonMode", "Just Move");
+    //}
     
-    else{
-      new MoveAndShoot(drive, limeLight, flywheel, conveyor, collector).moveAuton();
-      SmartDashboard.putString("AutonMode", "Move and Shoot");
-    }
+    //else{
+    //new MoveAndShoot(drive, limeLight, flywheel, conveyor, collector).moveAuton();
+      //SmartDashboard.putString("AutonMode", "Move and Shoot");
+    //}
 
     //AutonControlScheme hodl = new TestAuton(drive, limeLight, flywheel, conveyor, collector);
-    //AutonControlScheme hodl = new MoveAndShoot(drive, limeLight, flywheel, conveyor, collector);
-    //hodl.moveAuton();
+    AutonControlScheme hodl = new MoveAndShoot(drive, limeLight, flywheel, conveyor, collector);
+    hodl.moveAuton();
   }
 
   /**
