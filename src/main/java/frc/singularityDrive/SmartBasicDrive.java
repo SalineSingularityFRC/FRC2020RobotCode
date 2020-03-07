@@ -77,23 +77,29 @@ public class SmartBasicDrive extends SmartSingDrive {
 		}
 
 		// Change veloctiyMultiplier.
-		//setVelocityMultiplierBasedOnSpeedMode(speedMode);
+		setVelocityMultiplierBasedOnSpeedMode(speedMode);
 
 		// If translation + rotation > 1, we will divide by this value, maximum, in order to only set motors to power -1 to 1.
 		double maximum = Math.max(1, Math.abs(forwardVelocity) + Math.abs(rotationVelocity));
 
-		double leftOutput = (-forwardVelocity + rotationVelocity) / maximum;
-		double rightOutput = (forwardVelocity + rotationVelocity) / maximum;
+		double leftOutput = super.velocityMultiplier * (-forwardVelocity + rotationVelocity) / maximum;
+		double rightOutput = super.velocityMultiplier * (forwardVelocity + rotationVelocity) / maximum;
 
 		SmartDashboard.putNumber("Output Left", leftOutput);
 		SmartDashboard.putNumber("Output Right", rightOutput);
 
+		SmartDashboard.putNumber("Left RPM", super.getVelocityOutput(leftOutput, speedMode));
+		SmartDashboard.putNumber("Right RPM", super.getVelocityOutput(rightOutput, speedMode));
+			
+		
 		// Drive the motors, and all subsequent motors through following.
 
+		super.m_leftMotor1.setVelocity(super.getVelocityOutput(leftOutput, speedMode));
+		super.m_rightMotor1.setVelocity(super.getVelocityOutput(rightOutput, speedMode));
 		
 
-		super.m_leftMotor1.setSmartMotion(super.getVelocityOutput(leftOutput, speedMode));
-		super.m_rightMotor1.setSmartMotion(super.getVelocityOutput(rightOutput, speedMode));
+		//super.m_leftMotor1.setSmartMotion(super.getVelocityOutput(leftOutput, speedMode));
+		//super.m_rightMotor1.setSmartMotion(super.getVelocityOutput(rightOutput, speedMode));
 		
 	}
 
@@ -129,10 +135,12 @@ public class SmartBasicDrive extends SmartSingDrive {
 		double leftMaximum = Math.max(1, Math.abs(leftVelocity));
 		double rightMaximum = Math.max(1, Math.abs(rightVelocity));
 
+		double velRightOut = rightVelocity / rightMaximum;
+		double velLeftOut = leftVelocity / leftMaximum;
 
-		// Drive the motors, and all subsequent motors through following.
-		super.m_leftMotor1.setSpeed(super.velocityMultiplier * leftVelocity / leftMaximum);
-		super.m_rightMotor1.setSpeed(-super.velocityMultiplier * rightVelocity / rightMaximum);
 
+		// Drive the motors, and all subsequent motors through following.		
+		super.m_rightMotor1.setVelocity(super.getVelocityOutput(velRightOut, speedMode));
+		super.m_leftMotor1.setVelocity(super.getVelocityOutput(velLeftOut, speedMode));
 	}
 }

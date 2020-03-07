@@ -76,7 +76,8 @@ public class Spark implements MotorController {
 
         this.m_pidController = m_motor.getPIDController();
 
-        this.putConstantsOnDashboard(name, kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
+        //this.putConstantsOnDashboard(name, kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
+        this.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
 
         //If intitialPosition = -100, lower limit switch has not been pressed.
         this.initialPosition = -100;

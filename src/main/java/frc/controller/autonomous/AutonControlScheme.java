@@ -24,7 +24,7 @@ public abstract class AutonControlScheme {
 
     public static final double radius = 3.125;
     
-    public static final double encoderTicks = 15;
+    public static final double encoderTicks = 16.28;
 
     public AutonControlScheme(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor, CellCollector cellCollector){
         //define Limelight and all the sensors
@@ -46,8 +46,8 @@ public abstract class AutonControlScheme {
      * @param verticalSpeed The speed between 0 and 1 the robot will go. 
      */
     public void vertical(double distance, double verticalSpeed){
-
-        if(distance < 0) verticalSpeed *= -1;
+        
+        //if(distance < 0) verticalSpeed *= -1;
 
         drive.setInitialPosition();
 
@@ -57,13 +57,16 @@ public abstract class AutonControlScheme {
             SmartDashboard.putNumber("encoderPo", drive.getCurrentPosition());
             SmartDashboard.putNumber("goal", distance / radius);
 
-            drive.arcadeDrive(0.1, 0, 0.0, false, SpeedMode.NORMAL);
+            drive.arcadeDrive(verticalSpeed, 0, 0.0, false, SpeedMode.NORMAL);
         
-		}
+        }
+        
+        drive.arcadeDrive(0, 0, 0.0, false, SpeedMode.NORMAL);
+
     }
 
     public void vertical(double distance){
-        vertical(distance, 0.5);
+        vertical(distance, distance / Math.abs(distance) *0.1);
     }
 
     public void verticalWithCollector(double distance){
@@ -86,7 +89,8 @@ public abstract class AutonControlScheme {
             SmartDashboard.putNumber("GyroAngle", gyro.getAngle());
 			
 			//TODO accelerate motors slowly
-			//drive.rampVoltage();
+            //drive.rampVoltage();
+            SmartDashboard.putNumber("gyro       Angle", gyro.getAngle());
 			
 			drive.arcadeDrive(0.0, rotationSpeed, 0.0, false, SpeedMode.NORMAL);
 		}
@@ -96,16 +100,30 @@ public abstract class AutonControlScheme {
     }
 
     public void adjustToTarget(){
-        while(drive.limeLightDrive(limeLight, drive, gyro, false, true, false));
+        while(drive.limeLightDrive(limeLight));
     }
 
     public void shoot(){
         flywheel.flywheelForward();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            
+        }
+
         flywheel.flywheelFeedOn();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            
+        }
+
         conveyor.conveyorForward();
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(5000);
         } catch (InterruptedException ex) {
             
         }

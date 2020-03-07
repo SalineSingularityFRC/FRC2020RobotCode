@@ -18,6 +18,10 @@ public class Test extends ControlScheme{
     XboxController driveController;
     XboxController armController;
 
+    public void colorSensor(ColorSensor colorSensor) {
+        
+    }
+
     public Test(int driveControllerPort, int armControllerPort){
         driveController = new XboxController(driveControllerPort);
         armController = new XboxController(armControllerPort);
@@ -48,7 +52,8 @@ public class Test extends ControlScheme{
         
     }
 
-    public boolean limeLightDrive(LimeLight limeLight, SingDrive drive, AHRS gryo, boolean isAuto){
-        return false;
+    public void limeLightDrive(LimeLight limeLight, SmartSingDrive drive, boolean isAuto){
+        
     }
+
 }

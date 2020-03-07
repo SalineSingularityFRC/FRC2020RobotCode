@@ -25,7 +25,7 @@ public class Flywheel {
     double kFF = 0.000015; 
     double kMaxOutput = 1; 
     double kMinOutput = -1;
-    double maxRPMFlywheel = 5700;
+    double maxRPMFlywheel = 11000;
     double maxRPMFeed = 5700;
 
     // Init the flywheel object, taking int he two motors and ports and setting the flywheels to follow each other, reverse
@@ -33,7 +33,7 @@ public class Flywheel {
     public Flywheel(int flywheel1Port, int flywheel2Port, int flywheel3Port) {
         flywheel1 = new Spark(flywheel1Port, true, 0.00, "Flywheel1", false, false, kP, kI, kD, kIz, kFF, kMinOutput, kMaxOutput);
         flywheel2 = new Spark(flywheel2Port, true, 0.00, "Flywheel2", false, false, kP, kI, kD, kIz, kFF, kMinOutput, kMaxOutput);
-        flywheel3 = new Spark(flywheel3Port, true, 0.00, "Flywheel Feed ", false, false, kP, kI, kD, kIz, kFF, kMinOutput, kMaxOutput);
+        flywheel3 = new Spark(flywheel3Port, true, 0.00);
         flywheel2.follow(flywheel1, true);
 
         flywheel1.setCoastMode(true);
@@ -42,12 +42,12 @@ public class Flywheel {
 
     // Set the flywheels to shoot a cell forward
     public void flywheelForward() {
-        flywheel1.setVelocity(maxRPMFlywheel);
+        flywheel1.setVelocity(-maxRPMFlywheel);
     }
 
     // Set the flywheels to go revserse - not sure if needed, but have it in-case
     public void flywheelReverse() {
-        flywheel1.setVelocity(reverseSpeed);
+        flywheel1.setVelocity(maxRPMFlywheel);
     }
 
     // Turn the flywheels off
@@ -56,10 +56,14 @@ public class Flywheel {
     }
 
     public void flywheelFeedOn() {
-        flywheel3.setVelocity(maxRPMFeed);
+        flywheel3.setSpeed(.75);
+    }
+
+    public void flywheelFeedReverse() {
+        flywheel3.setSpeed(-.75);
     }
 
     public void flywheelFeedOff() {
-        flywheel3.setVelocity(0.0);
+        flywheel3.setSpeed(0.0);
     }
 }

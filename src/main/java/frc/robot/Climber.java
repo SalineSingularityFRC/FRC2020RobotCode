@@ -6,11 +6,8 @@ public class Climber{
 
     Spark upMotor, downMotor;
 
-    //private final double upVoltage = 11.5;
-    private final double upSpeed = -0.25;
-    private final double downSpeed = 0.25;
-    //private final double constantSpeed = 0.1;
-   // private final int upPosition = 5000;
+    //speed only used when resettings
+    private final double upSpeed = -0.4;
 
    double kP = 6e-5; 
    double kI = 0;
@@ -19,7 +16,7 @@ public class Climber{
    double kFF = 0.000015; 
    double kMaxOutput = 1; 
    double kMinOutput = -1;
-   double maxRPM = 5700;
+   double maxRPM = 6000;
 
     public Climber(int downMotorPort) {
         downMotor = new Spark(downMotorPort, true, 0.0, "Climber", false, false, kP, kI, kD, kIz, kFF, kMinOutput, kMaxOutput);
@@ -60,6 +57,10 @@ public class Climber{
 
     public void rachetDown() {
         downMotor.setVelocity(maxRPM);
+    }
+
+    public void rachetWind() {
+        downMotor.setPower(0.4);
     }
 
     public void rachetReset() {

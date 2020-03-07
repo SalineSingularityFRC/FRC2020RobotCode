@@ -3,6 +3,7 @@ package frc.controller.controlSchemes;
 import frc.controller.*;
 import frc.robot.CellCollector;
 import frc.robot.Climber;
+import frc.robot.ColorSensor;
 import frc.robot.Conveyor;
 import frc.robot.DrivePneumatics;
 import frc.robot.Flywheel;
@@ -128,18 +129,35 @@ public class SmartArcadeDrive extends ControlScheme {
         //turns of when released
         if(armController.getLB()) {
             collector.collectorForward();
-            conveyor.conveyorForward();
+        }
+
+        else if(armController.getXButton()) {
+            conveyor.conveyorReverse();
         }
 
         else {
             collector.collectorOff();
+        }
+
+
+        if(armController.getRB()) {
+            conveyor.conveyorForward();
+        }
+
+        else {
             conveyor.conveyorOff();
         }
+
+
 
         //When the right trigger is pressed, the green wheel begins feeding power cells into the ramped up intake
         //Only allow power cells to be fed when the flywheel is running
         if(armController.getTriggerRight() > .5 && armController.getTriggerRight() > .5) {
             flywheel.flywheelFeedOn();
+        }
+
+        else if(armController.getBButton()) {
+            flywheel.flywheelFeedReverse();
         }
 
         else {
@@ -156,6 +174,40 @@ public class SmartArcadeDrive extends ControlScheme {
         }
     }
 
+    public void colorSensor(ColorSensor colorSensor){
+        if(armController.getPOVUp()) {
+            colorSensor.spinColorWheelColor();
+            colorSensor.resetCount(false);
+        } 
+        
+        else if (armController.getPOVDown()) {
+            colorSensor.spinColorWheelRotations(26);
+            colorSensor.resetCount(false);
+        } 
+        
+        else if (armController.getPOVLeft()) {
+            colorSensor.resetCount(true);
+        } 
+        
+        else if (armController.getPOVRight()) {
+            colorSensor.spinSpeed(ColorSensor.lowspeed);
+            colorSensor.resetCount(false);
+        } 
+        
+        else {
+            colorSensor.stopSpinning();
+            colorSensor.resetCount(false);
+        }
+
+        if(armController.getStartButton()) {
+            colorSensor.extend();
+        }
+
+        else if(armController.getBackButton()) {
+            colorSensor.retract();
+        }
+    }
+
     public void climber(Climber climber) {
 
         if(driveController.getBButton()) {
@@ -165,8 +217,7 @@ public class SmartArcadeDrive extends ControlScheme {
         else {
             climber.rachetOffVel();
         }
-
-        
+ 
     }
 
     public void climberReset(Climber climber) {
@@ -174,8 +225,23 @@ public class SmartArcadeDrive extends ControlScheme {
             climber.rachetReset();
         }
 
+        else if(driveController.getYButton()) {
+            climber.rachetWind();
+        }
+
         else {
             climber.rachetOffSpeed();
+        }
+
+    }
+
+    public void limeLightDrive(LimeLight limeLight, SmartSingDrive drive, boolean runLimeLight){
+        SmartDashboard.putNumber("got here", 69.0);
+        if(driveController.getAButton()){
+            limeLight.runLimeLight(drive);
+        }
+        if(runLimeLight){
+            limeLight.runLimeLight(drive);
         }
     }
 
@@ -186,14 +252,12 @@ public class SmartArcadeDrive extends ControlScheme {
      */
     public void ledMode(LimeLight limeLight ){
 
-        /*
-        if(driveController.getXButton() || driveController.getYButton()){
-            limeLight.ledOff(limeLight);
+        if(driveController.getAButton()){
+            limeLight.ledOn(limeLight);
         }
         else{
-            limeLight.ledOn(limeLight);;
+            limeLight.ledOff(limeLight);
         }
-        */
     }
 
 }

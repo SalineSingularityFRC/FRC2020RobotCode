@@ -1,16 +1,35 @@
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import frc.singularityDrive.SingDrive;
+import frc.singularityDrive.SmartSingDrive;
+import frc.singularityDrive.SingDrive.SpeedMode;
 
 public class LimeLight{
 
+    
+    //Network table variables
     public NetworkTable table;
     public NetworkTableEntry tx, ty, ta, tv, ts, tl, pipeLine, tshort, tlong, thor, tvert, getpipe, camtran, ledMode, camMode;
 
-    //constructor to create the limelight and its values
-    //class by: Branden Amstutz
+    //LimeLightDrive 
+    final double kpAim = -0.1;
+    final double kpDistance = -0.1;
+    final double min_aim_command = 0.075;
+    final double DistanceCorrection = 0.0;
+    //final double headingCorrector = -2.0;
+
+
+    /**
+     * Basic LimeLight Stuff, to be reused year to year with little to no modification
+     * 
+     * @param NONE;
+     * @Author Branden Amstutz
+     */
     public LimeLight() {
 
         table = NetworkTableInstance.getDefault().getTable("limelight");
@@ -50,13 +69,13 @@ public class LimeLight{
     // turn on the LEDs, takes a liemlight object
     public void ledOn( LimeLight limeLight ){
         
-        limeLight.ledMode.setDouble(1.0);
+        limeLight.ledMode.setDouble(3.0);
 
     }
 
     // turn off the LEDs, takes a LimeLight object
     public void ledOff(LimeLight limeLight){
-        limeLight.ledMode.setDouble(3.0);
+        limeLight.ledMode.setDouble(1.0);
     }
 
     // method to change between pipeLines, takes an int and a LimeLight object
@@ -67,5 +86,83 @@ public class LimeLight{
     //method to toggle camera between drive mode and vision mode
     public void setCamMode( LimeLight limeLight, double mode){
         limeLight.camMode.setDouble(mode);
+    }
+
+
+
+
+    /**
+     * LimeLgiht Drive - 2020 atempt at aiming
+     *                   and posibly getting in range
+     * 
+     * 
+     * @author Branden Amstutz
+     * @param LLDrive stands for LimeLightDrive btw
+     */
+    public void runLimeLight( SmartSingDrive drive){
+
+        double hasVision = tv.getDouble(0.0);
+
+        if(hasVision == 1.0){
+            
+            double left_comand = 0.0;
+            double right_comand = 0.0;
+            
+            double heading_error = -tx.getDouble(0.0);
+            double distance_error = -ty.getDouble(0.0) + DistanceCorrection;
+            double steering_adjust = 0.0;
+            
+            
+
+            if( tx.getDouble(0.0) > 1.5 ){
+                steering_adjust = kpAim*heading_error - min_aim_command;
+            }
+            else if(tx.getDouble(0.0) < 1.5){
+                steering_adjust = kpAim*heading_error + min_aim_command;
+            }
+
+            double distance_adjust = kpAim*distance_error;
+
+            left_comand += heading_error * 0.055;
+            right_comand -= heading_error * 0.055;
+            drive.arcadeDrive(left_comand, right_comand, 0.0, false, SmartSingDrive.SpeedMode.SLOW);
+        
+        }
+
+    }
+
+
+    public boolean runLimeLight( SingDrive drive){
+
+        double hasVision = tv.getDouble(0.0);
+        
+        if(hasVision == 1.0 && !(tx.getDouble(0.0) <= 0.1 && tx.getDouble(0.0) >= -0.1)){
+            
+            double left_comand = 0.0;
+            double right_comand = 0.0;
+            
+            double heading_error = -tx.getDouble(0.0);
+            double distance_error = -ty.getDouble(0.0) + DistanceCorrection;
+            double steering_adjust = 0.0;
+
+            if( tx.getDouble(0.0) > 1.5 ){
+                steering_adjust = kpAim*heading_error - min_aim_command;
+            }
+            else if(tx.getDouble(0.0) < 1.5){
+                steering_adjust = kpAim*heading_error + min_aim_command;
+            }
+
+            double distance_adjust = kpAim*distance_error;
+
+            left_comand += heading_error * 0.055;
+            right_comand -= heading_error * 0.055;
+            drive.arcadeDrive(left_comand, right_comand, 0.0, false, SingDrive.SpeedMode.SLOW);
+
+            return true;
+        
+        }
+
+        return false;
+
     }
 }

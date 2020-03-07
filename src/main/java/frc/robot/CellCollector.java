@@ -24,7 +24,7 @@ public class CellCollector {
     double kFF = 0.000015; 
     double kMaxOutput = 1; 
     double kMinOutput = -1;
-    double maxRPM = 5700;
+    double maxRPM = 11000;
 
     /**
      * Class to control a power cell collector using a single 550 motor and Spark controller
@@ -36,11 +36,11 @@ public class CellCollector {
     }
 
     public void collectorForward() {
-        collectorMotor1.setVelocity(maxRPM);
+        collectorMotor1.setVelocity(-maxRPM);
     }
 
     public void collectorReverse() {
-        collectorMotor1.setVelocity(-maxRPM);
+        collectorMotor1.setVelocity(maxRPM);
     }
 
     public void collectorOff() {
