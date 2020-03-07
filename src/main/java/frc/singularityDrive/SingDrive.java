@@ -197,14 +197,14 @@ public abstract class SingDrive {
 	 /** LEFT IS REVERSED. GOING FORWARD PUSHES THE LEFT ENCODER VALUES IN THE NEGATIVE DIRECTION */
 	public double getCurrentPosition() {
 		SmartDashboard.putNumber("left position1", ((Spark) this.m_leftMotor1).getCurrentPosition());
-		SmartDashboard.putNumber("left position2", ((Spark) this.m_leftMotor2).getCurrentPosition());
-		SmartDashboard.putNumber("left position3", ((Spark) this.m_leftMotor3).getCurrentPosition());
+		//SmartDashboard.putNumber("left position2", ((Spark) this.m_leftMotor2).getCurrentPosition());
+		//SmartDashboard.putNumber("left position3", ((Spark) this.m_leftMotor3).getCurrentPosition());
 		SmartDashboard.putNumber("right position1", ((Spark) this.m_rightMotor1).getCurrentPosition());
-		SmartDashboard.putNumber("right position2", ((Spark) this.m_rightMotor2).getCurrentPosition());
-		SmartDashboard.putNumber("right position3", ((Spark) this.m_rightMotor3).getCurrentPosition());
-		return  ((Spark) this.m_leftMotor1).getCurrentPosition()/-6.0 + ((Spark)this.m_rightMotor1).getCurrentPosition()/6.0 +
-				((Spark) this.m_leftMotor2).getCurrentPosition()/-6.0 + ((Spark)this.m_rightMotor2).getCurrentPosition()/6.0 +
-				((Spark) this.m_leftMotor3).getCurrentPosition()/-6.0 + ((Spark)this.m_rightMotor3).getCurrentPosition()/6.0;//that negative is suposed to be there trust me
+		//SmartDashboard.putNumber("right position2", ((Spark) this.m_rightMotor2).getCurrentPosition());
+		//SmartDashboard.putNumber("right position3", ((Spark) this.m_rightMotor3).getCurrentPosition());
+		return  ((Spark) this.m_leftMotor1).getCurrentPosition()/-2.0 + ((Spark)this.m_rightMotor1).getCurrentPosition()/2.0;// +
+				/*((Spark) this.m_leftMotor2).getCurrentPosition()/-6.0 + ((Spark)this.m_rightMotor2).getCurrentPosition()/6.0 +
+				((Spark) this.m_leftMotor3).getCurrentPosition()/-6.0 + ((Spark)this.m_rightMotor3).getCurrentPosition()/6.0;//that negative is suposed to be there trust me*/
 		//return this.m_leftMotor1.getCurrentPosition();
 	}
 
@@ -214,10 +214,10 @@ public abstract class SingDrive {
 	public void setInitialPosition(){
 		((Spark) this.m_leftMotor1).setInitialPosition();
 		((Spark) this.m_rightMotor1).setInitialPosition();
-		((Spark) this.m_leftMotor2).setInitialPosition();
+		/*((Spark) this.m_leftMotor2).setInitialPosition();
 		((Spark) this.m_rightMotor2).setInitialPosition();
 		((Spark) this.m_leftMotor3).setInitialPosition();
-		((Spark) this.m_rightMotor3).setInitialPosition();
+		((Spark) this.m_rightMotor3).setInitialPosition();*/
 	}	
 
 	/**
@@ -272,12 +272,12 @@ public abstract class SingDrive {
 	 */
 	public void rampVoltage(double rampRate) {
 		this.m_leftMotor1.setRampRate(rampRate);
-		this.m_leftMotor2.setRampRate(rampRate);
-		this.m_leftMotor3.setRampRate(rampRate);
+		//this.m_leftMotor2.setRampRate(rampRate);
+		//this.m_leftMotor3.setRampRate(rampRate);
 
 		this.m_rightMotor1.setRampRate(rampRate);
-		this.m_rightMotor2.setRampRate(rampRate);
-		this.m_rightMotor3.setRampRate(rampRate);
+		//this.m_rightMotor2.setRampRate(rampRate);
+		//this.m_rightMotor3.setRampRate(rampRate);
 	}
 	/**
 	 * Used to return rampRate of motors to the default to avoid wear on motors (recommended for any normal driving).

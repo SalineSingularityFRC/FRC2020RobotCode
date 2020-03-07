@@ -165,33 +165,33 @@ public abstract class SmartSingDrive {
 			int rightMotor3, double slowSpeedConstant, double normalSpeedConstant, double fastSpeedConstant) {
 
 		this.m_leftMotor1 = new Spark(leftMotor1, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		this.m_leftMotor2 = new Spark(leftMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		this.m_leftMotor3 = new Spark(leftMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+		//this.m_leftMotor2 = new Spark(leftMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+		//this.m_leftMotor3 = new Spark(leftMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
 		// Setting one motor controller to follow another means that it will
 		// automatically set output voltage of the follower
 		// controller to the value of the followee motor controller. Setting the boolean
 		// value to true inverts the s0ignal
 		// in case that the motor controllers are naturally reversed.
-		this.m_leftMotor2.follow(this.m_leftMotor1, false);
-		this.m_leftMotor3.follow(this.m_leftMotor1, false);
+		//this.m_leftMotor2.follow(this.m_leftMotor1, false);
+		//this.m_leftMotor3.follow(this.m_leftMotor1, false);
 		this.m_leftMotor1.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
-		this.m_leftMotor2.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
-		this.m_leftMotor3.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
+		//this.m_leftMotor2.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
+		//this.m_leftMotor3.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
 		this.m_leftMotor1.setSmartMotionMaxVel(smartMotionMaxRPM);
-		this.m_leftMotor2.setSmartMotionMaxVel(smartMotionMaxRPM);
-		this.m_leftMotor3.setSmartMotionMaxVel(smartMotionMaxRPM);
+		//this.m_leftMotor2.setSmartMotionMaxVel(smartMotionMaxRPM);
+		//this.m_leftMotor3.setSmartMotionMaxVel(smartMotionMaxRPM);
 
 		this.m_rightMotor1 = new Spark(rightMotor1, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		this.m_rightMotor2 = new Spark(rightMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		this.m_rightMotor3 = new Spark(rightMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		this.m_rightMotor2.follow(this.m_rightMotor1, false);
-		this.m_rightMotor3.follow(this.m_rightMotor1, false);
+		//this.m_rightMotor2 = new Spark(rightMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+		//this.m_rightMotor3 = new Spark(rightMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+		//this.m_rightMotor2.follow(this.m_rightMotor1, false);
+		//this.m_rightMotor3.follow(this.m_rightMotor1, false);
 		this.m_rightMotor1.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
-		this.m_rightMotor2.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
-		this.m_rightMotor3.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
+		//this.m_rightMotor2.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
+		//this.m_rightMotor3.setPIDConstantsSilent(kP, kI, kD, kIZ, kFF, kMinOut, kMaxOut);
 		this.m_rightMotor1.setSmartMotionMaxVel(smartMotionMaxRPM);
-		this.m_rightMotor2.setSmartMotionMaxVel(smartMotionMaxRPM);
-		this.m_rightMotor3.setSmartMotionMaxVel(smartMotionMaxRPM);
+		//this.m_rightMotor2.setSmartMotionMaxVel(smartMotionMaxRPM);
+		//this.m_rightMotor3.setSmartMotionMaxVel(smartMotionMaxRPM);
 
 		// Set speed constants.
 		this.slowSpeedConstant = slowSpeedConstant;
@@ -292,12 +292,12 @@ public abstract class SmartSingDrive {
 	 */
 	public void rampDefaultVoltage() {
 		this.m_leftMotor1.setRampRate(DEFAULT_RAMP_RATE);
-		this.m_leftMotor2.setRampRate(DEFAULT_RAMP_RATE);
-		this.m_leftMotor3.setRampRate(DEFAULT_RAMP_RATE);
+		//this.m_leftMotor2.setRampRate(DEFAULT_RAMP_RATE);
+		//this.m_leftMotor3.setRampRate(DEFAULT_RAMP_RATE);
 
 		this.m_rightMotor1.setRampRate(DEFAULT_RAMP_RATE);
-		this.m_rightMotor2.setRampRate(DEFAULT_RAMP_RATE);
-		this.m_rightMotor3.setRampRate(DEFAULT_RAMP_RATE);
+		//this.m_rightMotor2.setRampRate(DEFAULT_RAMP_RATE);
+		//this.m_rightMotor3.setRampRate(DEFAULT_RAMP_RATE);
 	}
 
 	/**
@@ -311,30 +311,30 @@ public abstract class SmartSingDrive {
 	 */
 	public void setDriveToCoast(boolean coast) {
 		this.m_leftMotor1.setCoastMode(coast);
-		this.m_leftMotor2.setCoastMode(coast);
-		this.m_leftMotor3.setCoastMode(coast);
+		//this.m_leftMotor2.setCoastMode(coast);
+		//this.m_leftMotor3.setCoastMode(coast);
 
 		this.m_rightMotor1.setCoastMode(coast);
-		this.m_rightMotor2.setCoastMode(coast);
-		this.m_rightMotor3.setCoastMode(coast);
+		//this.m_rightMotor2.setCoastMode(coast);
+		//this.m_rightMotor3.setCoastMode(coast);
 	}
 
 	public void setInitialPosition(){
 		this.m_leftMotor1.setInitialPosition();
-		this.m_leftMotor2.setInitialPosition();
-		this.m_leftMotor3.setInitialPosition();
+		//this.m_leftMotor2.setInitialPosition();
+		//this.m_leftMotor3.setInitialPosition();
 		this.m_rightMotor1.setInitialPosition();
-		this.m_rightMotor2.setInitialPosition();
-		this.m_rightMotor3.setInitialPosition();
+		//this.m_rightMotor2.setInitialPosition();
+		//this.m_rightMotor3.setInitialPosition();
 	}
 
 	public double getCurrentPosition() {
 		SmartDashboard.putNumber("left position1", ((Spark) this.m_leftMotor1).getCurrentPosition());
-		SmartDashboard.putNumber("left position2", ((Spark) this.m_leftMotor2).getCurrentPosition());
-		SmartDashboard.putNumber("left position3", ((Spark) this.m_leftMotor3).getCurrentPosition());
+		//SmartDashboard.putNumber("left position2", ((Spark) this.m_leftMotor2).getCurrentPosition());
+		//SmartDashboard.putNumber("left position3", ((Spark) this.m_leftMotor3).getCurrentPosition());
 		SmartDashboard.putNumber("right position1", ((Spark) this.m_rightMotor1).getCurrentPosition());
-		SmartDashboard.putNumber("right position2", ((Spark) this.m_rightMotor2).getCurrentPosition());
-		SmartDashboard.putNumber("right position3", ((Spark) this.m_rightMotor3).getCurrentPosition());
+		//SmartDashboard.putNumber("right position2", ((Spark) this.m_rightMotor2).getCurrentPosition());
+		//SmartDashboard.putNumber("right position3", ((Spark) this.m_rightMotor3).getCurrentPosition());
 		return ((Spark) this.m_leftMotor1).getCurrentPosition()/2.0 + ((this.m_rightMotor1.getCurrentPosition()/-2.0));//that negative is suposed to be there trust me
 		//return this.m_leftMotor1.getCurrentPosition();
 	}

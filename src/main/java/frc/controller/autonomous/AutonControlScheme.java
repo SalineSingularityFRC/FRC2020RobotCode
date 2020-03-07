@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.lang.Math;
 
 import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SerialPort;
 
 import frc.robot.Flywheel;
 import frc.robot.LimeLight;
@@ -29,7 +30,8 @@ public abstract class AutonControlScheme {
     public AutonControlScheme(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor, CellCollector cellCollector){
         //define Limelight and all the sensors
         this.drive = drive;
-        this.gyro = new AHRS(SPI.Port.kMXP);
+        //this.gyro = new AHRS(SerialPort.Port.kUSB);//Via USB
+        this.gyro = new AHRS(SPI.Port.kMXP);//Plugged In
         this.limeLight = limeLight;
         this.flywheel = flywheel;
         this.conveyor = conveyor;
@@ -54,8 +56,8 @@ public abstract class AutonControlScheme {
         while ( drive.getCurrentPosition() / encoderTicks > -1 * Math.abs(distance) /( 2* Math.PI *radius)
                 && drive.getCurrentPosition() / encoderTicks < Math.abs(distance) / ( 2* Math.PI *radius)) {
         
-            SmartDashboard.putNumber("encoderPo", drive.getCurrentPosition());
-            SmartDashboard.putNumber("goal", distance / radius);
+            SmartDashboard.putNumber("encoderRotations", drive.getCurrentPosition() / encoderTicks);
+            SmartDashboard.putNumber("goal", distance / (2 * Math.PI * radius));
 
             drive.arcadeDrive(verticalSpeed, 0, 0.0, false, SpeedMode.NORMAL);
         
@@ -66,7 +68,7 @@ public abstract class AutonControlScheme {
     }
 
     public void vertical(double distance){
-        vertical(distance, distance / Math.abs(distance) *0.1);
+        vertical(distance, distance / Math.abs(distance) *0.3);
     }
 
     public void verticalWithCollector(double distance){
@@ -84,13 +86,14 @@ public abstract class AutonControlScheme {
     public void rotate(double rotationSpeed, double angle, boolean isCounterClockwise){
         gyro.reset();
         if(isCounterClockwise) rotationSpeed*= -1;
+        SmartDashboard.putNumber("GyroAngle", gyro.getAngle());
+
 		while(gyro.getAngle() < angle) {
 
             SmartDashboard.putNumber("GyroAngle", gyro.getAngle());
 			
 			//TODO accelerate motors slowly
             //drive.rampVoltage();
-            SmartDashboard.putNumber("gyro       Angle", gyro.getAngle());
 			
 			drive.arcadeDrive(0.0, rotationSpeed, 0.0, false, SpeedMode.NORMAL);
 		}
@@ -104,7 +107,7 @@ public abstract class AutonControlScheme {
     }
 
     public void shoot(){
-        flywheel.flywheelForward();
+        /*flywheel.flywheelForward();
 
         try {
             Thread.sleep(1000);
@@ -131,6 +134,7 @@ public abstract class AutonControlScheme {
         flywheel.flywheelOff();
         flywheel.flywheelFeedOff();
         conveyor.conveyorOff();
+        */
     }
 
 }

@@ -24,7 +24,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.cameraserver.CameraServer;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -78,9 +77,9 @@ public class Robot extends TimedRobot {
   Compressor compressor;
 
   //SendableChoosers
-  SendableChooser goalChooser;
-  SendableChooser positionChooser;
-  //SendableChooser secondaryChooser;
+  SendableChooser<Integer> goalChooser;
+  SendableChooser<Integer> positionChooser;
+  SendableChooser<Integer> secondaryChooser;
   
   //SendableChooser autoChooser;  
 
@@ -101,8 +100,8 @@ public class Robot extends TimedRobot {
     //initialize motor controller ports IDs
     //Uncomment to initialize motor controllers aswell - commented for texting purposes
     setDefaultProperties();
-    CameraServer.getInstance().startAutomaticCapture();
-    CameraServer.getInstance().startAutomaticCapture();
+    //CameraServer.getInstance().startAutomaticCapture();
+    //CameraServer.getInstance().startAutomaticCapture();
 
     //initialize our driving scheme to a basic arcade drive
     currentScheme = new SmartArcadeDrive(XBOX_PORT, XBOX_PORT +1);
@@ -110,7 +109,7 @@ public class Robot extends TimedRobot {
     gyro = new AHRS(SPI.Port.kMXP);
     gyroResetAtTeleop = true;
 
-    colorSensor = new ColorSensor(colorSpinner, colorSol1, colorSol2);
+    //colorSensor = new ColorSensor(colorSpinner, colorSol1, colorSol2);
     
     //initialize all mechanisms on the robot
     smartDrive = new SmartBasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
@@ -139,24 +138,24 @@ public class Robot extends TimedRobot {
     SmartDashboard.putData("Auto mode", autoChooser);*/
 
     //compressor = new Compressor();
-    goalChooser = new SendableChooser<String>();
-    positionChooser = new SendableChooser<String>();
-    //secondaryChooser = new SendableChooser<String>();
+    goalChooser = new SendableChooser<Integer>();
+    positionChooser = new SendableChooser<Integer>();
+    secondaryChooser = new SendableChooser<Integer>();
 
-    goalChooser.addDefault("Nothing", "-1");
-    goalChooser.addOption("Target", "0");
-    goalChooser.addOption("Target and Trench", "1");
+    goalChooser.addDefault("Just Move",1);
+    goalChooser.addOption("Target and Trench", 0);
+    goalChooser.addOption("TestAuton", 2);
 
-    /*positionChooser.addDefault("Position 1", "0");
-    positionChooser.addOption("Position 2", "1");
-    positionChooser.addOption("Position 3", "2");
+    positionChooser.addDefault("Position 1", 0);
+    positionChooser.addOption("Position 2", 1);
+    positionChooser.addOption("Position 3", 2);
 
-    //secondaryChooser.addDefault("Nothing", "-1");
-    //secondaryChooser.addOption("And Collect And Shoot", "0");
+    secondaryChooser.addDefault("Move Through Trench", 1);
+    secondaryChooser.addOption("Don't", 0);
 
-    //SmartDashboard.putData("Position", positionChooser);
+    SmartDashboard.putData("Position", positionChooser);
     SmartDashboard.putData("Primary Goal", goalChooser);
-   //SmartDashboard.putData("Secondary Goal", secondaryChooser);
+    SmartDashboard.putData("Secondary Goal", secondaryChooser);
   }
 
   /**
@@ -189,37 +188,39 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     //Positions 1,2,3
     //Goals
-    //  0: Target
-    //  1: Trench
+    //  0: Just Move
+    //  1: Trench and Shoot
     //secondaryGoals
-    //  0: move to Trench
-    //  1: move away
-   /*AutonControlScheme[] goals={ new Trench1(drive, limeLight, flywheel, conveyor, collector),
+    //  0: Move through Trench
+    //  1: Don't
+   AutonControlScheme[] goals={ new Trench1(drive, limeLight, flywheel, conveyor, collector),
                                  new Trench2(drive, limeLight, flywheel, conveyor, collector),
-                                 new Trench3(drive, limeLight, flywheel, conveyor, collector)};*/
+                                 new Trench3(drive, limeLight, flywheel, conveyor, collector)};
     
-    //SmartDashboard.putNumber("result of position", Integer.parseInt((String)positionChooser.getSelected()));
-    //SmartDashboard.putNumber("result of goals", Integer.parseInt((String)goalChooser.getSelected()));
+    SmartDashboard.putNumber("result of position", positionChooser.getSelected());
+    SmartDashboard.putNumber("result of goals", goalChooser.getSelected());
+    SmartDashboard.putNumber("result of secondary goals", secondaryChooser.getSelected());
+    //SmartDashboard.putBoolean("True?", goalChooser.getSelected() == 2);
 
-    SmartDashboard.putNumber("gyro", gyro.getAngle());
-    SmartDashboard.putNumber("number", 420);
-    //SmartDashboard.putNumber("result of secondary goals", Integer.parseInt((String)secondaryChooser.getSelected()));
-
-    /*if(goalChooser.getSelected().equals("-1")){
-      //SmartDashboard.putString("autoprogram", "JustMove");
-      new JustMove(drive, limeLight, flywheel, conveyor, collector).moveAuton();
+    if(goalChooser.getSelected() == 2){
+      SmartDashboard.putString("autoprogram", "Test Auton");
+      new TestAuton(drive, limeLight, flywheel, conveyor, collector);
+    }
+     else if(goalChooser.getSelected() == 1){
+      SmartDashboard.putString("autoprogram", "MoveAndShoot");
+      new ShootAndMove(drive, limeLight, flywheel, conveyor, collector).moveAuton();
     }
     else{
-      //SmartDashboard.putString("autoprogram", "PrimaryGoals");
-      goals[Integer.parseInt((String)positionChooser.getSelected())].moveAuton();
+      SmartDashboard.putString("autoprogram", "PrimaryGoal");
+      goals[positionChooser.getSelected()].moveAuton();
     }
-    if(!secondaryChooser.getSelected().equals("-1") && goalChooser.getSelected().equals("0")){
-      //SmartDashboard.putString("autonprogram", "SecondaryGoals");
-      new AndCollectAndShoot(drive, limeLight, flywheel, conveyor, collector).moveAuton();
-    }*/
+    if(secondaryChooser.getSelected() == 1 && goalChooser.getSelected() == 0){
+      SmartDashboard.putString("autoprogram", "SecondaryGoal");
+      new MoveThroughTrench(drive, limeLight, flywheel, conveyor, collector).moveAuton();
+    }
     
-    AutonControlScheme hodl = new ShootAndMove(drive, limeLight, flywheel, conveyor, collector);
-    hodl.moveAuton();
+    /*AutonControlScheme hodl = new TestAuton(drive, limeLight, flywheel, conveyor, collector);
+    hodl.moveAuton();*/
   }
 
   /**
@@ -290,12 +291,12 @@ public class Robot extends TimedRobot {
   private void setDefaultProperties() {
     
     // Drive Motors
-    driveLeft1 = 4;
-    driveLeft2 = 5;
-    driveLeft3 = 6;
-    driveRight1 = 1;
-    driveRight2 = 2;
-    driveRight3 = 3;
+    driveLeft1 = 1;
+    driveLeft2 = 1;
+    driveLeft3 = 1;
+    driveRight1 = 4;
+    driveRight2 = 4;
+    driveRight3 = 4;
 
     colorSpinner = 14;
 

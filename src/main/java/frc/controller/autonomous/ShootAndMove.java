@@ -13,8 +13,8 @@ public class ShootAndMove extends AutonControlScheme{
     }
 
     public void moveAuton(){
-        //super.shoot();
-        super.vertical(-50);
-        super.rotate(4200, Math.random() < 0.5);
+        super.shoot();
+        super.vertical(50, -0.4);
+        super.rotate(0.6, 4200, true);
     }
 }
