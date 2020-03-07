@@ -82,6 +82,8 @@ public abstract class AutonControlScheme {
         gyro.reset();
         if(isCounterClockwise) rotationSpeed*= -1;
 		while(gyro.getAngle() < angle) {
+
+            SmartDashboard.putNumber("GyroAngle", gyro.getAngle());
 			
 			//TODO accelerate motors slowly
 			//drive.rampVoltage();

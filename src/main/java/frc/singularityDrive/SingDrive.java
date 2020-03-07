@@ -152,20 +152,20 @@ public abstract class SingDrive {
 
 		SmartDashboard.putNumber("flipper", leftMotor1);
 		this.m_leftMotor1 = new Spark(leftMotor1, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		this.m_leftMotor2 = new Spark(leftMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		this.m_leftMotor3 = new Spark(leftMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+		//this.m_leftMotor2 = new Spark(leftMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+		//this.m_leftMotor3 = new Spark(leftMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
 
 		// Setting one motor controller to follow another means that it will automatically set output voltage of the follower
 		// controller to the value of the followee motor controller. Setting the boolean value to true inverts the s0ignal
 		// in case that the motor controllers are naturally reversed.
-		this.m_leftMotor2.follow(this.m_leftMotor1, false);
-		this.m_leftMotor3.follow(this.m_leftMotor1, false);
+		//this.m_leftMotor2.follow(this.m_leftMotor1, false);
+		//this.m_leftMotor3.follow(this.m_leftMotor1, false);
 
 		this.m_rightMotor1 = new Spark(rightMotor1, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		this.m_rightMotor2 = new Spark(rightMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		this.m_rightMotor3 = new Spark(rightMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		this.m_rightMotor2.follow(this.m_rightMotor1, false);
-		this.m_rightMotor3.follow(this.m_rightMotor1, false);
+		//this.m_rightMotor2 = new Spark(rightMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+		//this.m_rightMotor3 = new Spark(rightMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+		//this.m_rightMotor2.follow(this.m_rightMotor1, false);
+		//this.m_rightMotor3.follow(this.m_rightMotor1, false);
 
 		// Set speed constants.
 		this.slowSpeedConstant = slowSpeedConstant;
@@ -272,12 +272,12 @@ public abstract class SingDrive {
 	 */
 	public void rampDefaultVoltage() {
 		this.m_leftMotor1.setRampRate(DEFAULT_RAMP_RATE);
-		this.m_leftMotor2.setRampRate(DEFAULT_RAMP_RATE);
-		this.m_leftMotor3.setRampRate(DEFAULT_RAMP_RATE);
+		//this.m_leftMotor2.setRampRate(DEFAULT_RAMP_RATE);
+		//this.m_leftMotor3.setRampRate(DEFAULT_RAMP_RATE);
 
 		this.m_rightMotor1.setRampRate(DEFAULT_RAMP_RATE);
-		this.m_rightMotor2.setRampRate(DEFAULT_RAMP_RATE);
-		this.m_rightMotor3.setRampRate(DEFAULT_RAMP_RATE);
+		//this.m_rightMotor2.setRampRate(DEFAULT_RAMP_RATE);
+		//this.m_rightMotor3.setRampRate(DEFAULT_RAMP_RATE);
 	}
 
 	/**
@@ -289,12 +289,12 @@ public abstract class SingDrive {
 	 */
 	public void setDriveToCoast(boolean coast) {
 		this.m_leftMotor1.setCoastMode(coast);
-		this.m_leftMotor2.setCoastMode(coast);
-		this.m_leftMotor3.setCoastMode(coast);
+		//this.m_leftMotor2.setCoastMode(coast);
+		//this.m_leftMotor3.setCoastMode(coast);
 
 		this.m_rightMotor1.setCoastMode(coast);
-		this.m_rightMotor2.setCoastMode(coast);
-		this.m_rightMotor3.setCoastMode(coast);
+		//this.m_rightMotor2.setCoastMode(coast);
+		//this.m_rightMotor3.setCoastMode(coast);
 	}
 	
 	
