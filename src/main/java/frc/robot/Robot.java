@@ -115,7 +115,7 @@ public class Robot extends TimedRobot {
     drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
     flywheel = new Flywheel(flywheelMotor1, flywheelMotor2, flywheelMotor3);
     conveyor = new Conveyor(conveyorMotor1);
-    climber = new Climber(downMotorPort);
+    climber = new Climber(downMotorPort,0,0);//TODO THE LAST TWO NUNMBERS AREN'T CORRECT
     
     limeLight = new LimeLight();
     //limeLight.setCamMode(limeLight, 0.0);
