@@ -1,10 +1,13 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import frc.controller.motorControllers.Spark;
 
 public class Climber{
 
     Spark upMotor, downMotor;
+    DoubleSolenoid solenoid; 
 
     //speed only used when resettings
     private final double upSpeed = -0.4;
@@ -18,10 +21,27 @@ public class Climber{
    double kMinOutput = -1;
    double maxRPM = 6000;
 
-    public Climber(int downMotorPort) {
+    public Climber(int downMotorPort, int outPort, int inPort) {
         downMotor = new Spark(downMotorPort, true, 0.0, "Climber", false, false, kP, kI, kD, kIz, kFF, kMinOutput, kMaxOutput);
         downMotor.setCoastMode(false);
+        solenoid = new DoubleSolenoid(outPort, inPort);
+
     }
+
+    public void setHigh() {
+		solenoid.set(DoubleSolenoid.Value.kReverse);
+	}
+	
+	public void setLow() {
+		solenoid.set(DoubleSolenoid.Value.kForward);
+	}
+
+	public void setOff() {
+		solenoid.set(DoubleSolenoid.Value.kOff);
+	}
+
+
+
 
     /*
         Old code based on using two motors, were only using one now
