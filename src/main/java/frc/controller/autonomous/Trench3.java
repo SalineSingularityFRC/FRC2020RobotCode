@@ -8,8 +8,8 @@ import frc.robot.CellCollector;
 
 public class Trench3 extends AutonControlScheme {
 
-    public Trench3(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor, CellCollector cellCollector) {
-        super(drive, limeLight, flywheel, conveyor, cellCollector);
+    public Trench3(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor) {
+        super(drive, limeLight, flywheel, conveyor);
     }
 
     public void moveAuton() {

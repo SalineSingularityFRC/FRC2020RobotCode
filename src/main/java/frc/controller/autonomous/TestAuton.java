@@ -9,8 +9,8 @@ import frc.robot.CellCollector;
 public class TestAuton extends AutonControlScheme{
 
     
-    public TestAuton(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor, CellCollector cellCollector) {
-        super(drive, limeLight, flywheel, conveyor, cellCollector);
+    public TestAuton(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor) {
+        super(drive, limeLight, flywheel, conveyor);
     }
 
 

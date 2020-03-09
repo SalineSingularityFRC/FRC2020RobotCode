@@ -189,22 +189,21 @@ public class Robot extends TimedRobot {
     //secondaryGoals
     //  0: Move through Trench
     //  1: Don't
-   AutonControlScheme[] goals={ new Trench1(drive, limeLight, flywheel, conveyor, collector),
-                                 new Trench2(drive, limeLight, flywheel, conveyor, collector),
-                                 new Trench3(drive, limeLight, flywheel, conveyor, collector)};
+   AutonControlScheme[] goals={ new Trench1(drive, limeLight, flywheel, conveyor),
+                                 new Trench2(drive, limeLight, flywheel, conveyor),
+                                 new Trench3(drive, limeLight, flywheel, conveyor)};
     
     SmartDashboard.putNumber("result of position", positionChooser.getSelected());
     SmartDashboard.putNumber("result of goals", goalChooser.getSelected());
     SmartDashboard.putNumber("result of secondary goals", secondaryChooser.getSelected());
-    //SmartDashboard.putBoolean("True?", goalChooser.getSelected() == 2);
 
     if(goalChooser.getSelected() == 2){
       SmartDashboard.putString("autoprogram", "Test Auton");
-      new TestAuton(drive, limeLight, flywheel, conveyor, collector);
+      new TestAuton(drive, limeLight, flywheel, conveyor);
     }
      else if(goalChooser.getSelected() == 1){
       SmartDashboard.putString("autoprogram", "MoveAndShoot");
-      new ShootAndMove(drive, limeLight, flywheel, conveyor, collector).moveAuton();
+      new ShootAndMove(drive, limeLight, flywheel, conveyor).moveAuton();
     }
     else{
       SmartDashboard.putString("autoprogram", "PrimaryGoal");
@@ -212,7 +211,7 @@ public class Robot extends TimedRobot {
     }
     if(secondaryChooser.getSelected() == 1 && goalChooser.getSelected() == 0){
       SmartDashboard.putString("autoprogram", "SecondaryGoal");
-      new MoveThroughTrench(drive, limeLight, flywheel, conveyor, collector).moveAuton();
+      new MoveThroughTrench(drive, limeLight, flywheel, conveyor).moveAuton();
     }
     
     /*AutonControlScheme hodl = new TestAuton(drive, limeLight, flywheel, conveyor, collector);

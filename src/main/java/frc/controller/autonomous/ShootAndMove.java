@@ -8,8 +8,8 @@ import frc.robot.CellCollector;
 
 public class ShootAndMove extends AutonControlScheme{
 
-    public ShootAndMove(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor, CellCollector cellCollector) {
-        super(drive, limeLight, flywheel, conveyor, cellCollector);
+    public ShootAndMove(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor) {
+        super(drive, limeLight, flywheel, conveyor);
     }
 
     public void moveAuton(){

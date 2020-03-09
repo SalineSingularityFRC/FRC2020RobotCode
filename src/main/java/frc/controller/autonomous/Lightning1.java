@@ -8,8 +8,8 @@ import frc.robot.CellCollector;
 
 public class Lightning1 extends AutonControlScheme {
 
-    public Lightning1(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor, CellCollector cellCollector) {
-        super(drive, limeLight, flywheel, conveyor, cellCollector);
+    public Lightning1(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor) {
+        super(drive, limeLight, flywheel, conveyor);
     }
 
     public void moveAuton() {

@@ -27,7 +27,7 @@ public abstract class AutonControlScheme {
     
     public static final double encoderTicks = 16.28;
 
-    public AutonControlScheme(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor, CellCollector cellCollector){
+    public AutonControlScheme(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor){
         //define Limelight and all the sensors
         this.drive = drive;
         //this.gyro = new AHRS(SerialPort.Port.kUSB);//Via USB
