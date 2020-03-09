@@ -30,7 +30,7 @@ public abstract class ControlScheme {
 	public abstract void limeLightDrive(LimeLight limeLight, SmartSingDrive drive, boolean runLimeLight);
 	//public abstract boolean limeLightDrive( LimeLight limeLight, SingDrive drive, AHRS gyro, boolean LLDriveButton);
 	//public abstract boolean limeLightDrive( LimeLight limeLight, SingDrive drive, AHRS gyro, boolean isAuto);
-	public abstract void collectorConveyorFlywheel(Conveyor conveyor, CellCollector collector, Flywheel flywheel);
+	public abstract void conveyorFlywheel(Conveyor conveyor, Flywheel flywheel);
 	public abstract void climber(Climber climber);
 	public abstract void climberReset(Climber climber);
  	public abstract void colorSensor(ColorSensor colorSensor);

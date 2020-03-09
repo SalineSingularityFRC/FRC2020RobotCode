@@ -114,7 +114,7 @@ public class SmartArcadeDrive extends ControlScheme {
      * method that controls the conveyor, collector, and flywheel as the three need to move together
      * 
      */
-    public void collectorConveyorFlywheel(Conveyor conveyor, CellCollector collector, Flywheel flywheel) {
+    public void conveyorFlywheel(Conveyor conveyor, Flywheel flywheel) {
         //Flywheel shooter controlled independantly which allows it to ramp up to speed before shooting
         //Turns on when the left trigger is pressed, then turns off when released
         if(armController.getTriggerLeft() > .5) {
@@ -127,18 +127,6 @@ public class SmartArcadeDrive extends ControlScheme {
 
         //When LB is pressed, the intake turns on and the conveyor is moved simultaneously to feed up to the flywheel feed
         //turns of when released
-        if(armController.getLB()) {
-            collector.collectorForward();
-        }
-
-        else if(armController.getXButton()) {
-            conveyor.conveyorReverse();
-        }
-
-        else {
-            collector.collectorOff();
-        }
-
 
         if(armController.getRB()) {
             conveyor.conveyorForward();
@@ -162,15 +150,6 @@ public class SmartArcadeDrive extends ControlScheme {
 
         else {
             flywheel.flywheelFeedOff();
-        }
-
-        //Changes position of the intake solenoid when a button is pressed
-        if(armController.getYButton()) {
-            collector.collectorUp();
-        }
-
-        else if(armController.getAButton()) {
-            collector.collectorDown();
         }
     }
 
