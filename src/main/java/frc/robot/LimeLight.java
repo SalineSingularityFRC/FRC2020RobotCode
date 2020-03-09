@@ -142,20 +142,13 @@ public class LimeLight{
             double right_comand = 0.0;
             
             double heading_error = -tx.getDouble(0.0);
-            double distance_error = -ty.getDouble(0.0) + DistanceCorrection;
-            double steering_adjust = 0.0;
-
-            if( tx.getDouble(0.0) > 1.5 ){
-                steering_adjust = kpAim*heading_error - min_aim_command;
-            }
-            else if(tx.getDouble(0.0) < 1.5){
-                steering_adjust = kpAim*heading_error + min_aim_command;
-            }
-
-            double distance_adjust = kpAim*distance_error;
+            double distance_error = -ty.getDouble(0.0) + 9.7;
 
             left_comand += heading_error * 0.055;
             right_comand -= heading_error * 0.055;
+            left_comand += distance_error * 0.055;
+            right_comand += distance_error *0.055;
+
             drive.arcadeDrive(left_comand, right_comand, 0.0, false, SingDrive.SpeedMode.SLOW);
 
             return true;

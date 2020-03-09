@@ -251,6 +251,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    SmartDashboard.putNumber("Big Number Gyro Angle", gyro.getAngle());
 
     // Allow driver control based on current schem
 /*
