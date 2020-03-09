@@ -44,8 +44,6 @@ public class Robot extends TimedRobot {
   
   int flywheelMotor1, flywheelMotor2, flywheelMotor3;
   int conveyorMotor1, conveyorMotor2;
-  int collectorMotor1;
-  int collectorSol1, collectorSol2;
   int downMotorPort;
 
   //Declaration of our driving scheme, which can be initialized to
@@ -58,7 +56,6 @@ public class Robot extends TimedRobot {
   DrivePneumatics drivePneumatics;
   Flywheel flywheel;
   Conveyor conveyor;
-  CellCollector collector;
   Climber climber;
 
   //Creates an all-knowing limelight
@@ -119,7 +116,6 @@ public class Robot extends TimedRobot {
     drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
     flywheel = new Flywheel(flywheelMotor1, flywheelMotor2, flywheelMotor3);
     conveyor = new Conveyor(conveyorMotor1);
-    collector = new CellCollector(collectorMotor1, collectorSol1, collectorSol2);
     climber = new Climber(downMotorPort);
     
     limeLight = new LimeLight();
@@ -273,7 +269,7 @@ public class Robot extends TimedRobot {
     currentScheme.ledMode(limeLight);
     //control other various mechanisms
     currentScheme.limeLightDrive(limeLight, smartDrive, false);
-    currentScheme.collectorConveyorFlywheel(conveyor, collector, flywheel);
+    currentScheme.conveyorFlywheel(conveyor, flywheel);
     currentScheme.climber(climber);
     
     SmartDashboard.getNumber("EncoderPosition", smartDrive.getCurrentPosition());
@@ -315,9 +311,6 @@ public class Robot extends TimedRobot {
     // Conveyor motors
     conveyorMotor1 = 7;
 
-    // Cell Collector Motor
-    collectorMotor1 = 10;
-
     // Climber Motor Ports
     downMotorPort = 13;
 
@@ -326,9 +319,6 @@ public class Robot extends TimedRobot {
     
     drivePneu1 = 1;
     drivePneu2 = 6;
-
-    collectorSol1 = 5;
-    collectorSol2 = 2;
 
     colorSol1 = 7;
     colorSol2 = 0;
