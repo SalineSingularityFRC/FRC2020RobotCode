@@ -125,4 +125,28 @@ public class LimeLight{
         return false;
 
     }
+    public void runLimeLight( SmartSingDrive drive){
+
+        double hasVision = tv.getDouble(0.0);
+        
+        if(hasVision == 1.0 && !(tx.getDouble(0.0) <= 0.1 && tx.getDouble(0.0) >= -0.1)){
+            
+            double left_comand = 0.0;
+            double right_comand = 0.0;
+            
+            double heading_error = -tx.getDouble(0.0);
+            double distance_error = target_distance -ty.getDouble(0.0);
+
+            left_comand += heading_error * 0.055;
+            right_comand -= heading_error * 0.055;
+            
+            left_comand += distance_error * 0.055;
+            right_comand += distance_error *0.055;
+
+            drive.arcadeDrive(left_comand, right_comand, 0.0, false, SmartSingDrive.SpeedMode.SLOW);
+
+        
+        }
+
+    }
 }

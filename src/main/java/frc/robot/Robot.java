@@ -223,8 +223,8 @@ public class Robot extends TimedRobot {
     //}
 
     //AutonControlScheme hodl = new TestAuton(drive, limeLight, flywheel, conveyor, collector);
-    AutonControlScheme hodl = new MoveAndShoot(drive, limeLight, flywheel, conveyor, collector);
-    hodl.moveAuton();
+    //AutonControlScheme hodl = new MoveAndShoot(drive, limeLight, flywheel);
+    //hodl.moveAuton();
   }
 
   /**
