@@ -35,7 +35,7 @@ public class Test extends ControlScheme{
         
     }
 
-    public void collectorConveyorFlywheel(Conveyor conveyor, CellCollector collector, Flywheel flywheel) {
+    public void conveyorFlywheel(Conveyor conveyor, Flywheel flywheel) {
         
     }
 
