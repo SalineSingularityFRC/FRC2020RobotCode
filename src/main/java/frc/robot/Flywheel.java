@@ -56,11 +56,11 @@ public class Flywheel {
     }
 
     public void flywheelFeedOn() {
-        flywheel3.setSpeed(.75);
+        flywheel3.setSpeed(.50);
     }
 
     public void flywheelFeedReverse() {
-        flywheel3.setSpeed(-.75);
+        flywheel3.setSpeed(-.25);
     }
 
     public void flywheelFeedOff() {
