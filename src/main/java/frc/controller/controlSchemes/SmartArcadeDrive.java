@@ -43,7 +43,7 @@ public class SmartArcadeDrive extends ControlScheme {
 
         lowGear = true;
         climberExtended = false;
-        speedMode = SpeedMode.SLOW;
+        speedMode = SpeedMode.FAST;
 
     }
 
