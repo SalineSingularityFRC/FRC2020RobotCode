@@ -40,6 +40,7 @@ public class Robot extends TimedRobot {
   int driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3;
   int drivePneu1, drivePneu2;
   int colorSol1, colorSol2;
+  int  climberSol1, climberSol2;
   int colorSpinner;
   
   int flywheelMotor1, flywheelMotor2, flywheelMotor3;
@@ -116,7 +117,7 @@ public class Robot extends TimedRobot {
     drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
     flywheel = new Flywheel(flywheelMotor1, flywheelMotor2, flywheelMotor3);
     conveyor = new Conveyor(conveyorMotor1);
-    climber = new Climber(downMotorPort);
+    climber = new Climber(downMotorPort, climberSol1, climberSol2);
     
     limeLight = new LimeLight();
     //limeLight.setCamMode(limeLight, 0.0);
@@ -322,6 +323,9 @@ public class Robot extends TimedRobot {
 
     colorSol1 = 7;
     colorSol2 = 0;
+
+    climberSol1 = 2;
+    climberSol2 = 3;
 
     
 
