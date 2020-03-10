@@ -97,8 +97,8 @@ public class Robot extends TimedRobot {
     //initialize motor controller ports IDs
     //Uncomment to initialize motor controllers aswell - commented for texting purposes
     setDefaultProperties();
-    //CameraServer.getInstance().startAutomaticCapture();
-    //CameraServer.getInstance().startAutomaticCapture();
+    CameraServer.getInstance().startAutomaticCapture();
+    CameraServer.getInstance().startAutomaticCapture();
 
     //initialize our driving scheme to a basic arcade drive
     currentScheme = new SmartArcadeDrive(XBOX_PORT, XBOX_PORT +1);
@@ -165,7 +165,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
 
-    //compressor.start();
+    compressor.start();
 
   }
 
@@ -274,10 +274,8 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    //compressor.start();
-    //currentScheme.climberReset(climber);
-    double angle = 420;
-    SmartDashboard.putNumber("Gyro", angle );
+    compressor.start();
+    currentScheme.climberReset(climber);
   }
 
   
@@ -287,12 +285,12 @@ public class Robot extends TimedRobot {
   private void setDefaultProperties() {
     
     // Drive Motors
-    driveLeft1 = 1;
-    driveLeft2 = 1;
-    driveLeft3 = 1;
-    driveRight1 = 4;
-    driveRight2 = 4;
-    driveRight3 = 4;
+    driveLeft1 = 4;
+    driveLeft2 = 5;
+    driveLeft3 = 6;
+    driveRight1 = 1;
+    driveRight2 = 2;
+    driveRight3 = 3;
 
     colorSpinner = 14;
 
