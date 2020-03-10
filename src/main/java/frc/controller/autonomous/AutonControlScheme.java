@@ -35,7 +35,6 @@ public abstract class AutonControlScheme {
         this.limeLight = limeLight;
         this.flywheel = flywheel;
         this.conveyor = conveyor;
-        this.cellCollector = cellCollector;
     }
 
     //the main method of each auton programs

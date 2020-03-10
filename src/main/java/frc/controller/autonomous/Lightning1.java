@@ -4,7 +4,6 @@ import frc.singularityDrive.SingDrive;
 import frc.robot.LimeLight;
 import frc.robot.Flywheel;
 import frc.robot.Conveyor;
-import frc.robot.CellCollector;
 
 public class Lightning1 extends AutonControlScheme {
 
