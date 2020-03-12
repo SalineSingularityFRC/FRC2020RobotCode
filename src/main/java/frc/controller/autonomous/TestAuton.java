@@ -9,8 +9,8 @@ import frc.robot.CellCollector;
 public class TestAuton extends AutonControlScheme{
 
     
-    public TestAuton(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor, CellCollector cellCollector) {
-        super(drive, limeLight, flywheel, conveyor, cellCollector);
+    public TestAuton(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor) {
+        super(drive, limeLight, flywheel, conveyor);
     }
 
 
@@ -18,9 +18,9 @@ public class TestAuton extends AutonControlScheme{
     public void moveAuton() {
         //super.vertical(10, 0.1);
         //super.vertical(-10);
-        //super.rotate(90, false);
+        super.rotate(0.1, 90, false);
         //super.adjustToTarget();
-        super.vertical(40, 0.3);
+        //super.vertical(40, 0.3);
         //super.shoot();
     } 
 

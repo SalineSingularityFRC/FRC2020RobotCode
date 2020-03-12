@@ -84,7 +84,7 @@ public class BasicDrive extends SingDrive {
 		double rightOutput = super.velocityMultiplier * (forwardVelocity + rotationVelocity) / maximum;
 
 		double velLeftOutput = (-forwardVelocity + rotationVelocity) / maximum;
-		double velRightOutput = (forwardVelocity + rotationVelocity) / maximum;
+		double velRightOutput = (-forwardVelocity + rotationVelocity) / maximum;
 
 		SmartDashboard.putNumber("Output Left", leftOutput);
 		SmartDashboard.putNumber("Output Right", rightOutput);
