@@ -17,7 +17,7 @@ public class LimeLight{
     public NetworkTableEntry tx, ty, ta, tv, ts, tl, pipeLine, tshort, tlong, thor, tvert, getpipe, camtran, ledMode, camMode;
 
     //LimeLightDrive 
-    final double target_distance = 9.7;
+    final double target_distance = -9.73;
     //final double headingCorrector = -2.0;
 
 

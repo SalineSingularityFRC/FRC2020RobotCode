@@ -114,7 +114,7 @@ public class Robot extends TimedRobot {
     smartDrive = new SmartBasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
     drive = new BasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
     // ^^^^^^^ change this to SmartBasicDrive if using SmartDrive
-    drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
+    drivePneumatics = new DrivePneumatics(drivePneu2, drivePneu1);
     flywheel = new Flywheel(flywheelMotor1, flywheelMotor2, flywheelMotor3);
     conveyor = new Conveyor(conveyorMotor1);
     climber = new Climber(downMotorPort, climberSol1, climberSol2);
