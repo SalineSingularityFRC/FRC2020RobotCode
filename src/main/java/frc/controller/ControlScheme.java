@@ -7,7 +7,6 @@ import frc.robot.ColorSensor;
 //import edu.wpi.first.wpilibj.Ultrasonic;
 import frc.robot.DrivePneumatics;
 import frc.robot.Flywheel;
-import frc.robot.CellCollector;
 import frc.robot.Climber;
 import frc.robot.Conveyor;
 import frc.singularityDrive.SingDrive;
