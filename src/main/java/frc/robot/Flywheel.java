@@ -60,7 +60,7 @@ public class Flywheel {
     }
 
     public void flywheelFeedReverse() {
-        flywheel3.setVelocity((.25*maxRPMFeed)));
+        flywheel3.setVelocity((.25*maxRPMFeed));
     }
 
     public void flywheelFeedOff() {
