@@ -105,27 +105,39 @@ public class SwerveDrive  {
         double mBL_Distance = distance(mBL_XPos_Curr, mBL_YPos_Curr, mBL_XPos_Next, mBL_YPos_Next);
         double mBR_Distance = distance(mBR_XPos_Curr, mBR_YPos_Curr, mBR_XPos_Next, mBR_YPos_Next);
 
-        System.out.println(mFL_Angle);
-        System.out.println(mFR_Angle);
-        System.out.println(mBL_Angle);
-        System.out.println(mBL_Angle + "\n");
+        System.out.printf(String.format( "%.3f %n", mFL_Angle));
+        System.out.printf(String.format("%.3f %n", mBL_Angle));
+        System.out.printf(String.format("%.3f %n", mBL_Angle));
+        System.out.printf(String.format("%.3f %n %n", mFR_Angle));
 
-        System.out.println(mFL_Distance);
-        System.out.println(mFR_Distance);
-        System.out.println(mBL_Distance);
-        System.out.println(mBL_Distance + "\n");
+        //System.out.printf(String.format("Value with 3 digits after decimal point %.3f %n", PI)); // OUTPUTS: Value with 3 digits after decimal point 3.142
 
-        System.out.println(mFL_XPos_Next);
-        System.out.println(mFL_YPos_Next);
 
-        System.out.println(mFR_XPos_Next);
-        System.out.println(mFR_YPos_Next);
 
-        System.out.println(mBL_XPos_Next);
-        System.out.println(mBL_YPos_Next);
+        System.out.printf(String.format("%.3f %n", mFL_Distance));
+        System.out.printf(String.format("%.3f %n", mFR_Distance));
+        System.out.printf(String.format("%.3f %n", mBL_Distance));
+        System.out.printf(String.format("%.3f %n %n", mBL_Distance));
 
-        System.out.println(mBR_XPos_Next);
-        System.out.println(mBR_YPos_Next);
+        //System.out.printf(String.format("%.3f %n" , mFL_XPos_Next));
+        //System.out.printf(String.format("%.3f %n" , mFL_YPos_Next));
+
+        System.out.println(String.format("(%.3f , %.3f) %n %n" , mFL_XPos_Next, mFL_YPos_Next));
+
+        //System.out.printf(String.format("%.3f %n" , mFR_XPos_Next));
+        //System.out.printf(String.format("%.3f %n", mFR_YPos_Next));
+
+        System.out.println(String.format("(%.3f , %.3f) %n %n" , mFR_XPos_Next, mFR_YPos_Next));
+
+        //System.out.printf(String.format("%.3f %n" , mBL_XPos_Next));
+        //System.out.printf(String.format("%.3f %n" , mBL_YPos_Next));
+
+        System.out.println(String.format("(%.3f , %.3f) %n %n" , mBL_XPos_Next, mBL_YPos_Next));
+
+        //System.out.printf(String.format("%.3f %n" , mBR_XPos_Next));
+        //System.out.printf(String.format("%.3f %n" , mBR_YPos_Next));
+
+        System.out.println(String.format("(%.3f , %.3f) %n %n" , mBR_XPos_Next, mBR_YPos_Next));
 
     }
     public static void main(String[] args){
