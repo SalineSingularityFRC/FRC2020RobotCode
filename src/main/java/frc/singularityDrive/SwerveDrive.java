@@ -26,6 +26,9 @@ public class SwerveDrive  {
     
     protected double velocityMultiplier;
 
+    protected Spark brushMotor1, brushMotor2, brushMotor3, brushMotor4;
+    protected Spark brushlessMotor1, brushlessMotor2, brushlessMotor3, brushlessMotor4;
+
     public enum SpeedMode {
         FAST,
         NORMAL,
