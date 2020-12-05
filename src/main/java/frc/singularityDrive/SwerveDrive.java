@@ -137,4 +137,18 @@ public class SwerveDrive  {
 
     }
 
+    private static double angleCalculator(double currentAngle, double futureAngle) {
+        if (currentAngle < 0 || currentAngle > 360 || futureAngle < 0 || futureAngle > 360) {
+            return -1;
+        }
+
+        double difference = futureAngle - currentAngle;
+
+        if (difference <= 180 && difference >= -180) {
+            return difference;
+        }
+
+        return (difference > 0) ? difference - 360 : difference + 360;
+    }
+
 }
