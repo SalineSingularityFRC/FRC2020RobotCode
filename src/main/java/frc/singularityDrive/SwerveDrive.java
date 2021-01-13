@@ -102,7 +102,7 @@ public class SwerveDrive  {
                                                                        // circle with radius midToOutSize
         double mFR_Offset_Angle = -mBR_Offset_Angle; // " " but negative
         double mFL_Offset_Angle = mBR_Offset_Angle + Math.PI; // complement ( +180 degrees ) of the first one
-        double mBL_Offset_Angle = mFR_Offset_Angle + Math.PI; // " " but of the second one
+        double mBL_Offset_Angle = mFR_Offset_Angle + Math.PI; // same thing, but of the second one
 
         double mFL_XPos_Next = horizontal
                 + (midToOutSize * Math.cos(-(rotation * rotationSpeedConstant) - mFL_Offset_Angle));
@@ -199,6 +199,15 @@ public class SwerveDrive  {
         }
 
         return (difference > 0) ? difference - 360 : difference + 360;
+    }
+
+    //@param voltage: likely be using resistance based encoders that give a voltage between .1 and 5V
+    private static double voltageToAngle(double voltage){
+        if(voltage > 5 || voltage < .1 ) {
+            return -1;
+        }
+        return (voltage - 0.1) * (360/4.9);
+
     }
 
 }
