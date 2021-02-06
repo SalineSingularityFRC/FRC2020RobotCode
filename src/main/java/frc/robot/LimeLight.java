@@ -108,7 +108,7 @@ public class LimeLight{
             double right_comand = 0.0;
             
             double heading_error = -tx.getDouble(0.0);
-            double distance_error = target_distance -ty.getDouble(0.0);
+            double distance_error = target_distance - ty.getDouble(0.0);
 
             left_comand += heading_error * 0.055;
             right_comand -= heading_error * 0.055;

@@ -43,7 +43,7 @@ public class SmartArcadeDrive extends ControlScheme {
 
         lowGear = true;
         climberExtended = false;
-        speedMode = SpeedMode.SLOW;
+        speedMode = SpeedMode.FAST;
 
     }
 
@@ -195,6 +195,14 @@ public class SmartArcadeDrive extends ControlScheme {
 
         else {
             climber.rachetOffVel();
+        }
+
+        if(driveController.getXButton()) {
+            climber.setLow();
+        }
+
+        else if(driveController.getYButton()) {
+            climber.setHigh();
         }
  
     }
