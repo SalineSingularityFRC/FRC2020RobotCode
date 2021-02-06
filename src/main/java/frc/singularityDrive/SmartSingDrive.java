@@ -329,12 +329,12 @@ public abstract class SmartSingDrive {
 	}
 
 	public double getCurrentPosition() {
-		SmartDashboard.putNumber("left position1", ((Spark) this.m_leftMotor1).getCurrentPosition());
-		SmartDashboard.putNumber("left position2", ((Spark) this.m_leftMotor2).getCurrentPosition());
-		SmartDashboard.putNumber("left position3", ((Spark) this.m_leftMotor3).getCurrentPosition());
-		SmartDashboard.putNumber("right position1", ((Spark) this.m_rightMotor1).getCurrentPosition());
-		SmartDashboard.putNumber("right position2", ((Spark) this.m_rightMotor2).getCurrentPosition());
-		SmartDashboard.putNumber("right position3", ((Spark) this.m_rightMotor3).getCurrentPosition());
+		//SmartDashboard.putNumber("left position1", ((Spark) this.m_leftMotor1).getCurrentPosition());
+		//SmartDashboard.putNumber("left position2", ((Spark) this.m_leftMotor2).getCurrentPosition());
+		//SmartDashboard.putNumber("left position3", ((Spark) this.m_leftMotor3).getCurrentPosition());
+		//SmartDashboard.putNumber("right position1", ((Spark) this.m_rightMotor1).getCurrentPosition());
+		//SmartDashboard.putNumber("right position2", ((Spark) this.m_rightMotor2).getCurrentPosition());
+		//SmartDashboard.putNumber("right position3", ((Spark) this.m_rightMotor3).getCurrentPosition());
 		return ((Spark) this.m_leftMotor1).getCurrentPosition()/2.0 + ((this.m_rightMotor1.getCurrentPosition()/-2.0));//that negative is suposed to be there trust me
 		//return this.m_leftMotor1.getCurrentPosition();
 	}

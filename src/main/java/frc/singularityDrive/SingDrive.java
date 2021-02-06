@@ -152,14 +152,14 @@ public abstract class SingDrive {
 
 		SmartDashboard.putNumber("flipper", leftMotor1);
 		this.m_leftMotor1 = new Spark(leftMotor1, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		this.m_leftMotor2 = new Spark(leftMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
-		this.m_leftMotor3 = new Spark(leftMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+		//this.m_leftMotor2 = new Spark(leftMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
+		//this.m_leftMotor3 = new Spark(leftMotor3, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
 
 		// Setting one motor controller to follow another means that it will automatically set output voltage of the follower
 		// controller to the value of the followee motor controller. Setting the boolean value to true inverts the s0ignal
 		// in case that the motor controllers are naturally reversed.
-		this.m_leftMotor2.follow(this.m_leftMotor1, false);
-		this.m_leftMotor3.follow(this.m_leftMotor1, false);
+		//this.m_leftMotor2.follow(this.m_leftMotor1, false);
+		//this.m_leftMotor3.follow(this.m_leftMotor1, false);
 
 		this.m_rightMotor1 = new Spark(rightMotor1, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
 		this.m_rightMotor2 = new Spark(rightMotor2, DEFAULT_TO_BRUSHLESS, DEFAULT_RAMP_RATE);
@@ -197,11 +197,11 @@ public abstract class SingDrive {
 	 /** LEFT IS REVERSED. GOING FORWARD PUSHES THE LEFT ENCODER VALUES IN THE NEGATIVE DIRECTION */
 	public double getCurrentPosition() {
 		SmartDashboard.putNumber("left position1", ((Spark) this.m_leftMotor1).getCurrentPosition());
-		SmartDashboard.putNumber("left position2", ((Spark) this.m_leftMotor2).getCurrentPosition());
-		SmartDashboard.putNumber("left position3", ((Spark) this.m_leftMotor3).getCurrentPosition());
+		//SmartDashboard.putNumber("left position2", ((Spark) this.m_leftMotor2).getCurrentPosition());
+		//SmartDashboard.putNumber("left position3", ((Spark) this.m_leftMotor3).getCurrentPosition());
 		SmartDashboard.putNumber("right position1", ((Spark) this.m_rightMotor1).getCurrentPosition());
-		SmartDashboard.putNumber("right position2", ((Spark) this.m_rightMotor2).getCurrentPosition());
-		SmartDashboard.putNumber("right position3", ((Spark) this.m_rightMotor3).getCurrentPosition());
+		//SmartDashboard.putNumber("right position2", ((Spark) this.m_rightMotor2).getCurrentPosition());
+		//SmartDashboard.putNumber("right position3", ((Spark) this.m_rightMotor3).getCurrentPosition());
 		return  ((Spark) this.m_leftMotor1).getCurrentPosition()/-6.0 + ((Spark)this.m_rightMotor1).getCurrentPosition()/6.0 +
 				((Spark) this.m_leftMotor2).getCurrentPosition()/-6.0 + ((Spark)this.m_rightMotor2).getCurrentPosition()/6.0 +
 				((Spark) this.m_leftMotor3).getCurrentPosition()/-6.0 + ((Spark)this.m_rightMotor3).getCurrentPosition()/6.0;//that negative is suposed to be there trust me

@@ -8,8 +8,8 @@ import frc.robot.CellCollector;
 
 public class Trench1 extends AutonControlScheme {
 
-    public Trench1(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor, CellCollector cellCollector) {
-        super(drive, limeLight, flywheel, conveyor, cellCollector);
+    public Trench1(SingDrive drive, LimeLight limeLight, Flywheel flywheel, Conveyor conveyor) {
+        super(drive, limeLight, flywheel, conveyor);
     }
 
     //The back of the robot should be facing in the direction of the side of the field with the trench//

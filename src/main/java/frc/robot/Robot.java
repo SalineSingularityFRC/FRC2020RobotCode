@@ -24,7 +24,6 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.cameraserver.CameraServer;
-//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
@@ -76,9 +75,9 @@ public class Robot extends TimedRobot {
   Compressor compressor;
 
   //SendableChoosers
-  SendableChooser goalChooser;
-  SendableChooser positionChooser;
-  SendableChooser secondaryChooser;
+  SendableChooser<Integer> goalChooser;
+  SendableChooser<Integer> positionChooser;
+  SendableChooser<Integer> secondaryChooser;
   
   //SendableChooser autoChooser;  
 
@@ -108,7 +107,7 @@ public class Robot extends TimedRobot {
     gyro = new AHRS(SPI.Port.kMXP);
     gyroResetAtTeleop = true;
 
-    colorSensor = new ColorSensor(colorSpinner, colorSol1, colorSol2);
+    //colorSensor = new ColorSensor(colorSpinner, colorSol1, colorSol2);
     
     //initialize all mechanisms on the robot
     smartDrive = new SmartBasicDrive(driveLeft1, driveLeft2, driveLeft3, driveRight1, driveRight2, driveRight3);
@@ -117,7 +116,11 @@ public class Robot extends TimedRobot {
     drivePneumatics = new DrivePneumatics(drivePneu1, drivePneu2);
     flywheel = new Flywheel(flywheelMotor1, flywheelMotor2, flywheelMotor3);
     conveyor = new Conveyor(conveyorMotor1);
-    climber = new Climber(downMotorPort, climberSol1, climberSol2);
+
+
+
+    climber = new Climber(downMotorPort,0,0);//TODO THE LAST TWO NUNMBERS AREN'T CORRECT
+
     
     limeLight = new LimeLight();
     //limeLight.setCamMode(limeLight, 0.0);
@@ -126,7 +129,7 @@ public class Robot extends TimedRobot {
     // This is not used if the raspberry pi is being used for image compression
     //CameraServer.getInstance().startAutomaticCapture();
 
-    //gyro = new AHRS(SPI.Port.kMXP);
+    gyro = new AHRS(SPI.Port.kMXP);
     //gyroResetAtTeleop = true;
 
     //tutorial code for the sendableChooser in case it breaks
@@ -134,27 +137,26 @@ public class Robot extends TimedRobot {
     autoChooser.addDefault("Default Auto", new TestAuton(drive, limeLight));
     autoChooser.addOption("SupremeAuto", new JustMove(drive, limeLight));
     SmartDashboard.putData("Auto mode", autoChooser);*/
-    
-    smartDrive.setInitialPosition();
 
-    compressor = new Compressor();
-    goalChooser = new SendableChooser<String>();
-    //positionChooser = new SendableChooser<String>();
-    //secondaryChooser = new SendableChooser<String>();
+    //compressor = new Compressor();
+    goalChooser = new SendableChooser<Integer>();
+    positionChooser = new SendableChooser<Integer>();
+    secondaryChooser = new SendableChooser<Integer>();
 
-    goalChooser.addDefault("Move", "-0");
-    goalChooser.addOption("Move and Shoot", "1");
+    goalChooser.addDefault("Just Move",1);
+    goalChooser.addOption("Target and Trench", 0);
+    goalChooser.addOption("TestAuton", 2);
 
-    /*positionChooser.addDefault("Position 1", "0");
-    positionChooser.addOption("Position 2", "1");
-    positionChooser.addOption("Position 3", "2");
+    positionChooser.addDefault("Position 1", 0);
+    positionChooser.addOption("Position 2", 1);
+    positionChooser.addOption("Position 3", 2);
 
-    secondaryChooser.addDefault("Nothing", "-1");
-    secondaryChooser.addOption("And Collect And Shoot", "0");*/
+    secondaryChooser.addDefault("Move Through Trench", 1);
+    secondaryChooser.addOption("Don't", 0);
 
-    //SmartDashboard.putData("Position", positionChooser);
+    SmartDashboard.putData("Position", positionChooser);
     SmartDashboard.putData("Primary Goal", goalChooser);
-    //SmartDashboard.putData("Secondary Goal", secondaryChooser);
+    SmartDashboard.putData("Secondary Goal", secondaryChooser);
   }
 
   /**
@@ -187,45 +189,38 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     //Positions 1,2,3
     //Goals
-    //  0: Target
-    //  1: Trench
+    //  0: Just Move
+    //  1: Trench and Shoot
     //secondaryGoals
-    //  0: move to Trench
-    //  1: move away
-   /*AutonControlScheme[] goals={ new Trench1(drive, limeLight, flywheel, conveyor, collector),
-                                 new Trench2(drive, limeLight, flywheel, conveyor, collector),
-                                 new Trench3(drive, limeLight, flywheel, conveyor, collector)};
+    //  0: Move through Trench
+    //  1: Don't
+   AutonControlScheme[] goals={ new Trench1(drive, limeLight, flywheel, conveyor),
+                                 new Trench2(drive, limeLight, flywheel, conveyor),
+                                 new Trench3(drive, limeLight, flywheel, conveyor)};
     
-    SmartDashboard.putNumber("result of position", Integer.parseInt((String)positionChooser.getSelected()));
-    SmartDashboard.putNumber("result of goals", Integer.parseInt((String)goalChooser.getSelected()));
-    SmartDashboard.putNumber("result of secondary goals", Integer.parseInt((String)secondaryChooser.getSelected()));*/
+    SmartDashboard.putNumber("result of position", positionChooser.getSelected());
+    SmartDashboard.putNumber("result of goals", goalChooser.getSelected());
+    SmartDashboard.putNumber("result of secondary goals", secondaryChooser.getSelected());
 
-    /*if(goalChooser.getSelected().equals("-1")){
-      //SmartDashboard.putString("autoprogram", "JustMove");
-      new JustMove(drive, limeLight, flywheel, conveyor, collector).moveAuton();
+    if(goalChooser.getSelected() == 2){
+      SmartDashboard.putString("autoprogram", "Test Auton");
+      new TestAuton(drive, limeLight, flywheel, conveyor);
+    }
+     else if(goalChooser.getSelected() == 1){
+      SmartDashboard.putString("autoprogram", "MoveAndShoot");
+      new ShootAndMove(drive, limeLight, flywheel, conveyor).moveAuton();
     }
     else{
-      //SmartDashboard.putString("autoprogram", "PrimaryGoals");
-      goals[Integer.parseInt((String)positionChooser.getSelected())].moveAuton();
+      SmartDashboard.putString("autoprogram", "PrimaryGoal");
+      goals[positionChooser.getSelected()].moveAuton();
     }
-    if(!secondaryChooser.getSelected().equals("-1") && goalChooser.getSelected().equals("0")){
-      //SmartDashboard.putString("autonprogram", "SecondaryGoals");
-      new AndCollectAndShoot(drive, limeLight, flywheel, conveyor, collector).moveAuton();
-    }*/
+    if(secondaryChooser.getSelected() == 1 && goalChooser.getSelected() == 0){
+      SmartDashboard.putString("autoprogram", "SecondaryGoal");
+      new MoveThroughTrench(drive, limeLight, flywheel, conveyor).moveAuton();
+    }
     
-    //if(((String)goalChooser.getSelected()).equals("0")){
-    //new TestAuton(drive, limeLight, flywheel, conveyor, collector).moveAuton();
-      //SmartDashboard.putString("AutonMode", "Just Move");
-    //}
-    
-    //else{
-    //new MoveAndShoot(drive, limeLight, flywheel, conveyor, collector).moveAuton();
-      //SmartDashboard.putString("AutonMode", "Move and Shoot");
-    //}
-
-    //AutonControlScheme hodl = new TestAuton(drive, limeLight, flywheel, conveyor, collector);
-    //AutonControlScheme hodl = new MoveAndShoot(drive, limeLight, flywheel);
-    //hodl.moveAuton();
+    /*AutonControlScheme hodl = new TestAuton(drive, limeLight, flywheel, conveyor, collector);
+    hodl.moveAuton();*/
   }
 
   /**
@@ -235,6 +230,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     //currentScheme.drive(drive, drivePneumatics);
     //currentScheme.ledMode(limeLight);
+    
   }
 
   //Stuff to run when teleop is selected
@@ -283,8 +279,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void testPeriodic() {
-    SmartDashboard.getNumber("EncoderPosition", smartDrive.getCurrentPosition());
-    //compressor.start();
+    compressor.start();
     currentScheme.climberReset(climber);
   }
 
