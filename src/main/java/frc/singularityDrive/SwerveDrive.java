@@ -54,8 +54,46 @@ public class SwerveDrive  {
     // public abstract void arcadeDrive(double vertical, double rotation, double
     // horizontal, boolean poweredInputs, SpeedMode speedMode);
 
-    private double distance(double x1, double y1, double x2, double y2) {
+    private static double distance(double x1, double y1, double x2, double y2) {
         return (Math.sqrt((Math.pow((x2 - x1), 2) + Math.pow((y2 - y1), 2))));
+    }
+
+    
+
+    private static double getAngleIfStill(double xNext, double yNext, double xCurr, double yCurr, double height, double width, double angleAdd, double localToGlobal){
+        if(xNext == xCurr && yNext == yCurr){ //check to see if robot is stationary
+            return Math.toDegrees(Math.atan(width / height)) + angleAdd;
+        }
+        else{ //if the robot isn't stationary
+            if(xNext < 0){
+                return Math.toDegrees(Math.atan((yNext - yCurr) / (xNext - xCurr)) - localToGlobal) + 180;
+            }
+            else if(xNext > 0){
+                return Math.toDegrees(Math.atan((yNext - yCurr) / (xNext - xCurr))  - localToGlobal);
+            }
+            else{ //xNext == 0
+                if(yNext < 0){
+                        return 270;
+                }
+                else{
+                        return 90;
+                }
+                
+            }
+            //return Math.toDegrees(Math.atan((yNext - yCurr) / (xNext - xCurr)));
+                
+        }
+    }
+    
+
+    private static double getDistanceIfStill(double xNext, double yNext, double xCurr, double yCurr, double rotationSpeed ){
+        if(xNext == xCurr && yNext == yCurr){
+                return rotationSpeed;
+        }
+        else{
+                return distance(xNext, yNext, xCurr, yCurr);
+        }
+        
     }
 
     /**
@@ -126,15 +164,15 @@ public class SwerveDrive  {
 
         // Angle adjusting motors will set the wheels to be pointed to the angle of
         // these slopes:
-        double mFL_Angle = Math.atan((mFL_YPos_Next - mFL_YPos_Curr) / (mFL_XPos_Next - mFL_XPos_Curr));
-        double mFR_Angle = Math.atan((mFR_YPos_Next - mFR_YPos_Curr) / (mFR_XPos_Next - mFR_XPos_Curr));
-        double mBL_Angle = Math.atan((mBL_YPos_Next - mBL_YPos_Curr) / (mBL_XPos_Next - mBL_XPos_Curr));
-        double mBR_Angle = Math.atan((mBR_YPos_Next - mBR_YPos_Curr) / (mBR_XPos_Next - mBR_XPos_Curr));
+        double mFL_Angle = getAngleIfStill(horizontal, vertical, 0, 0, robotWidth, robotHeight, 180, 0);
+        double mFR_Angle = getAngleIfStill(horizontal, vertical, 0, 0, robotHeight, robotWidth, 90, 0);
+        double mBL_Angle = getAngleIfStill(horizontal, vertical, 0, 0, robotHeight, robotWidth, 270, 0);
+        double mBR_Angle = getAngleIfStill(horizontal, vertical, 0, 0, robotWidth, robotHeight, 0, 0);
 
-        double mFR_Distance = distance(mFR_XPos_Curr, mFR_YPos_Curr, mFR_XPos_Next, mFR_YPos_Next);
-        double mFL_Distance = distance(mFL_XPos_Curr, mFL_YPos_Curr, mFL_XPos_Next, mFL_YPos_Next);
-        double mBL_Distance = distance(mBL_XPos_Curr, mBL_YPos_Curr, mBL_XPos_Next, mBL_YPos_Next);
-        double mBR_Distance = distance(mBR_XPos_Curr, mBR_YPos_Curr, mBR_XPos_Next, mBR_YPos_Next);
+        double mFR_Distance = getDistanceIfStill(mFR_XPos_Curr, mFR_YPos_Curr, mFR_XPos_Next, mFR_YPos_Next, 1);
+        double mFL_Distance = getDistanceIfStill(mFL_XPos_Curr, mFL_YPos_Curr, mFL_XPos_Next, mFL_YPos_Next, 1);
+        double mBL_Distance = getDistanceIfStill(mBL_XPos_Curr, mBL_YPos_Curr, mBL_XPos_Next, mBL_YPos_Next, 1);
+        double mBR_Distance = getDistanceIfStill(mBR_XPos_Curr, mBR_YPos_Curr, mBR_XPos_Next, mBR_YPos_Next, 1);
 
         System.out.printf(String.format("%.3f %n", mFL_Angle));
         System.out.printf(String.format("%.3f %n", mBL_Angle));
